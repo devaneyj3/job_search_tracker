@@ -1,10 +1,9 @@
-import Header from "@/components/Header";
 import "./tailwind.css";
 import Providers from "@/components/Providers";
 
 export const metadata = {
-	title: "Movie Tracker",
-	description: "Track your movies",
+	title: "Job Tracker",
+	description: "Track your jobs",
 };
 
 export default function RootLayout({ children }) {
@@ -12,10 +11,7 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<Providers>
 				<body>
-					<div className="flex h-screen flex-col">
-						<Header />
-						<main className="flex-1 wrapper">{children}</main>
-					</div>
+					<main>{children}</main>
 				</body>
 			</Providers>
 		</html>

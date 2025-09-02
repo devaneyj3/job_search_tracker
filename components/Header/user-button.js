@@ -52,7 +52,7 @@ const UserButton = async () => {
 							className="w-full py-4 px-2 h-2 justify-start"
 							variant="ghost"
 							asChild>
-							<Link href="/Profile">
+							<Link href="/profile">
 								<UserIcon />
 								Profile
 							</Link>

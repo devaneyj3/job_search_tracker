@@ -1,33 +1,34 @@
-datasource db {
-  provider = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
 model User {
-  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String        @default("NO_NAME")
-  address       String?
-  city          String?
-  state         String?
-  zip           String?
-  email         String?   @unique
-  phone         String?
-  emailVerified DateTime?       @db.Timestamp(6)
-  image         String?
+  id              String        @id @default(uuid()) @db.Uuid
+  name            String        @default("NO_NAME")
+  address         String?
+  city            String?
+  state           String?
+  zip             String?
+  email           String?       @unique
+  phone           String?
+  emailVerified   DateTime?     @db.Timestamp(6)
+  image           String?
   profileComplete Boolean       @default(false)
-  account Account[]
-  session     Session[]
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime      @updatedAt
+  accounts        Account[]
+  applications    Application[]
+  sessions        Session[]
 }
 
 model Account {
-  userId            String      @db.Uuid
+  userId            String   @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -38,23 +39,23 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
   sessionToken String   @id
   userId       String   @db.Uuid
   expires      DateTime @db.Timestamp(6)
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())  @db.Timestamp(6)
-  updatedAt DateTime @updatedAt
+  @@index([userId])
 }
 
 model VerificationToken {
@@ -63,4 +64,47 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Application {
+  id                Int          @id @default(autoincrement())
+  userId            String       @db.Uuid
+  jobTitle          String
+  companyName       String
+  jobUrl            String
+  appliedDate       DateTime?
+  status            String?
+  statusDate        DateTime?
+  archived          Boolean      @default(false)
+  salary            String?
+  location          String?
+  contactName       String?
+  contactEmail      String?
+  nextFollowUpDate  DateTime?
+  lastContactedDate DateTime?
+  jobDescription    String?
+  interviewNotes    String?
+  interviewDate     DateTime?
+  offerDetails      String?
+  rejectionReason   String?
+  dateArchived      DateTime?
+  notes             String?
+  companyInfoId     Int?         @unique
+  createdAt         DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime     @updatedAt
+  companyInfo       CompanyInfo? @relation(fields: [companyInfoId], references: [id])
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([appliedDate])
+}
+
+model CompanyInfo {
+  id          Int          @id @default(autoincrement())
+  industry    String?
+  size        String?
+  website     String?
+  linkedin    String?
+  application Application?
 }

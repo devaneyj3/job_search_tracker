@@ -1,0 +1,35 @@
+.container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+  gap: 1rem;
+}
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.label {
+  color: #666;
+}
+.footer {
+  margin-top: 1rem;
+}
+.link {
+  color: #2563eb;
+  text-decoration: underline;
+}
