@@ -9,7 +9,7 @@ const Menu = () => {
 		<div className="flex justify-end gap-3">
 			<nav className="md:flex hidden w-full max-w-xs gap-1">
 				<Button asChild variant="ghost">
-					<Link href="/">Home</Link>
+					<Link href="/profile">Profile</Link>
 				</Button>
 				<UserButton />
 			</nav>
@@ -21,7 +21,7 @@ const Menu = () => {
 					<SheetContent className="flex flex-col items-start">
 						<SheetTitle>Menu</SheetTitle>
 						<Button asChild variant="ghost">
-							<Link href="/">Home</Link>
+							<Link href="/profile">Profile</Link>
 						</Button>
 						<UserButton />
 					</SheetContent>

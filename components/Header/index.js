@@ -8,7 +8,9 @@ const Header = () => {
 		<header className={styles.header}>
 			<div className="wrapper flex-between">
 				<div className="flex-start">
-					<Link href="/" className="flex-start"></Link>
+					<Link href="/" className="flex-start">
+						<Image src="/images/logo.png" width={100} height={100} alt="logo" />
+					</Link>
 				</div>
 				<Menu />
 			</div>

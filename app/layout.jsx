@@ -5,7 +5,7 @@ export const metadata = {
 	title: "Job Tracker",
 	description: "Track your jobs",
 	icons: {
-		icon: "/sign-in.png", // or "/favicon.png"
+		icon: "/logo.png",
 	},
 };
 
