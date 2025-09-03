@@ -1,8 +1,7 @@
 import React from "react";
-import Link from "next/link";
 import styles from "./Stats.module.scss";
 
-export default function StatsPage() {
+export default function Stats() {
 	// placeholder metrics
 	const metrics = [
 		{ id: "applied", label: "Applied", value: 24 },
@@ -21,12 +20,6 @@ export default function StatsPage() {
 						<div className={styles.label}>{m.label}</div>
 					</div>
 				))}
-			</div>
-
-			<div className={styles.footer}>
-				<Link href="/all-jobs" className={styles.link}>
-					Back to all jobs
-				</Link>
 			</div>
 		</main>
 	);

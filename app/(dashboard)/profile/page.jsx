@@ -1,6 +1,12 @@
 import React from "react";
-import Profile from "@/components/Profile/profile";
+import Stats from "@/components/Stats/Stats";
+import AllJobs from "@/components/AllJobs/AllJobs";
 
 export default function ProfilePage() {
-	return <Profile />;
+	return (
+		<>
+			<Stats />
+			<AllJobs />
+		</>
+	);
 }
