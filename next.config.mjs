@@ -8,6 +8,9 @@ const nextConfig = {
 			},
 		],
 	},
+	sassOptions: {
+		api: "modern-compiler",
+	},
 };
 
 export default nextConfig;

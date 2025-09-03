@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  h3 {
+    text-align: center;
+    font-size: 50px;
+    font-family: auto;
+  }
+}
+
+.info {
+  .heading {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    p {
+      font-size: 50px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      text-align: center;
+      
+      font-weight: bold;
+    }
+  }
+}
+.tagline {
+  font-family: auto;
+  font-size: 50px;
+  text-align: center;
+  
+}
+

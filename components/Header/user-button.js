@@ -62,7 +62,7 @@ const UserButton = async () => {
 						<form
 							action={async () => {
 								"use server";
-								await signOut();
+								await signOut({ redirectTo: "/" });
 							}}>
 							<Button
 								className="w-full py-4 px-2 h-2 justify-start"
