@@ -4,6 +4,9 @@ import Providers from "@/components/Providers";
 export const metadata = {
 	title: "Job Tracker",
 	description: "Track your jobs",
+	icons: {
+		icon: "/sign-in.png", // or "/favicon.png"
+	},
 };
 
 export default function RootLayout({ children }) {

@@ -3,9 +3,6 @@ import styles from "./sign-in.module.scss";
 import Image from "next/image";
 import { Rotating } from "@/components/Animations/RotatingText/RotatingText";
 
-export const metadata = {
-	title: "Sign In",
-};
 export default async function SignInPage({ searchParams }) {
 	const { callbackUrl } = await searchParams;
 	return (

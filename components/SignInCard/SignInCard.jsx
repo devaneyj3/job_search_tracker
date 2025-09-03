@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./SignInCard.module.scss";
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
+
 import GoogleSignIn from "@/components/SignInCard/GoggleSignIn/GoogleSignIn";
 
 export default function SignInCard({ callbackUrl }) {
@@ -13,22 +11,7 @@ export default function SignInCard({ callbackUrl }) {
 				<p className={styles.description}>Sign in to your account</p>
 			</div>
 			<div className={styles.card_content}>
-				<form
-					action={async () => {
-						"use server";
-						try {
-							await signIn("google", {
-								redirectTo: callbackUrl ?? "/profile",
-							});
-						} catch (error) {
-							if (error instanceof AuthError) {
-								return redirect(`/error?error=${error.type}`);
-							}
-							throw error;
-						}
-					}}>
-					<GoogleSignIn />
-				</form>
+				<GoogleSignIn callbackUrl={callbackUrl} />
 			</div>
 		</div>
 	);
