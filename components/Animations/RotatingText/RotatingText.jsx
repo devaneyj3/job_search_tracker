@@ -1,5 +1,6 @@
 import { RotatingText } from "@/components/animate-ui/text/rotating";
+import styles from "./text.module.scss";
 
 export const Rotating = ({ text }) => {
-	return <RotatingText className="text-4xl font-semibold" text={text} />;
+	return <RotatingText className={styles.text} text={text} />;
 };

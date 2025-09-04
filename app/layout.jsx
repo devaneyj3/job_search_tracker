@@ -1,3 +1,4 @@
+import { plex } from "@/lib/fonts";
 import "./tailwind.css";
 import Providers from "@/components/Providers";
 
