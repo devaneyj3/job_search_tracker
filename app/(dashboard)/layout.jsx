@@ -4,7 +4,7 @@ export default function DashboardLayout({ children }) {
 	return (
 		<>
 			<Header />
-			<main>{children}</main>
+			<main style={{ backgroundColor: "#f8fafc" }}>{children}</main>
 		</>
 	);
 }
