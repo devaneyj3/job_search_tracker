@@ -7,14 +7,14 @@ import GoogleButtonText from "./GoogleButton";
 
 // taken from https://developers.google.com/identity/branding-guidelines
 
-export default async function GoogleSignIn({ callbackUrl }) {
+export default async function GoogleSignIn() {
 	return (
 		<form
 			action={async () => {
 				"use server";
 				try {
 					await signIn("google", {
-						redirectTo: callbackUrl ?? "/profile",
+						redirectTo: "/profile",
 					});
 				} catch (error) {
 					if (error instanceof AuthError) {

@@ -12,9 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		}),
 	],
 	adapter: PrismaAdapter(prisma),
-	pages: {
-		signIn: "/sign-in",
-	},
 	// finding if the user exists in the database, if it does creat new session properties with the existing database properties
 	callbacks: {
 		async jwt({ token, user }) {

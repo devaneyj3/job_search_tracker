@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./welcome.module.scss";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Rotating } from "../Animations/RotatingText/RotatingText";
+import SignInCard from "../SignInCard/SignInCard";
+import Image from "next/image";
 
 const benefits = [
 	"Track applications, interviews, and offers in one place",
@@ -13,14 +13,25 @@ export default function Welcome() {
 	return (
 		<div className={styles.main}>
 			<h1 className={styles.title}>The #10 Best Job Tracking App Ever </h1>
+			<p className={styles.tagline}>Your job hunt, organized and stress free</p>
 			<div className={styles.jobBox}>
 				<ul className="benefits">
 					<Rotating text={benefits} />
 				</ul>
 			</div>
-			<Button variant="outline" className={styles.btn} asChild>
-				<Link href="/sign-in">Start Tracking Now</Link>
-			</Button>
+			<div className={styles.sign_in}>
+				<div className={styles.info}>
+					<Image
+						src="/images/sign-in.png"
+						width={500}
+						height={500}
+						alt="Sign In Logo"
+					/>
+				</div>
+				<div className={styles.sign_in_card}>
+					<SignInCard />
+				</div>
+			</div>
 		</div>
 	);
 }

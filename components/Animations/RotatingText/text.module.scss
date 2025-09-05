@@ -1,7 +1,18 @@
+.container {
+
+  max-width: fit-content;
+  justify-self: center;
+}
 .text {
   font-weight: bold;
-  color: white;
+  margin-top: 50px;
+  text-align: center;
   font-size: 25px;
   margin-bottom: 10px;
-  border-bottom: 1px solid yellow;
+
+}
+.seperator {
+  margin-top: 10px;
+  background-color: #12a1bf;
+  height: 2px;
 }

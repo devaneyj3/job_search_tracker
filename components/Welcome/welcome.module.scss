@@ -1,31 +1,37 @@
 .main {
   display: flex;
   flex-direction: column;
-
+  height: 100vh;
   justify-content: space-around;
 
 }
 
 .title {
-  font-size: 30px;
+  font-size: 40px;
   text-align: center;
   margin-bottom: 1rem;
   font-weight: bold;
-  color: white;
 }
 
 
-.btn {
-  margin-top: 1.5rem;
-  color:yellow;
-  border-color: yellow;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    border-color: goldenrod;
-    color: goldenrod;
-    background-color: inherit;
-  } 
+
+.sign_in {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  h3 {
+    text-align: center;
+    font-size: 50px;
+    font-family: auto;
+  }
 }
+
+
+.tagline {
+  font-size: 25px;
+  text-align: center;
+  font-style: italic;
+  
+}
+

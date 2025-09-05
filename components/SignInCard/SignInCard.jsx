@@ -3,7 +3,7 @@ import styles from "./SignInCard.module.scss";
 
 import GoogleSignIn from "@/components/SignInCard/GoggleSignIn/GoogleSignIn";
 
-export default function SignInCard({ callbackUrl }) {
+export default function SignInCard() {
 	return (
 		<div className={styles.card}>
 			<div className={styles.card_header}>
@@ -11,7 +11,7 @@ export default function SignInCard({ callbackUrl }) {
 				<p className={styles.description}>Sign in to your account</p>
 			</div>
 			<div className={styles.card_content}>
-				<GoogleSignIn callbackUrl={callbackUrl} />
+				<GoogleSignIn />
 			</div>
 		</div>
 	);
