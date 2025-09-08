@@ -16,16 +16,10 @@
 .jobTitle {
   font-weight: 600;
 }
-.company {
+.company, .location, .salary {
   color: #666;
   display: flex;
   align-items: center;
-}
-.location {
-  color: #666;
-  align-items: center;
-  display: flex;
-
 }
 
 .icon {
