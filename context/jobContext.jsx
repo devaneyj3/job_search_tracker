@@ -13,6 +13,7 @@ export const JobItemProvider = ({ children }) => {
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedJob, setSelectedJob] = useState({});
+	const [noJobMsg, setNoJobsMsg] = useState("");
 
 	useEffect(() => {
 		const getJobs = async () => {
@@ -29,13 +30,21 @@ export const JobItemProvider = ({ children }) => {
 				const res = await fetch(`/api/job?userId=${session.user.id}`);
 				if (!res.ok) throw new Error("Failed to fetch job");
 				const data = await res.json();
+				console.log(data);
 
-				const sortedJobs = data.sort(
-					(a, b) => new Date(b.appliedDate) - new Date(a.appliedDate)
-				);
+				//If there are jobs that the user applied to unless set no job applied to
+				if (data.length > 0) {
+					const sortedJobs = data.sort(
+						(a, b) => new Date(b.appliedDate) - new Date(a.appliedDate)
+					);
 
-				setJobs(sortedJobs);
-				if (data.length > 0) setSelectedJob(data[0]);
+					setJobs(sortedJobs);
+					console.log(jobs);
+					if (data.length > 0) setSelectedJob(data[0]);
+				} else {
+					setNoJobsMsg("You haven't applied to any jobs yet");
+					setJobs([]);
+				}
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -81,11 +90,21 @@ export const JobItemProvider = ({ children }) => {
 			setJobs,
 			selectedJob,
 			setSelectedJob,
+			noJobMsg,
 			createJob,
 			error,
 			isLoading,
 		}),
-		[jobs, setJobs, selectedJob, setSelectedJob, createJob, error, isLoading]
+		[
+			jobs,
+			setJobs,
+			selectedJob,
+			setSelectedJob,
+			createJob,
+			error,
+			isLoading,
+			noJobMsg,
+		]
 	);
 	return (
 		<SessionProvider>
