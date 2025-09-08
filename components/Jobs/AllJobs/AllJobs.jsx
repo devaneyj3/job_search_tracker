@@ -1,17 +1,9 @@
 import React from "react";
 import styles from "./AllJobs.module.scss";
-import { MapPinned, Building } from "lucide-react";
-import { readableDate } from "@/utils";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import JobBox from "./JobBox/JobBox";
 
-export default function AllJobs({
-	jobs,
-	selectedJob,
-	setSelectedJob,
-	noJobMsg,
-}) {
-	console.log(selectedJob);
-
+export default function AllJobs({ jobs, noJobMsg }) {
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
 			<div className={styles.container}>
@@ -25,31 +17,7 @@ export default function AllJobs({
 			<h1 className={styles.title}>All Jobs</h1>
 			{!noJobMsg && jobs.length > 0 ? (
 				jobs.map((j) => {
-					const date = readableDate(j.appliedDate);
-					return (
-						<div
-							key={j.id}
-							className={`${styles.job} ${
-								j.id === selectedJob.id && styles.active
-							}`}
-							onClick={() => setSelectedJob(j)}>
-							<div>
-								<div className={styles.jobTitle}>{j.jobTitle}</div>
-								<div className={styles.company}>
-									<Building size={15} className={styles.icon} />
-									{j.companyName}
-								</div>
-								<div className={styles.location}>
-									<MapPinned size={15} className={styles.icon} />
-									{j.location}
-								</div>
-							</div>
-							<div>
-								<div className={styles.status}>{j.status}</div>
-								<div className={styles.appliedDate}>{date}</div>
-							</div>
-						</div>
-					);
+					return <JobBox key={j.id} j={j} />;
 				})
 			) : (
 				<div>{noJobMsg}</div>
