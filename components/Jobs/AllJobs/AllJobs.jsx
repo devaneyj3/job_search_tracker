@@ -3,18 +3,20 @@ import styles from "./AllJobs.module.scss";
 import { MapPinned, Building } from "lucide-react";
 import { readableDate } from "@/utils";
 
-export default function AllJobs({ jobs }) {
-	const sortedJobs = jobs.sort(
-		(a, b) => new Date(b.appliedDate) - new Date(a.appliedDate)
-	);
-
+export default function AllJobs({ jobs, selectedJob, setSelectedJob }) {
+	console.log(selectedJob);
 	return (
 		<main className={styles.container}>
 			<h1 className={styles.title}>All Jobs</h1>
-			{sortedJobs.map((j, index) => {
+			{jobs.map((j) => {
 				const date = readableDate(j.appliedDate);
 				return (
-					<div key={index} className={styles.job}>
+					<div
+						key={j.id}
+						className={`${styles.job} ${
+							j.id === selectedJob.id && styles.active
+						}`}
+						onClick={() => setSelectedJob(j)}>
 						<div>
 							<div className={styles.jobTitle}>{j.jobTitle}</div>
 							<div className={styles.company}>

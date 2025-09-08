@@ -17,6 +17,7 @@
   background-color: white;
   border: 1px solid #eee;
   border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     background-color: rgb(204, 234, 246);
@@ -39,4 +40,8 @@
 
 .icon {
   margin-right: 10px;
+}
+
+.active {
+  background-color: rgb(173, 225, 246);
 }
