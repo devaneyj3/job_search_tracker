@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./AllJobs.module.scss";
 import { MapPinned, Building } from "lucide-react";
 import { readableDate } from "@/utils";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 
 export default function AllJobs({
 	jobs,
@@ -14,7 +15,7 @@ export default function AllJobs({
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
 			<div className={styles.container}>
-				<p>Loading</p>
+				<LoadingSpinner />
 			</div>
 		);
 	}
