@@ -13,16 +13,29 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { useJob } from "@/context/jobContext";
-import { MapPinned, Building, Currency } from "lucide-react";
+import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
 import styles from "./JobBox.module.scss";
-import { readableDate } from "@/utils";
+import { daysFromNow, readableDate } from "@/utils";
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob } = useJob();
 	const [open, setOpen] = useState(false);
+	console.log(j);
 
 	const date = readableDate(j.appliedDate);
+	const lastContactedDate = readableDate(j.lastContactedDate);
+	const firstContactDate = readableDate(j.firstContactDate);
+	const secondContactDate = readableDate(j.secondContactDate);
+	const thirdContactDate = readableDate(j.thirdContactDate);
+
+	// send second follow up email 3 days from the application date
+	const secondEmail = daysFromNow(j.appliedDate, "3");
+
+	// send second follow up email one week from the second follow up date
+	const thirdEmail = daysFromNow(j.appliedDate, "10");
+	console.log(secondEmail, thirdEmail);
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
@@ -51,9 +64,15 @@ export default function JobBox({ j }) {
 					</div>
 				</div>
 			</SheetTrigger>
-			<SheetContent>
+			<SheetContent className="w-full sm:w-1/2">
 				<SheetHeader>
 					<SheetTitle className={styles.jobTitle}>{j.jobTitle}</SheetTitle>
+					<p className={styles.jobPosting}>
+						<ExternalLink size={15} className={styles.icon} />
+						<Link href={j.jobUrl} target="_blank">
+							Go to Job Posting
+						</Link>
+					</p>
 					<div className={styles.salary}>
 						<Currency size={15} className={styles.icon} />
 						{j.salary}
@@ -69,6 +88,46 @@ export default function JobBox({ j }) {
 					</p>
 					<div className={styles.status}>
 						{j.status} on {date}
+					</div>
+					<div className={styles.contactInfo}>
+						<div className={styles.contact}>
+							<Label htmlFor="contactName">Contact Name: </Label>
+							<p id="contactName">
+								{j.contactName ? j.contactName : "Not Set"}
+							</p>
+						</div>
+						<div className={styles.contact}>
+							<Label htmlFor="contactEmail">Contact Email: </Label>
+							<p id="contactEmail">
+								{j.contactEmail ? j.contactEmail : "Not Set"}
+							</p>
+						</div>
+						<section className={styles.contactDates}>
+							<div className={styles.contact}>
+								<Label htmlFor="firstContactDate">First Contact Date: </Label>
+								<p id="firstContactDate">
+									{j.firstContactDate ? firstContactDate : "Not Set"}
+								</p>
+							</div>
+							<div className={styles.contact}>
+								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
+								<p id="secondContactDate">
+									{j.secondContactDate ? secondContactDate : secondEmail}
+								</p>
+							</div>
+							<div className={styles.contact}>
+								<Label htmlFor="thirdContactDate">Third Contact Date: </Label>
+								<p id="thirdContactDate">
+									{j.thirdContactDate ? thirdContactDate : thirdEmail}
+								</p>
+							</div>
+						</section>
+						<div className={styles.contact}>
+							<Label htmlFor="lastContactedDate">Last Contacted Date: </Label>
+							<p id="lastContactedDate">
+								{j.lastContactedDate ? lastContactedDate : "Not Set"}
+							</p>
+						</div>
 					</div>
 					<SheetDescription>{j.jobDescription}</SheetDescription>
 				</SheetHeader>

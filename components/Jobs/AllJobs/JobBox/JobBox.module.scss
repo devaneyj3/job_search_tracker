@@ -16,7 +16,7 @@
 .jobTitle {
   font-weight: 600;
 }
-.company, .location, .salary {
+.company, .location, .salary, .jobPosting {
   color: #666;
   display: flex;
   align-items: center;
@@ -28,4 +28,23 @@
 
 .active {
   background-color: rgb(173, 225, 246);
+}
+
+.contactInfo {
+  margin: 20px 0 20px 0;
+}
+.contact {
+  display: flex;
+  p {
+    margin-left: 5px;
+    font-size: 15px;
+  }
+}
+
+.jobPosting {
+  color: blue
+}
+
+.contactDates {
+  margin: 20px;
 }

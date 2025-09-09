@@ -72,16 +72,21 @@ model Application {
   jobTitle          String
   companyName       String
   jobUrl            String
-  appliedDate       DateTime?
+  appliedDate       DateTime?      @default(now()) @db.Timestamp(6)
   status            String?
   statusDate        DateTime?
-  archived          Boolean      @default(false)
+  archived          Boolean?      @default(false)
   salary            String?
   location          String?
   contactName       String?
   contactEmail      String?
-  nextFollowUpDate  DateTime?
+  firstContactDate  DateTime? @default(now()) @db.Timestamp(6)
+  secondContactDate DateTime?
+  thirdContactDate DateTime?
   lastContactedDate DateTime?
+  firstContactEmailSent   Boolean?      @default(false)
+  secondContactEmailSent  Boolean?      @default(false)
+  thirdContactEmailSent  Boolean ?     @default(false)
   jobDescription    String?
   interviewNotes    String?
   interviewDate     DateTime?
