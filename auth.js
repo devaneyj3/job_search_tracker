@@ -2,44 +2,74 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-	providers: [
-		Google({
-			clientId: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-		}),
-	],
-	adapter: PrismaAdapter(prisma),
-	// finding if the user exists in the database, if it does creat new session properties with the existing database properties
-	callbacks: {
-		async jwt({ token, user }) {
-			// This runs when user first signs in (user is defined)
-			if (user) {
-				// Store user data in JWT token
-				token.id = user.id;
-				token.phone = user.phone;
-				token.address = user.address;
-				token.city = user.city;
-				token.state = user.state;
-				token.zip = user.zip;
-				token.profileComplete = user.profileComplete;
-			}
-			return token;
+let handlers, signIn, signOut, auth;
+
+try {
+	const nextAuthResult = NextAuth({
+		providers: [
+			Google({
+				clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+				clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+			}),
+		],
+		trustHost: true,
+		adapter: PrismaAdapter(prisma),
+		callbacks: {
+			async jwt({ token, user }) {
+				try {
+					if (user) {
+						token.id = user.id;
+						token.phone = user.phone;
+						token.address = user.address;
+						token.city = user.city;
+						token.state = user.state;
+						token.zip = user.zip;
+						token.profileComplete = user.profileComplete;
+					}
+				} catch (err) {
+					console.error("JWT callback error:", err);
+				}
+				return token;
+			},
+			async session({ session, token }) {
+				try {
+					if (token) {
+						session.user.id = token.id;
+						session.user.phone = token.phone;
+						session.user.address = token.address;
+						session.user.city = token.city;
+						session.user.state = token.state;
+						session.user.zip = token.zip;
+						session.user.profileComplete = token.profileComplete;
+					}
+				} catch (err) {
+					console.error("Session callback error:", err);
+				}
+				return session;
+			},
 		},
-		async session({ session, token }) {
-			// This runs on every session check, but uses JWT data (no database query)
-			if (token) {
-				session.user.id = token.id;
-				session.user.phone = token.phone;
-				session.user.address = token.address;
-				session.user.city = token.city;
-				session.user.state = token.state;
-				session.user.zip = token.zip;
-				session.user.profileComplete = token.profileComplete;
-			}
-			return session;
-		},
-	},
-});
+	});
+
+	handlers = nextAuthResult.handlers;
+	signIn = nextAuthResult.signIn;
+	signOut = nextAuthResult.signOut;
+	auth = nextAuthResult.auth;
+} catch (err) {
+	console.error("NextAuth initialization failed:", err);
+	// Optional: export fallbacks to prevent runtime crash
+	handlers = {};
+	signIn = async () => {
+		throw new Error("Auth not initialized");
+	};
+	signOut = async () => {
+		throw new Error("Auth not initialized");
+	};
+	auth = async () => {
+		throw new Error("Auth not initialized");
+	};
+}
+
+export { handlers, signIn, signOut, auth };
