@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
 	Sheet,
@@ -15,7 +14,7 @@ import {
 import { useJob } from "@/context/jobContext";
 import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
 import styles from "./JobBox.module.scss";
-import { daysFromNow, readableDate } from "@/utils";
+import { readableDate } from "@/utils";
 import React, { useState } from "react";
 import Link from "next/link";
 
@@ -30,12 +29,6 @@ export default function JobBox({ j }) {
 	const secondContactDate = readableDate(j.secondContactDate);
 	const thirdContactDate = readableDate(j.thirdContactDate);
 
-	// send second follow up email 3 days from the application date
-	const secondEmail = daysFromNow(j.appliedDate, "3");
-
-	// send second follow up email one week from the second follow up date
-	const thirdEmail = daysFromNow(j.appliedDate, "10");
-	console.log(secondEmail, thirdEmail);
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger asChild>
@@ -112,13 +105,13 @@ export default function JobBox({ j }) {
 							<div className={styles.contact}>
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
 								<p id="secondContactDate">
-									{j.secondContactDate ? secondContactDate : secondEmail}
+									{j.secondContactDate ? secondContactDate : "Not Set"}
 								</p>
 							</div>
 							<div className={styles.contact}>
 								<Label htmlFor="thirdContactDate">Third Contact Date: </Label>
 								<p id="thirdContactDate">
-									{j.thirdContactDate ? thirdContactDate : thirdEmail}
+									{j.thirdContactDate ? thirdContactDate : "Not Set"}
 								</p>
 							</div>
 						</section>

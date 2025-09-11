@@ -24,6 +24,7 @@ import {
 import { jobKeys } from "@/lib/formKeys";
 import { formSchema, STATUS } from "@/lib/formSchema";
 import { toast } from "sonner";
+import { useJob } from "@/context/jobContext";
 
 // helper: fetch field config by name from jobKeys
 function getCfg(name) {
@@ -33,6 +34,7 @@ function getCfg(name) {
 }
 
 export default function CreateApplication() {
+	const { createJob } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -50,6 +52,7 @@ export default function CreateApplication() {
 	});
 
 	function onSubmit(values) {
+		createJob(values);
 		toast("Application has been created", {
 			description: (
 				<pre className="mt-2 text-xs">{JSON.stringify(values, null, 2)}</pre>

@@ -16,8 +16,8 @@ export default function AllJobs({ jobs, noJobMsg }) {
 		<main className={styles.container}>
 			<h1 className={styles.title}>All Jobs</h1>
 			{!noJobMsg && jobs.length > 0 ? (
-				jobs.map((j) => {
-					return <JobBox key={j.id} j={j} />;
+				jobs.map((j, index) => {
+					return <JobBox key={index} j={j} />;
 				})
 			) : (
 				<div>{noJobMsg}</div>

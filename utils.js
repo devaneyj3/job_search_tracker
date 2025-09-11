@@ -17,5 +17,5 @@ export const readableDate = (date) => {
 //calculation for sending the follow up emails after so many business days
 export const daysFromNow = (date, daysFromNow) => {
 	const today = moment.utc(date);
-	return business.addWeekDays(today, daysFromNow).format("M/DD/YY");
+	return business.addWeekDays(today, daysFromNow);
 };

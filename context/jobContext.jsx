@@ -78,7 +78,7 @@ export const JobItemProvider = ({ children }) => {
 			body: JSON.stringify({ ...data, userId: session?.user.id }),
 		});
 		const newJob = await res.json();
-		setInvoices((prev) => [...prev, newJob]);
+		setJobs((prev) => [...prev, newJob]);
 		setSelectedJob(newJob);
 		if (!res.ok) throw new Error("Failed to save job to database");
 		return newJob;

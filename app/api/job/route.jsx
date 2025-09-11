@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { daysFromNow } from "@/utils";
 
 const prisma = new PrismaClient();
 
@@ -30,38 +31,43 @@ export async function GET(request) {
 		);
 	}
 }
-
-export async function POST(request) {
+export async function POST(req) {
 	try {
-		const data = await request.json();
+		const {
+			userId,
+			jobTitle,
+			companyName,
+			jobUrl,
+			status,
+			salary,
+			location,
+			contactName,
+			contactEmail,
+			jobDescription,
+		} = await req.json();
 
-		const existingCompany = await prisma.company.findUnique({
-			where: { companyName: data.companyName },
-		});
-
-		if (existingCompany) {
-			return NextResponse.json(
-				{ success: false, error: "You already created this company" },
-				{ status: 400 }
-			);
-		}
-
-		const newCompany = await prisma.company.create({
+		const newJob = await prisma.application.create({
 			data: {
-				companyName: data.companyName,
-				companyAddress: data.companyAddress,
-				companyCity: data.companyCity,
-				companyState: data.companyState,
-				companyZip: data.companyZip,
-				userId: data.userId,
+				userId,
+				jobTitle,
+				companyName,
+				jobUrl,
+				status,
+				secondContactDate: daysFromNow(new Date.now(), "3"),
+				thirdContactDate: daysFromNow(new Date.now(), "10"),
+				salary,
+				location,
+				contactName,
+				contactEmail,
+				jobDescription,
 			},
 		});
 
-		return NextResponse.json({ success: true, company: newCompany });
+		return NextResponse.json({ success: true, job: newJob });
 	} catch (error) {
-		console.error("Error creating company:", error);
+		console.error("Error creating Job:", error);
 		return NextResponse.json(
-			{ success: false, error: "Failed to create company" },
+			{ success: false, error: "Failed to create Job" },
 			{ status: 500 }
 		);
 	}
