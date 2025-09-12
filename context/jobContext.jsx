@@ -83,13 +83,14 @@ export const JobItemProvider = ({ children }) => {
 		if (!res.ok) throw new Error("Failed to save job to database");
 		return newJob;
 	};
-	const deleteJob = async (job) => {
+	const deleteJob = async (id, companyInfoId) => {
+		console.log(companyInfoId);
 		const res = await fetch("/api/job", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ id: job.id }),
+			body: JSON.stringify({ id: id, companyInfoId: companyInfoId }),
 		});
 		const deletedJob = await res.json();
 		setJobs((prev) => [...prev, deletedJob]);

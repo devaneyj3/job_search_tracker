@@ -66,7 +66,9 @@ export default function JobBox({ j }) {
 							Go to Job Posting
 						</Link>
 					</p>
-					<Button variant="destructive" onClick={() => deleteJob(j.id)}>
+					<Button
+						variant="destructive"
+						onClick={() => deleteJob(j.id, j.companyInfoId)}>
 						Delete
 					</Button>
 					<div className={styles.salary}>

@@ -85,7 +85,12 @@ export async function POST(req) {
 
 export async function DELETE(req) {
 	try {
-		const { id } = await req.json();
+		const { id, companyInfoId } = await req.json();
+		await prisma.companyInfo.delete({
+			where: {
+				id: companyInfoId,
+			},
+		});
 		const deleteJob = await prisma.application.delete({
 			where: {
 				id: id,
