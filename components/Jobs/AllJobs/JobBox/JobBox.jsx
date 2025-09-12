@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function JobBox({ j }) {
-	const { selectedJob, setSelectedJob } = useJob();
+	const { selectedJob, setSelectedJob, deleteJob } = useJob();
 	const [open, setOpen] = useState(false);
 	console.log(j);
 
@@ -66,6 +66,9 @@ export default function JobBox({ j }) {
 							Go to Job Posting
 						</Link>
 					</p>
+					<Button variant="destructive" onClick={() => deleteJob(j.id)}>
+						Delete
+					</Button>
 					<div className={styles.salary}>
 						<Currency size={15} className={styles.icon} />
 						{j.salary}

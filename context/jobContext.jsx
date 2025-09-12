@@ -83,6 +83,19 @@ export const JobItemProvider = ({ children }) => {
 		if (!res.ok) throw new Error("Failed to save job to database");
 		return newJob;
 	};
+	const deleteJob = async (job) => {
+		const res = await fetch("/api/job", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ id: job.id }),
+		});
+		const deletedJob = await res.json();
+		setJobs((prev) => [...prev, deletedJob]);
+		if (!res.ok) throw new Error("Failed to delete job");
+		return newJob;
+	};
 
 	const values = useMemo(
 		() => ({
@@ -92,6 +105,7 @@ export const JobItemProvider = ({ children }) => {
 			setSelectedJob,
 			noJobMsg,
 			createJob,
+			deleteJob,
 			error,
 			isLoading,
 		}),
@@ -101,6 +115,7 @@ export const JobItemProvider = ({ children }) => {
 			selectedJob,
 			setSelectedJob,
 			createJob,
+			deleteJob,
 			error,
 			isLoading,
 			noJobMsg,

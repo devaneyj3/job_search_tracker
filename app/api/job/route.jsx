@@ -46,6 +46,15 @@ export async function POST(req) {
 			jobDescription,
 		} = await req.json();
 
+		const company = await prisma.companyInfo.create({
+			data: {
+				industry: "Software",
+				size: "2",
+				website: "www.jordandevaney.com",
+				linkedin: "linkedin.com",
+			},
+		});
+
 		const newJob = await prisma.application.create({
 			data: {
 				userId,
@@ -60,6 +69,7 @@ export async function POST(req) {
 				contactName,
 				contactEmail,
 				jobDescription,
+				companyInfoId: company.id,
 			},
 		});
 
@@ -68,6 +78,24 @@ export async function POST(req) {
 		console.error("Error creating Job:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to create Job" },
+			{ status: 500 }
+		);
+	}
+}
+
+export async function DELETE(req) {
+	try {
+		const { id } = await req.json();
+		const deleteJob = await prisma.application.delete({
+			where: {
+				id: id,
+			},
+		});
+		return NextResponse.json({ success: true, job: deleteJob });
+	} catch (error) {
+		console.error("Error deleting Job:", error);
+		return NextResponse.json(
+			{ success: false, error: "Failed to delete Job" },
 			{ status: 500 }
 		);
 	}
