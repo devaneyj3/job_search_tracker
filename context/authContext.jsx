@@ -1,13 +1,20 @@
 "use client";
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	useMemo,
+	useCallback,
+} from "react";
 import { useSession } from "next-auth/react";
 
 export const authContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
 	const [signedInUser, setSignedInUser] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
 	const { data: session, status } = useSession();
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		if (status === "loading") {
@@ -36,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 		setIsLoading(false);
 	}, [session, status]);
 
-	async function update(id, address, city, state, zip, phone) {
+	const update = useCallback(async (id, address, city, state, zip, phone) => {
 		const res = await fetch("/api/user", {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
@@ -52,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 		}));
 
 		return user;
-	}
+	}, []);
 
 	// Memoize the context value to prevent infinite re-renders
 	const contextValue = useMemo(
@@ -60,6 +67,7 @@ export const AuthProvider = ({ children }) => {
 			signedInUser,
 			setSignedInUser,
 			update,
+			setIsLoading,
 			isLoading,
 		}),
 		[signedInUser, isLoading]
