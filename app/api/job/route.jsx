@@ -91,12 +91,12 @@ export async function DELETE(req) {
 				id: companyInfoId,
 			},
 		});
-		const deleteJob = await prisma.application.delete({
+		const deletedJob = await prisma.application.delete({
 			where: {
 				id: id,
 			},
 		});
-		return NextResponse.json({ success: true, job: deleteJob });
+		return NextResponse.json({ success: true, id: deletedJob.id });
 	} catch (error) {
 		console.error("Error deleting Job:", error);
 		return NextResponse.json(

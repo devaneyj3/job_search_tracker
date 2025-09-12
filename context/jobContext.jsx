@@ -8,6 +8,7 @@ export const JobItemContext = createContext({});
 
 export const JobItemProvider = ({ children }) => {
 	const { data: session, status } = useSession();
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const [jobs, setJobs] = useState([]);
 	const [error, setError] = useState(null);
@@ -30,7 +31,6 @@ export const JobItemProvider = ({ children }) => {
 				const res = await fetch(`/api/job?userId=${session.user.id}`);
 				if (!res.ok) throw new Error("Failed to fetch job");
 				const data = await res.json();
-				console.log(data);
 
 				//If there are jobs that the user applied to unless set no job applied to
 				if (data.length > 0) {
@@ -39,7 +39,6 @@ export const JobItemProvider = ({ children }) => {
 					);
 
 					setJobs(sortedJobs);
-					console.log(jobs);
 					if (data.length > 0) setSelectedJob(data[0]);
 				} else {
 					setNoJobsMsg("You haven't applied to any jobs yet");
@@ -69,22 +68,22 @@ export const JobItemProvider = ({ children }) => {
 		}
 	}, [session?.user?.id, status]);
 
-	const createJob = async (data) => {
+	const createJob = async (newJob) => {
 		const res = await fetch("/api/job", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ ...data, userId: session?.user.id }),
+			body: JSON.stringify({ ...newJob, userId: session?.user.id }),
 		});
-		const newJob = await res.json();
-		setJobs((prev) => [...prev, newJob]);
+		const data = await res.json();
+		setJobs((prev) => [...prev, data.job]);
+		setModalOpen(false);
 		setSelectedJob(newJob);
 		if (!res.ok) throw new Error("Failed to save job to database");
 		return newJob;
 	};
 	const deleteJob = async (id, companyInfoId) => {
-		console.log(companyInfoId);
 		const res = await fetch("/api/job", {
 			method: "DELETE",
 			headers: {
@@ -92,10 +91,11 @@ export const JobItemProvider = ({ children }) => {
 			},
 			body: JSON.stringify({ id: id, companyInfoId: companyInfoId }),
 		});
-		const deletedJob = await res.json();
-		setJobs((prev) => [...prev, deletedJob]);
+		const deletedJobId = await res.json();
+		setJobs((prev) => jobs.filter((job) => job.id != deletedJobId.id));
+		setModalOpen(false);
 		if (!res.ok) throw new Error("Failed to delete job");
-		return newJob;
+		return deletedJobId;
 	};
 
 	const values = useMemo(
@@ -107,6 +107,8 @@ export const JobItemProvider = ({ children }) => {
 			noJobMsg,
 			createJob,
 			deleteJob,
+			modalOpen,
+			setModalOpen,
 			error,
 			isLoading,
 		}),
@@ -117,6 +119,8 @@ export const JobItemProvider = ({ children }) => {
 			setSelectedJob,
 			createJob,
 			deleteJob,
+			modalOpen,
+			setModalOpen,
 			error,
 			isLoading,
 			noJobMsg,

@@ -19,9 +19,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function JobBox({ j }) {
-	const { selectedJob, setSelectedJob, deleteJob } = useJob();
-	const [open, setOpen] = useState(false);
-	console.log(j);
+	const { selectedJob, setSelectedJob, deleteJob, modalOpen, setModalOpen } =
+		useJob();
 
 	const date = readableDate(j.appliedDate);
 	const lastContactedDate = readableDate(j.lastContactedDate);
@@ -30,7 +29,7 @@ export default function JobBox({ j }) {
 	const thirdContactDate = readableDate(j.thirdContactDate);
 
 	return (
-		<Sheet open={open} onOpenChange={setOpen}>
+		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetTrigger asChild>
 				<div
 					className={`${styles.job} ${
@@ -38,7 +37,7 @@ export default function JobBox({ j }) {
 					}`}
 					onClick={() => {
 						setSelectedJob(j);
-						setOpen(!open);
+						setModalOpen(!modalOpen);
 					}}>
 					<div>
 						<div className={styles.jobTitle}>{j.jobTitle}</div>
@@ -131,7 +130,9 @@ export default function JobBox({ j }) {
 				</SheetHeader>
 
 				<SheetFooter>
-					<Button type="submit">Save changes</Button>
+					<Button type="submit" onClick={() => setModalOpen(false)}>
+						Save changes
+					</Button>
 					<SheetClose asChild>
 						<Button variant="outline">Close</Button>
 					</SheetClose>

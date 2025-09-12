@@ -25,7 +25,7 @@ export default function CreateApplicationMenuItem() {
 						Track your application
 					</DialogTitle>
 					<DialogDescription className={styles.subtitle}></DialogDescription>
-					<CreateApplication />
+					<CreateApplication setInvoiceDialogOpen={setInvoiceDialogOpen} />
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>

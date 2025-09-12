@@ -33,7 +33,7 @@ function getCfg(name) {
 	return cfg;
 }
 
-export default function CreateApplication() {
+export default function CreateApplication({ setInvoiceDialogOpen }) {
 	const { createJob } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),
@@ -53,10 +53,8 @@ export default function CreateApplication() {
 
 	function onSubmit(values) {
 		createJob(values);
+		setInvoiceDialogOpen(false);
 		toast("Application has been created", {
-			description: (
-				<pre className="mt-2 text-xs">{JSON.stringify(values, null, 2)}</pre>
-			),
 			action: { label: "Close", onClick: () => {} },
 		});
 	}
