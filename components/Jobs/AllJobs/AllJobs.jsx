@@ -2,7 +2,8 @@ import React from "react";
 import styles from "./AllJobs.module.scss";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import JobBox from "./JobBox/JobBox";
-
+import { Button } from "@/components/ui/button";
+import { generatePdf } from "@/lib/generatePDF";
 export default function AllJobs({ jobs, noJobMsg }) {
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
@@ -14,6 +15,7 @@ export default function AllJobs({ jobs, noJobMsg }) {
 
 	return (
 		<main className={styles.container}>
+			<Button onClick={() => generatePdf()}>Download Resume</Button>
 			<h1 className={styles.title}>All Jobs</h1>
 			{!noJobMsg && jobs.length > 0 ? (
 				jobs.map((j, index) => {

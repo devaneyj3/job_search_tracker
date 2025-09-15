@@ -25,6 +25,7 @@ import { jobKeys } from "@/lib/formKeys";
 import { formSchema, STATUS } from "@/lib/formSchema";
 import { toast } from "sonner";
 import { useJob } from "@/context/jobContext";
+import { generatePdf } from "@/lib/generatePDF";
 
 // helper: fetch field config by name from jobKeys
 function getCfg(name) {
@@ -51,12 +52,25 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 		mode: "onBlur",
 	});
 
-	function onSubmit(values) {
-		createJob(values);
-		setInvoiceDialogOpen(false);
-		toast("Application has been created", {
-			action: { label: "Close", onClick: () => {} },
-		});
+	async function onSubmit(values) {
+		try {
+			createJob(values);
+			setInvoiceDialogOpen(false);
+
+			await generatePdf();
+
+			toast("Application has been created and email sent!", {
+				action: { label: "Close", onClick: () => {} },
+			});
+		} catch (error) {
+			console.error("Error in onSubmit:", error);
+			toast(
+				"Application created, but failed to send email. Please try again.",
+				{
+					action: { label: "Close", onClick: () => {} },
+				}
+			);
+		}
 	}
 
 	const RenderField = ({ name }) => {
