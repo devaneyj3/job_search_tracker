@@ -15,12 +15,12 @@ import { useJob } from "@/context/jobContext";
 import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
 import styles from "./JobBox.module.scss";
 import { readableDate } from "@/utils";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
+import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 
 export default function JobBox({ j }) {
-	const { selectedJob, setSelectedJob, deleteJob, modalOpen, setModalOpen } =
-		useJob();
+	const { selectedJob, setSelectedJob, modalOpen, setModalOpen } = useJob();
 
 	const date = readableDate(j.appliedDate);
 	const lastContactedDate = readableDate(j.lastContactedDate);
@@ -65,11 +65,7 @@ export default function JobBox({ j }) {
 							Go to Job Posting
 						</Link>
 					</p>
-					<Button
-						variant="destructive"
-						onClick={() => deleteJob(j.id, j.companyInfoId)}>
-						Delete
-					</Button>
+					<DeleteJobButton id={j.id} company={j.companyInfoId} />
 					<div className={styles.salary}>
 						<Currency size={15} className={styles.icon} />
 						{j.salary}
