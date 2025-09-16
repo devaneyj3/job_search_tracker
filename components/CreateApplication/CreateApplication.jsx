@@ -35,7 +35,7 @@ function getCfg(name) {
 }
 
 export default function CreateApplication({ setInvoiceDialogOpen }) {
-	const { createJob } = useJob();
+	const { createJob, createCalendarEvent } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -52,12 +52,13 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 		mode: "onBlur",
 	});
 
+	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
 		try {
-			createJob(values);
-			setInvoiceDialogOpen(false);
+			const job = await createJob(values);
+			await createCalendarEvent(job);
 
-			await generatePdf();
+			setInvoiceDialogOpen(false);
 
 			toast("Application has been created and email sent!", {
 				action: { label: "Close", onClick: () => {} },

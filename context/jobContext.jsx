@@ -8,7 +8,7 @@ import {
 	useMemo,
 	useCallback,
 } from "react";
-import { useSession, SessionProvider } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export const JobItemContext = createContext({});
 
@@ -126,6 +126,30 @@ export const JobItemProvider = ({ children }) => {
 		[selectedJob]
 	);
 
+	//create calendar event
+	const createCalendarEvent = useCallback(
+		async (job) => {
+			const res = await fetch("/api/calendar", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ ...job }),
+			});
+			if (!res.ok) throw new Error("Failed to create calendar event");
+
+			const blob = await res.blob();
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = "calendar.ics";
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+		},
+
+		// Get the blob from the response
+		[session?.user?.id]
+	);
+
 	const values = useMemo(
 		() => ({
 			jobs,
@@ -136,6 +160,7 @@ export const JobItemProvider = ({ children }) => {
 			createJob,
 			deleteJob,
 			modalOpen,
+			createCalendarEvent,
 			setModalOpen,
 			error,
 			isLoading,
@@ -143,6 +168,7 @@ export const JobItemProvider = ({ children }) => {
 		[
 			jobs,
 			selectedJob,
+			createCalendarEvent,
 			noJobMsg,
 			createJob,
 			deleteJob,

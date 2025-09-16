@@ -3,6 +3,7 @@ import styles from "./welcome.module.scss";
 import { Rotating } from "../Animations/RotatingText/RotatingText";
 import SignInCard from "../SignInCard/SignInCard";
 import Image from "next/image";
+import FollowUpEvidence from "../FollowUpEvidence/FollowUpEvidence";
 
 const benefits = [
 	"Track applications, interviews, and offers in one place",
@@ -19,6 +20,7 @@ export default function Welcome() {
 					<Rotating text={benefits} />
 				</ul>
 			</div>
+			<FollowUpEvidence />
 			<div className={styles.sign_in}>
 				<div className={styles.info}>
 					<Image
