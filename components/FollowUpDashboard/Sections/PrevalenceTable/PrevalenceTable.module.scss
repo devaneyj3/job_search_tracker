@@ -1,0 +1,14 @@
+@use "../../../../styles/tokens.module" as *;
+
+.card { border: 1px solid $border; border-radius: $radius-2xl; overflow: hidden; box-shadow: $shadow-sm; }
+.header { background: $bg-subtle; padding: .75rem 1rem; font-weight: 600; }
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .95rem; }
+.table thead tr { border-bottom: 1px solid $border; text-align: left; }
+.table th, .table td { padding: .75rem 1rem; vertical-align: top; }
+.table tbody tr { border-bottom: 1px solid $border; }
+.metric { font-weight: 600; }
+.note { color: $muted-600; font-size: .8rem; margin-top: .2rem; }
+.pill { display: inline-block; padding: .1rem .5rem; border: 1px solid $border; border-radius: 999px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.footerSources { padding: .75rem 1rem; font-size: .8rem; color: $muted-600; }
+.footerSources a { text-decoration: underline; }
