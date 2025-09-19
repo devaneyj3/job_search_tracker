@@ -16,7 +16,7 @@ export const sendEmail = async (values) => {
 
 	const info = await transporter.sendMail({
 		from: "Jordan Devaney <jordandevaney28@gmail.com>",
-		to: contactEmail || "jordandevaney28@gmail.com",
+		to: contactEmail,
 		subject: `Application for ${jobTitle} - Jordan Devaney`,
 		text: `Hi ${contactName}
 I recently applied for the ${jobTitle} role at ${companyName}.

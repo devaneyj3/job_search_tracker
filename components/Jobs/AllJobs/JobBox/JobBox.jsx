@@ -21,6 +21,7 @@ import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob, modalOpen, setModalOpen } = useJob();
+	console.log(selectedJob);
 
 	const date = readableDate(j.appliedDate);
 	const lastContactedDate = readableDate(j.lastContactedDate);
@@ -35,8 +36,8 @@ export default function JobBox({ j }) {
 						j.id === selectedJob.id && styles.active
 					}`}
 					onClick={() => {
-						setSelectedJob(j);
-						setModalOpen(!modalOpen);
+						setSelectedJob(j.id);
+						setModalOpen(true);
 					}}>
 					<div>
 						<div className={styles.jobTitle}>{j.jobTitle}</div>
@@ -48,6 +49,9 @@ export default function JobBox({ j }) {
 							<MapPinned size={15} className={styles.icon} />
 							{j.location}
 						</div>
+						<p id="contactEmail">
+							{j.contactEmail ? j.contactEmail : "No Contact Email"}
+						</p>
 					</div>
 					<div>
 						<div className={styles.status}>{j.status}</div>
@@ -99,9 +103,16 @@ export default function JobBox({ j }) {
 								<Label htmlFor="initailContactDate">
 									Initial Contact Date:{" "}
 								</Label>
-								<p id="firstContactDate">
+								<p
+									id="firstContactDate"
+									className={`${
+										j.initialContactEmailSent ? styles.sent : null
+									}`}>
 									{j.initialContactDate ? initialContactDate : "Not Set"}
 								</p>
+								{j.initialContactEmailSent && (
+									<span className={styles.small}>Email sent</span>
+								)}
 							</div>
 							<div className={styles.contact}>
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
