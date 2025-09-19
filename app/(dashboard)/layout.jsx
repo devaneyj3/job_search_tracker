@@ -6,7 +6,7 @@ export default function DashboardLayout({ children }) {
 		<>
 			<Header />
 			<Toaster />
-			<main style={{ backgroundColor: "#f8fafc" }}>{children}</main>
+			<main>{children}</main>
 		</>
 	);
 }
