@@ -4,9 +4,10 @@ import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import JobBox from "./JobBox/JobBox";
 import CreateApplicationMenuItem from "@/components/Header/CreateApplicationItem";
 import { useJob } from "@/context/jobContext";
+import CustomSheet from "./JobBox/CustomSheet";
 
 export default function AllJobs({ jobs, noJobMsg }) {
-	const { setModalOpen, modalOpen } = useJob();
+	const { selectedJob } = useJob();
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
 			<div className={styles.container}>
@@ -23,19 +24,12 @@ export default function AllJobs({ jobs, noJobMsg }) {
 			<h1 className={styles.title}>All Jobs</h1>
 			{!noJobMsg && jobs.length > 0 ? (
 				jobs.map((j, index) => {
-					return (
-						<JobBox
-							key={index}
-							j={j}
-							setModalOpen={setModalOpen}
-							modalOpen={modalOpen}
-						/>
-					);
+					return <JobBox key={index} j={j} />;
 				})
 			) : (
 				<div>{noJobMsg}</div>
 			)}
-			<CustomSheet j={selectedJob} />
+			{selectedJob && <CustomSheet j={selectedJob} />}
 		</main>
 	);
 }

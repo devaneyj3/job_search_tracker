@@ -10,7 +10,6 @@ import {
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
-	SheetTrigger,
 } from "@/components/ui/sheet";
 import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
 import styles from "./JobBox.module.scss";
