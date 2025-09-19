@@ -35,6 +35,7 @@ export default function AllJobs({ jobs, noJobMsg }) {
 			) : (
 				<div>{noJobMsg}</div>
 			)}
+			<CustomSheet j={selectedJob} />
 		</main>
 	);
 }

@@ -1,34 +1,22 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
 import { useJob } from "@/context/jobContext";
-import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
 import styles from "./JobBox.module.scss";
+import { MapPinned, Building } from "lucide-react";
 import { readableDate } from "@/utils";
-import React from "react";
-import Link from "next/link";
-import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 
+<<<<<<< HEAD
 export default function JobBox({ j, setModalOpen, modalOpen }) {
 	const { selectedJob, setSelectedJob } = useJob();
 	console.log(selectedJob);
 
+=======
+export default function JobBox({ j }) {
+	const { selectedJob, setSelectedJob, modalOpen, setModalOpen } = useJob();
+>>>>>>> sheet-fix
 	const date = readableDate(j.appliedDate);
-	const lastContactedDate = readableDate(j.lastContactedDate);
-	const initialContactDate = readableDate(j.initialContactDate);
-	const secondContactDate = readableDate(j.secondContactDate);
 
 	return (
+<<<<<<< HEAD
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetTrigger asChild>
 				<div
@@ -152,5 +140,32 @@ export default function JobBox({ j, setModalOpen, modalOpen }) {
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>
+=======
+		<div
+			className={`${styles.job} ${j.id === selectedJob.id && styles.active}`}
+			onClick={() => {
+				setSelectedJob(j);
+				setModalOpen(true);
+			}}>
+			<div>
+				<div className={styles.jobTitle}>{j.jobTitle}</div>
+				<div className={styles.company}>
+					<Building size={15} className={styles.icon} />
+					{j.companyName}
+				</div>
+				<div className={styles.location}>
+					<MapPinned size={15} className={styles.icon} />
+					{j.location}
+				</div>
+				<p id="contactEmail">
+					{j.contactEmail ? j.contactEmail : "No Contact Email"}
+				</p>
+			</div>
+			<div>
+				<div className={styles.status}>{j.status}</div>
+				<div className={styles.appliedDate}>{date}</div>
+			</div>
+		</div>
+>>>>>>> sheet-fix
 	);
 }
