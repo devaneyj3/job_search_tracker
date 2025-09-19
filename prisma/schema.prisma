@@ -80,13 +80,11 @@ model Application {
   location          String?
   contactName       String?
   contactEmail      String?
-  firstContactDate  DateTime? @default(now()) @db.Timestamp(6)
+  initialContactDate  DateTime? @default(now()) @db.Timestamp(6)
   secondContactDate DateTime?
-  thirdContactDate DateTime?
   lastContactedDate DateTime?
-  firstContactEmailSent   Boolean?      @default(false)
+  initialContactEmailSent   Boolean?      @default(false)
   secondContactEmailSent  Boolean?      @default(false)
-  thirdContactEmailSent  Boolean ?     @default(false)
   jobDescription    String?
   interviewNotes    String?
   interviewDate     DateTime?

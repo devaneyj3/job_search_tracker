@@ -43,6 +43,8 @@ export async function POST(req) {
 			location,
 			contactName,
 			contactEmail,
+			lastContactedDate,
+			initialContactEmailSent,
 			jobDescription,
 		} = await req.json();
 
@@ -62,8 +64,9 @@ export async function POST(req) {
 				companyName,
 				jobUrl,
 				status,
-				secondContactDate: daysFromNow(new Date.now(), "3"),
-				thirdContactDate: daysFromNow(new Date.now(), "10"),
+				secondContactDate: daysFromNow(new Date.now(), "5"),
+				lastContactedDate,
+				initialContactEmailSent,
 				salary,
 				location,
 				contactName,

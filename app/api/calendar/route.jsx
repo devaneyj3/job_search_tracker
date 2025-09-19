@@ -16,34 +16,26 @@ export async function POST(req) {
 			jobUrl,
 			salary,
 			secondContactDate,
-			thirdContactDate,
 			location,
 			contactName,
 			contactEmail,
 		} = await req.json();
 
-		const filename = "calendar.ics";
+		const filename = "contact_calendar.ics";
 		const calendar = icalendar({
 			events: [
 				{
-					description: `${companyName} - Initial Contact: Email ${contactName} at ${contactEmail}`,
+					description: `${jobTitle} at ${companyName} - Initial Contact: ${contactName} at ${contactEmail}`,
 					allDay: true,
 					start: moment(),
-					summary: `${companyName} - Initial Contact: Email ${contactName} at ${contactEmail}`,
+					summary: `${jobTitle} at ${companyName} - Initial Contact: ${contactName} at ${contactEmail}`,
 					url: jobUrl,
 				},
 				{
-					description: `${companyName} - Contact Follow-Up 1: Email ${contactName} at ${contactEmail}`,
+					description: `${jobTitle} at ${companyName} - Follow-Up Email: ${contactName} at ${contactEmail}`,
 					allDay: true,
 					start: secondContactDate,
-					summary: `${companyName} - Contact Follow-Up 1: Email ${contactName} at ${contactEmail}`,
-					url: jobUrl,
-				},
-				{
-					description: `${companyName} - Contact Follow-Up 2: Email ${contactName} at ${contactEmail}`,
-					allDay: true,
-					start: thirdContactDate,
-					summary: `${companyName} - Contact Follow-Up 2: Email ${contactName} at ${contactEmail}`,
+					summary: `${jobTitle} at ${companyName} - Follow-Up Email: ${contactName} at ${contactEmail}`,
 					url: jobUrl,
 				},
 			],

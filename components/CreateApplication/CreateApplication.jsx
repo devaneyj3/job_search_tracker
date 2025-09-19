@@ -25,7 +25,6 @@ import { jobKeys } from "@/lib/formKeys";
 import { formSchema, STATUS } from "@/lib/formSchema";
 import { toast } from "sonner";
 import { useJob } from "@/context/jobContext";
-import { generatePdf } from "@/lib/generatePDF";
 
 // helper: fetch field config by name from jobKeys
 function getCfg(name) {
@@ -35,7 +34,7 @@ function getCfg(name) {
 }
 
 export default function CreateApplication({ setInvoiceDialogOpen }) {
-	const { createJob, createCalendarEvent } = useJob();
+	const { createJob, createCalendarEvent, sendEmail } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -48,15 +47,37 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 			contactName: "",
 			contactEmail: "",
 			jobDescription: "",
+			skill1: "",
+			goal: "",
 		},
 		mode: "onBlur",
 	});
 
 	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
+		const hasContact = Boolean(values.contactEmail?.trim());
+
+		// Choose one format and stick with it:
+		// If your DB uses Prisma DateTime, pass a Date object.
+		const lastContacted = hasContact ? new Date() : null;
+
+		// Build one payload
+		const jobPayload = {
+			...values,
+			lastContactedDate: lastContacted, // Date (preferred for Prisma)
+			initialContactEmailSent: hasContact, // boolean
+		};
 		try {
-			const job = await createJob(values);
-			await createCalendarEvent(job);
+			const job = await createJob(jobPayload);
+
+			// 2) Optional side effects if contact email exists
+			if (hasContact) {
+				// If these don't depend on each other, do them in parallel:
+				await Promise.allSettled([
+					sendEmail(values), // or sendEmail({ ...values, jobId: job.id })
+					createCalendarEvent(job), // needs the created job
+				]);
+			}
 
 			setInvoiceDialogOpen(false);
 
@@ -142,8 +163,13 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 					<RenderField name="location" />
 					<RenderField name="salary" />
 				</div>
+				{/* Row 4: Skill + Company's Goal */}
+				<div className={styles.twoCol}>
+					<RenderField name="skill1" />
+					<RenderField name="goal" />
+				</div>
 
-				{/* Row 4: Contact Name + Contact Email */}
+				{/* Row 5: Contact Name + Contact Email */}
 				<div className={styles.twoCol}>
 					<RenderField name="contactName" />
 					<RenderField name="contactEmail" />

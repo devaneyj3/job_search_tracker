@@ -24,9 +24,8 @@ export default function JobBox({ j }) {
 
 	const date = readableDate(j.appliedDate);
 	const lastContactedDate = readableDate(j.lastContactedDate);
-	const firstContactDate = readableDate(j.firstContactDate);
+	const initialContactDate = readableDate(j.initialContactDate);
 	const secondContactDate = readableDate(j.secondContactDate);
-	const thirdContactDate = readableDate(j.thirdContactDate);
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
@@ -97,21 +96,17 @@ export default function JobBox({ j }) {
 						</div>
 						<section className={styles.contactDates}>
 							<div className={styles.contact}>
-								<Label htmlFor="firstContactDate">First Contact Date: </Label>
+								<Label htmlFor="initailContactDate">
+									Initial Contact Date:{" "}
+								</Label>
 								<p id="firstContactDate">
-									{j.firstContactDate ? firstContactDate : "Not Set"}
+									{j.initialContactDate ? initialContactDate : "Not Set"}
 								</p>
 							</div>
 							<div className={styles.contact}>
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
 								<p id="secondContactDate">
 									{j.secondContactDate ? secondContactDate : "Not Set"}
-								</p>
-							</div>
-							<div className={styles.contact}>
-								<Label htmlFor="thirdContactDate">Third Contact Date: </Label>
-								<p id="thirdContactDate">
-									{j.thirdContactDate ? thirdContactDate : "Not Set"}
 								</p>
 							</div>
 						</section>

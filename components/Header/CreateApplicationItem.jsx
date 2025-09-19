@@ -17,7 +17,9 @@ export default function CreateApplicationMenuItem() {
 	return (
 		<Dialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen}>
 			<DialogTrigger asChild>
-				<Button variant="ghost">Create Application</Button>
+				<Button variant="primary" className={styles.btn}>
+					Create Application
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="overflow-y-scroll max-h-screen w-xl bg-white">
 				<DialogHeader>

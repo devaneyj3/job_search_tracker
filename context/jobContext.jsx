@@ -150,6 +150,20 @@ export const JobItemProvider = ({ children }) => {
 		[session?.user?.id]
 	);
 
+	const sendEmail = useCallback(
+		async (values) => {
+			const res = await fetch("/api/email", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					values,
+				}),
+			});
+			if (!res.ok) throw new Error("Failed to send email");
+		},
+		[session?.user?.id]
+	);
+
 	const values = useMemo(
 		() => ({
 			jobs,
@@ -161,6 +175,7 @@ export const JobItemProvider = ({ children }) => {
 			deleteJob,
 			modalOpen,
 			createCalendarEvent,
+			sendEmail,
 			setModalOpen,
 			error,
 			isLoading,

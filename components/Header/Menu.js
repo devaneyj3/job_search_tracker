@@ -3,13 +3,17 @@ import Link from "next/link";
 import { EllipsisVertical } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import UserButton from "./user-button";
-import CreateApplicationMenuItem from "./CreateApplicationItem";
 
 const Menu = () => {
 	return (
 		<div className="flex justify-end gap-3">
 			<nav className="md:flex hidden w-full max-w-xs gap-1">
-				<CreateApplicationMenuItem />
+				<Button asChild variant="ghost">
+					<Link href="/dashboard">Dashboard</Link>
+				</Button>
+				<Button asChild variant="ghost">
+					<Link href="/tracker">Job Tracker</Link>
+				</Button>
 				<Button asChild variant="ghost">
 					<Link href="/profile">Profile</Link>
 				</Button>
@@ -22,9 +26,14 @@ const Menu = () => {
 					</SheetTrigger>
 					<SheetContent className="flex flex-col items-start">
 						<SheetTitle>Menu</SheetTitle>
-						<CreateApplicationMenuItem />
+						<Button asChild variant="ghost">
+							<Link href="/dashboard">Dashboard</Link>
+						</Button>
 						<Button asChild variant="ghost">
 							<Link href="/profile">Profile</Link>
+						</Button>
+						<Button asChild variant="ghost">
+							<Link href="/tracker">Job Tracker</Link>
 						</Button>
 						<UserButton />
 					</SheetContent>
