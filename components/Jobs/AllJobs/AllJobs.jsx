@@ -7,8 +7,8 @@ import { useJob } from "@/context/jobContext";
 import CustomSheet from "./JobBox/CustomSheet";
 
 export default function AllJobs({ jobs, noJobMsg }) {
-	const { selectedJob, setSelectedJob, modalOpen, setModalOpen } = useJob();
-	console.log(selectedJob);
+	const { selectedJob } = useJob();
+
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
 			<div className={styles.container}>
