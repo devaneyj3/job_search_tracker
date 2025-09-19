@@ -19,8 +19,8 @@ import React from "react";
 import Link from "next/link";
 import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 
-export default function JobBox({ j }) {
-	const { selectedJob, setSelectedJob, modalOpen, setModalOpen } = useJob();
+export default function JobBox({ j, setModalOpen, modalOpen }) {
+	const { selectedJob, setSelectedJob } = useJob();
 	console.log(selectedJob);
 
 	const date = readableDate(j.appliedDate);
@@ -36,7 +36,7 @@ export default function JobBox({ j }) {
 						j.id === selectedJob.id && styles.active
 					}`}
 					onClick={() => {
-						setSelectedJob(j.id);
+						setSelectedJob(j);
 						setModalOpen(true);
 					}}>
 					<div>
@@ -61,41 +61,48 @@ export default function JobBox({ j }) {
 			</SheetTrigger>
 			<SheetContent className="w-full sm:w-1/2">
 				<SheetHeader>
-					<SheetTitle className={styles.jobTitle}>{j.jobTitle}</SheetTitle>
+					<SheetTitle className={styles.jobTitle}>
+						{selectedJob.jobTitle}
+					</SheetTitle>
 					<p className={styles.jobPosting}>
 						<ExternalLink size={15} className={styles.icon} />
-						<Link href={j.jobUrl} target="_blank">
+						<Link href={selectedJob.jobUrl} target="_blank">
 							Go to Job Posting
 						</Link>
 					</p>
-					<DeleteJobButton id={j.id} company={j.companyInfoId} />
+					<DeleteJobButton
+						id={selectedJob.id}
+						company={selectedJob.companyInfoId}
+					/>
 					<div className={styles.salary}>
 						<Currency size={15} className={styles.icon} />
-						{j.salary}
+						{selectedJob.salary}
 					</div>
 					<p className={styles.company}>
 						<Building size={15} className={styles.icon} />
-						{j.companyName}
+						{selectedJob.companyName}
 					</p>
 					<p className={styles.location}>
 						<MapPinned size={15} className={styles.icon} />
 
-						{j.location}
+						{selectedJob.location}
 					</p>
 					<div className={styles.status}>
-						{j.status} on {date}
+						{selectedJob.status} on {date}
 					</div>
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
 							<Label htmlFor="contactName">Contact Name: </Label>
 							<p id="contactName">
-								{j.contactName ? j.contactName : "Not Set"}
+								{selectedJob.contactName ? selectedJob.contactName : "Not Set"}
 							</p>
 						</div>
 						<div className={styles.contact}>
 							<Label htmlFor="contactEmail">Contact Email: </Label>
 							<p id="contactEmail">
-								{j.contactEmail ? j.contactEmail : "Not Set"}
+								{selectedJob.contactEmail
+									? selectedJob.contactEmail
+									: "Not Set"}
 							</p>
 						</div>
 						<section className={styles.contactDates}>
@@ -106,9 +113,11 @@ export default function JobBox({ j }) {
 								<p
 									id="firstContactDate"
 									className={`${
-										j.initialContactEmailSent ? styles.sent : null
+										selectedJob.initialContactEmailSent ? styles.sent : null
 									}`}>
-									{j.initialContactDate ? initialContactDate : "Not Set"}
+									{selectedJob.initialContactDate
+										? initialContactDate
+										: "Not Set"}
 								</p>
 								{j.initialContactEmailSent && (
 									<span className={styles.small}>Email sent</span>
@@ -117,18 +126,20 @@ export default function JobBox({ j }) {
 							<div className={styles.contact}>
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
 								<p id="secondContactDate">
-									{j.secondContactDate ? secondContactDate : "Not Set"}
+									{selectedJob.secondContactDate
+										? secondContactDate
+										: "Not Set"}
 								</p>
 							</div>
 						</section>
 						<div className={styles.contact}>
 							<Label htmlFor="lastContactedDate">Last Contacted Date: </Label>
 							<p id="lastContactedDate">
-								{j.lastContactedDate ? lastContactedDate : "Not Set"}
+								{selectedJob.lastContactedDate ? lastContactedDate : "Not Set"}
 							</p>
 						</div>
 					</div>
-					<SheetDescription>{j.jobDescription}</SheetDescription>
+					<SheetDescription>{selectedJob.jobDescription}</SheetDescription>
 				</SheetHeader>
 
 				<SheetFooter>
