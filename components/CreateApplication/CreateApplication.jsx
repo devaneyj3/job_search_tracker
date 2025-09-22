@@ -48,7 +48,7 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 			contactEmail: "",
 			jobDescription: "",
 			skill1: "",
-			goal: "",
+			skill2: "",
 		},
 		mode: "onBlur",
 	});
@@ -168,7 +168,7 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 				{/* Row 4: Skill + Company's Goal */}
 				<div className={styles.twoCol}>
 					<RenderField name="skill1" />
-					<RenderField name="goal" />
+					<RenderField name="skill2" />
 				</div>
 
 				{/* Row 5: Contact Name + Contact Email */}

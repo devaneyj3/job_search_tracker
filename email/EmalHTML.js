@@ -59,7 +59,7 @@ export function buildApplicationHtml({
                 </p>
 
                 <p style="margin:0 0 14px 0;">
-                  My background in <strong>${skill1}</strong> would help your team achieve <strong>${goal}</strong>, and I’d be excited to contribute from day one.
+                  I believe my skills are a great match for the position as the role combines my interests and experience in <strong>${skill1}</strong> and <strong>${skill2}</strong>, and I’d be excited to contribute from day one.
                 </p>
 
                 <p style="margin:0 0 18px 0;">
