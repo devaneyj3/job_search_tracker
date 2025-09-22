@@ -4,7 +4,7 @@ export function buildApplicationHtml({
 	jobTitle,
 	companyName,
 	skill1,
-	goal,
+	skill2,
 }) {
 	const preheader = `Regarding my application for ${jobTitle} at ${companyName}`;
 	return `<!DOCTYPE html>

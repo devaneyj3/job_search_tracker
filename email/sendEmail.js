@@ -3,7 +3,7 @@ import path from "path";
 import { buildApplicationHtml } from "./EmalHTML";
 
 export const sendEmail = async (values) => {
-	const { contactName, jobTitle, companyName, contactEmail, skill1, goal } =
+	const { contactName, jobTitle, companyName, contactEmail, skill1, skill2 } =
 		values;
 	const filePath = path.join(process.cwd(), "public", "resume.pdf");
 
@@ -20,7 +20,7 @@ export const sendEmail = async (values) => {
 		subject: `Application for ${jobTitle} - Jordan Devaney`,
 		text: `Hi ${contactName}
 I recently applied for the ${jobTitle} role at ${companyName}.
-My background in ${skill1} would help your team achieve ${goal}.
+I believe my skills are a great match for the position as the role combines my interests and experience in ${skill1} and ${skill2} , and I’d be excited to contribute from day one.
 I've attached my resume and would welcome a quick conversation.
 
 Best regards,
@@ -30,7 +30,7 @@ Jordan Devaney`,
 			jobTitle,
 			companyName,
 			skill1,
-			goal,
+			skill2,
 		}),
 		attachments: [
 			{
