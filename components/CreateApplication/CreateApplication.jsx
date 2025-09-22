@@ -77,13 +77,15 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 					sendEmail(values), // or sendEmail({ ...values, jobId: job.id })
 					createCalendarEvent(job), // needs the created job
 				]);
+				toast("Application has been created and email sent!", {
+					action: { label: "Close", onClick: () => {} },
+				});
 			}
 
-			setInvoiceDialogOpen(false);
-
-			toast("Application has been created and email sent!", {
+			toast("Application has been created", {
 				action: { label: "Close", onClick: () => {} },
 			});
+			setInvoiceDialogOpen(false);
 		} catch (error) {
 			console.error("Error in onSubmit:", error);
 			toast(
