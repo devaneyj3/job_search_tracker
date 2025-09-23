@@ -27,7 +27,7 @@ export default function CustomSheet({ j }) {
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
-			<SheetContent className="w-1/2 overflow-y-scroll max-h-screenbg-white">
+			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white">
 				<SheetHeader>
 					<SheetTitle className={styles.jobTitle}>{j.jobTitle}</SheetTitle>
 					<p className={styles.jobPosting}>
