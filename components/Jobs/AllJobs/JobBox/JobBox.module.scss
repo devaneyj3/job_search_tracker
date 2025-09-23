@@ -16,7 +16,7 @@
 .jobTitle {
   font-weight: 600;
 }
-.company, .location, .salary, .jobPosting {
+.company, .location, .salary, .jobPosting, .contactEmail {
   color: #666;
   display: flex;
   align-items: center;
@@ -30,32 +30,12 @@
   background-color: rgb(173, 225, 246);
 }
 
-.contactInfo {
-  margin: 20px 0 20px 0;
-}
-.contact {
-  display: flex;
-  p {
-    margin-left: 5px;
-    font-size: 15px;
-  }
+.status {
+  background-color: #285dfb;
 }
 
-.jobPosting {
-  color: blue
+.contactEmail {
+  
 }
 
-.contactDates {
-  margin: 20px;
-}
 
-.sent {
-  text-decoration: line-through;
-}
-
-.small {
-  color: red;
-  text-align: center;
-  font-size: small;
-  margin-left: 10px;
-}

@@ -1,0 +1,44 @@
+
+.jobTitle {
+  font-weight: 600;
+}
+.company, .location, .salary, .jobPosting {
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+
+.contactInfo {
+  margin: 20px 0 20px 0;
+}
+.contact {
+  display: flex;
+  p {
+    margin-left: 5px;
+    font-size: 15px;
+  }
+}
+
+.jobPosting {
+  color: blue
+}
+
+.contactDates {
+  margin: 20px;
+}
+
+.sent {
+  text-decoration: line-through;
+}
+
+.small {
+  color: red;
+  text-align: center;
+  font-size: small;
+  margin-left: 10px;
+}

@@ -1,8 +1,9 @@
 "use client";
 import { useJob } from "@/context/jobContext";
 import styles from "./JobBox.module.scss";
-import { MapPinned, Building } from "lucide-react";
+import { MapPinned, Building, Mail } from "lucide-react";
 import { readableDate } from "@/utils";
+import { Badge } from "@/components/ui/badge";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob, setModalOpen } = useJob();
@@ -25,13 +26,15 @@ export default function JobBox({ j }) {
 					<MapPinned size={15} className={styles.icon} />
 					{j.location}
 				</div>
-				<p id="contactEmail">
+				<p id="contactEmail" className={styles.contactEmail}>
+					<Mail size={15} className={styles.icon} />
 					{j.contactEmail ? j.contactEmail : "No Contact Email"}
 				</p>
 			</div>
 			<div>
-				<div className={styles.status}>{j.status}</div>
-				<div className={styles.appliedDate}>{date}</div>
+				<Badge className={styles.status}>
+					{j.status} on {date}
+				</Badge>
 			</div>
 		</div>
 	);

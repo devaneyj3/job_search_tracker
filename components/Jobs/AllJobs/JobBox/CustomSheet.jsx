@@ -12,7 +12,7 @@ import {
 	SheetTitle,
 } from "@/components/ui/sheet";
 import { MapPinned, Building, Currency, ExternalLink } from "lucide-react";
-import styles from "./JobBox.module.scss";
+import styles from "./CustomSheet.module.scss";
 import { readableDate } from "@/utils";
 import Link from "next/link";
 import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
