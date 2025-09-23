@@ -17,6 +17,11 @@ export default function JobBox({ j }) {
 				setModalOpen(true);
 			}}>
 			<div>
+				<div>
+					<Badge className={styles.status}>
+						{j.status} on {date}
+					</Badge>
+				</div>
 				<div className={styles.jobTitle}>{j.jobTitle}</div>
 				<div className={styles.company}>
 					<Building size={15} className={styles.icon} />
@@ -30,11 +35,6 @@ export default function JobBox({ j }) {
 					<Mail size={15} className={styles.icon} />
 					{j.contactEmail ? j.contactEmail : "No Contact Email"}
 				</p>
-			</div>
-			<div>
-				<Badge className={styles.status}>
-					{j.status} on {date}
-				</Badge>
 			</div>
 		</div>
 	);
