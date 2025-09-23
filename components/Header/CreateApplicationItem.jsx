@@ -21,7 +21,7 @@ export default function CreateApplicationMenuItem() {
 					Create Application
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="w-full overflow-y-scroll max-h-screen bg-white">
+			<DialogContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[700px]">
 				<DialogHeader>
 					<DialogTitle className={styles.title}>
 						Track your application
