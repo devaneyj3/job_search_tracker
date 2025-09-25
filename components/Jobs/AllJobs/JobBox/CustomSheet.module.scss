@@ -1,4 +1,9 @@
-
+.jobTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 50px;
+}
 .jobTitle {
   font-weight: 600;
 }
@@ -22,6 +27,12 @@
     margin-left: 5px;
     font-size: 15px;
   }
+}
+.jobDescription {
+  margin-top: 20px;
+  font-size: 20px;
+  max-width: 500px;
+  line-height: 2;
 }
 
 .jobPosting {

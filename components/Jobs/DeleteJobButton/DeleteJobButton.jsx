@@ -23,7 +23,7 @@ export default function DeleteJobButton({ id, company }) {
 			<DialogTrigger asChild>
 				<Button variant="destructive">
 					<Trash2 />
-					Delete Application
+					Delete
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="overflow-y-scroll max-h-screen w-xl bg-white">

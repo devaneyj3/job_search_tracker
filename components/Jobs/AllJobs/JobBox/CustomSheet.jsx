@@ -27,20 +27,24 @@ export default function CustomSheet({ j }) {
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
-			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[500px]">
+			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
 				<SheetHeader>
-					<SheetTitle className={styles.jobTitle}>{j.jobTitle}</SheetTitle>
+					<div className={styles.jobTitleContainer}>
+						<SheetTitle className={styles.jobTitle}>{j.jobTitle}</SheetTitle>
+						<DeleteJobButton id={j.id} company={j.companyInfoId} />
+					</div>
 					<p className={styles.jobPosting}>
 						<ExternalLink size={15} className={styles.icon} />
 						<Link href={j.jobUrl} target="_blank">
 							Go to Job Posting
 						</Link>
 					</p>
-					<DeleteJobButton id={j.id} company={j.companyInfoId} />
-					<div className={styles.salary}>
-						<Currency size={15} className={styles.icon} />
-						{j.salary}
-					</div>
+					{j.salary && (
+						<div className={styles.salary}>
+							<Currency size={15} className={styles.icon} />
+							{j.salary}
+						</div>
+					)}
 					<p className={styles.company}>
 						<Building size={15} className={styles.icon} />
 						{j.companyName}
@@ -96,7 +100,9 @@ export default function CustomSheet({ j }) {
 							</p>
 						</div>
 					</div>
-					<SheetDescription>{j.jobDescription}</SheetDescription>
+					<SheetDescription className={styles.jobDescription}>
+						{j.jobDescription}
+					</SheetDescription>
 				</SheetHeader>
 
 				<SheetFooter>
