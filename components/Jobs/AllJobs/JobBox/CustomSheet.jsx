@@ -17,6 +17,8 @@ import { readableDate } from "@/utils";
 import Link from "next/link";
 import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 import { useJob } from "@/context/jobContext";
+import { Badge } from "@/components/ui/badge";
+import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
 
 export default function CustomSheet({ j }) {
 	const { modalOpen, setModalOpen } = useJob();
@@ -24,6 +26,7 @@ export default function CustomSheet({ j }) {
 	const lastContactedDate = readableDate(j.lastContactedDate);
 	const initialContactDate = readableDate(j.initialContactDate);
 	const secondContactDate = readableDate(j.secondContactDate);
+	console.log(j.status);
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
@@ -54,9 +57,13 @@ export default function CustomSheet({ j }) {
 
 						{j.location}
 					</p>
-					<div className={styles.status}>
-						{j.status} on {date}
+					<div className={styles.badge}>
+						<Badge
+							className={j.status === "Rejected" ? styles.red : styles.status}>
+							{j.status} on {date}
+						</Badge>
 					</div>
+					<JobStatusSelect jobId={j.id} />
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
 							<Label htmlFor="contactName">Contact Name: </Label>

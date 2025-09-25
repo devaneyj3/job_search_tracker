@@ -4,6 +4,7 @@ import styles from "./JobBox.module.scss";
 import { MapPinned, Building, Mail } from "lucide-react";
 import { readableDate } from "@/utils";
 import { Badge } from "@/components/ui/badge";
+import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob, setModalOpen } = useJob();
@@ -18,7 +19,8 @@ export default function JobBox({ j }) {
 			}}>
 			<div>
 				<div>
-					<Badge className={styles.status}>
+					<Badge
+						className={j.status === "Rejected" ? styles.red : styles.status}>
 						{j.status} on {date}
 					</Badge>
 				</div>
@@ -36,6 +38,7 @@ export default function JobBox({ j }) {
 					{j.contactEmail ? j.contactEmail : "No Contact Email"}
 				</p>
 			</div>
+			<JobStatusSelect jobId={j.id} />
 		</div>
 	);
 }
