@@ -166,7 +166,6 @@ export const JobItemProvider = ({ children }) => {
 
 	//
 	const updateJobStatus = (jobId, status) => {
-		console.log("Changing to status, ", status);
 		//TODO: Update job status in database, what if user constantly change status, this create a bunch of database calls. Can I avoid this?
 		setJobs((prevJobs) =>
 			prevJobs.map((job) => (job.id === jobId ? { ...job, status } : job))
