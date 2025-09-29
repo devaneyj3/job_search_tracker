@@ -19,6 +19,7 @@ import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 import { useJob } from "@/context/jobContext";
 import { Badge } from "@/components/ui/badge";
 import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
+import moment from "moment";
 
 export default function CustomSheet({ j }) {
 	const { modalOpen, setModalOpen } = useJob();
@@ -26,8 +27,15 @@ export default function CustomSheet({ j }) {
 	const lastContactedDate = readableDate(j.lastContactedDate);
 	const initialContactDate = readableDate(j.initialContactDate);
 	const secondContactDate = readableDate(j.secondContactDate);
-	console.log(j.status);
 
+	//check if second contact date is today or any time before today and the second email is not sent
+	const shouldSendSecondEmail =
+		moment(secondContactDate).isSameOrBefore(Date.now()) &&
+		j.secondContactEmailSent === false;
+
+	const sendSecondEmail = () => {
+		console.log("Sending Second Email");
+	};
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -97,6 +105,11 @@ export default function CustomSheet({ j }) {
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
 								<p id="secondContactDate">
 									{j.secondContactDate ? secondContactDate : "Not Set"}
+									{shouldSendSecondEmail && (
+										<Button className={styles.btn} onClick={sendSecondEmail}>
+											Send Follow-Up Email
+										</Button>
+									)}
 								</p>
 							</div>
 						</section>

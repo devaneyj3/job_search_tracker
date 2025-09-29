@@ -65,3 +65,11 @@
 .red {
   background-color: red;
 }
+
+.btn {
+  margin-left: 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #666;
+  }
+}

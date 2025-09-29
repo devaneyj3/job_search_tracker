@@ -5,11 +5,19 @@ import { MapPinned, Building, Mail } from "lucide-react";
 import { readableDate } from "@/utils";
 import { Badge } from "@/components/ui/badge";
 import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
+import moment from "moment";
+import { Button } from "@/components/ui/button";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob, setModalOpen } = useJob();
 	const date = readableDate(j.appliedDate);
+	const initialContactDate = readableDate(j.initialContactDate);
+	const secondContactDate = readableDate(j.secondContactDate);
 
+	//check if second contact date is today or any time before today and the second email is not sent
+	const shouldSendSecondEmail =
+		moment(secondContactDate).isSameOrBefore(Date.now()) &&
+		j.secondContactEmailSent === false;
 	return (
 		<div
 			className={`${styles.job} ${j.id === selectedJob.id && styles.active}`}
@@ -38,6 +46,18 @@ export default function JobBox({ j }) {
 					{j.contactEmail ? j.contactEmail : "No Contact Email"}
 				</p>
 			</div>
+			{j.initialContactEmailSent && (
+				<div className={styles.contactBox}>
+					<span>First email sent</span>
+					<p>{j.initialContactDate ? initialContactDate : "Not Set"}</p>
+				</div>
+			)}
+			{shouldSendSecondEmail && (
+				<div className={styles.contactBox}>
+					<span>Second email</span>
+					<p>{j.initialContactEmailSent && secondContactDate}</p>
+				</div>
+			)}
 			<JobStatusSelect jobId={j.id} />
 		</div>
 	);
