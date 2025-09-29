@@ -164,15 +164,26 @@ export const JobItemProvider = ({ children }) => {
 		[session?.user?.id]
 	);
 
-	//
-	const updateJobStatus = (jobId, status) => {
-		//TODO: Update job status in database, what if user constantly change status, this create a bunch of database calls. Can I avoid this?
-		setJobs((prevJobs) =>
-			prevJobs.map((job) => (job.id === jobId ? { ...job, status } : job))
-		);
+	const updateJobStatus = useCallback(
+		async (jobId, status) => {
+			const response = await fetch("/api/job", {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					jobId,
+					status,
+				}),
+			});
 
-		setSelectedJob({ ...selectedJob, status });
-	};
+			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			setJobs((prevJobs) =>
+				prevJobs.map((job) => (job.id === jobId ? { ...job, status } : job))
+			);
+
+			setSelectedJob({ ...selectedJob, status });
+		},
+		[session?.user?.id]
+	);
 
 	const values = useMemo(
 		() => ({

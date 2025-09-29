@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { daysFromNow } from "@/utils";
+import { success } from "zod";
+import { id } from "zod/v4/locales";
 
 const prisma = new PrismaClient();
 
@@ -104,6 +106,33 @@ export async function DELETE(req) {
 		console.error("Error deleting Job:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to delete Job" },
+			{ status: 500 }
+		);
+	}
+}
+
+export async function PUT(req) {
+	try {
+		const { jobId, status } = await req.json();
+		const updateJobStatus = await prisma.application.update({
+			where: {
+				id: jobId,
+			},
+			data: {
+				status: status,
+			},
+		});
+		return NextResponse.json({
+			success: true,
+			id: `Change job id: ${updateJobStatus.id} to status: ${updateJobStatus.status}`,
+		});
+	} catch (error) {
+		console.log("Error updating job");
+		return NextResponse.json(
+			{
+				success: false,
+				error: "Error Updating job status",
+			},
 			{ status: 500 }
 		);
 	}
