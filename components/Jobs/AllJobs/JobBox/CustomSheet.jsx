@@ -22,11 +22,13 @@ import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
 import moment from "moment";
 
 export default function CustomSheet({ j }) {
-	const { modalOpen, setModalOpen } = useJob();
+	const { modalOpen, setModalOpen, sendEmail } = useJob();
 	const date = readableDate(j.appliedDate);
 	const lastContactedDate = readableDate(j.lastContactedDate);
 	const initialContactDate = readableDate(j.initialContactDate);
 	const secondContactDate = readableDate(j.secondContactDate);
+
+	console.log(j);
 
 	//check if second contact date is today or any time before today and the second email is not sent
 	const shouldSendSecondEmail =
@@ -34,7 +36,7 @@ export default function CustomSheet({ j }) {
 		j.secondContactEmailSent === false;
 
 	const sendSecondEmail = () => {
-		console.log("Sending Second Email");
+		sendEmail(j, true);
 	};
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
@@ -103,7 +105,11 @@ export default function CustomSheet({ j }) {
 							</div>
 							<div className={styles.contact}>
 								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
-								<p id="secondContactDate">
+								<p
+									id="secondContactDate"
+									className={`${
+										j.secondContactEmailSent ? styles.sent : null
+									}`}>
 									{j.secondContactDate ? secondContactDate : "Not Set"}
 									{shouldSendSecondEmail && (
 										<Button className={styles.btn} onClick={sendSecondEmail}>
@@ -111,6 +117,9 @@ export default function CustomSheet({ j }) {
 										</Button>
 									)}
 								</p>
+								{j.secondContactEmailSent && (
+									<span className={styles.small}>Email sent</span>
+								)}
 							</div>
 						</section>
 						<div className={styles.contact}>

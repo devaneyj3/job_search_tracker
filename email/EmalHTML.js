@@ -1,12 +1,50 @@
 // put this near your sendEmail (same file or a small util)
 export function buildApplicationHtml({
+	sendSecondEmail,
+	lastDateSent,
 	contactName,
 	jobTitle,
 	companyName,
 	skill1,
 	skill2,
 }) {
-	const preheader = `Regarding my application for ${jobTitle} at ${companyName}`;
+	// 		How to send a follow-up email after no response
+	// Use this follow-up email after no response template to gently nudge the recipient while keeping a respectful tone.
+
+	// Template #4: Follow-up email after no response
+
+	// Subject Line: Following up – [Your name]
+
+	// Dear [recipient's name],
+
+	// I hope this message finds you well. I wanted to follow up on my previous email sent on [specific date] regarding [topic]. I understand you’re likely busy, but I’m checking in to see if you’ve had a chance to review it or if there’s anything further I can assist with.
+
+	// Please don’t hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.
+
+	// Best regards,
+	// [Your full name]
+	let body = "";
+	let preheader = "";
+	if (sendSecondEmail) {
+		preheader = `Following up on the ${jobTitle} role - Jordan Devaney`;
+		body = ` <p style="margin:0 0 14px 0;">I wanted to follow up on my previous email sent on ${lastDateSent} regarding the <strong>${jobTitle}</strong> role. I understand you’re likely busy, but I’m checking in to see if you’ve had a chance to review it or if there’s anything further I can assist with.</p>
+
+	  <p style="margin:0 0 14px 0;">Please don’t hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.</p>`;
+	} else {
+		preheader = `Regarding my application for ${jobTitle} at ${companyName}`;
+		body = `
+                <p style="margin:0 0 14px 0;">
+                  I recently applied for the <strong>${jobTitle}</strong> role at <strong>${companyName}</strong> and wanted to introduce myself directly.
+                </p>
+
+                <p style="margin:0 0 14px 0;">
+                  I believe my skills are a great match for the position as the role combines my interests and experience in <strong>${skill1}</strong> and <strong>${skill2}</strong>, and I’d be excited to contribute from day one.
+                </p>
+
+                <p style="margin:0 0 18px 0;">
+                  If helpful, I’m happy to share more details on relevant projects and outcomes. I’ve attached my resume for your convenience.
+                </p>`;
+	}
 	return `<!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
 <head>
@@ -53,18 +91,7 @@ export function buildApplicationHtml({
             <td class="card" style="background:#ffffff;border:1px solid #e6e8ee;border-radius:14px;padding:28px;">
               <div class="text" style="font:400 16px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
                 <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
-
-                <p style="margin:0 0 14px 0;">
-                  I recently applied for the <strong>${jobTitle}</strong> role at <strong>${companyName}</strong> and wanted to introduce myself directly.
-                </p>
-
-                <p style="margin:0 0 14px 0;">
-                  I believe my skills are a great match for the position as the role combines my interests and experience in <strong>${skill1}</strong> and <strong>${skill2}</strong>, and I’d be excited to contribute from day one.
-                </p>
-
-                <p style="margin:0 0 18px 0;">
-                  If helpful, I’m happy to share more details on relevant projects and outcomes. I’ve attached my resume for your convenience.
-                </p>
+                ${body}
 
                 <!-- Bulletproof CTA button -->
                 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:4px 0 22px 0;">

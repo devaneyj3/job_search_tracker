@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { daysFromNow } from "@/utils";
-import { success } from "zod";
-import { id } from "zod/v4/locales";
 
 const prisma = new PrismaClient();
 

@@ -151,14 +151,28 @@ export const JobItemProvider = ({ children }) => {
 	);
 
 	const sendEmail = useCallback(
-		async (values) => {
+		async (values, isSecondEmail) => {
+			const sendSecondEmail = isSecondEmail | null;
 			const res = await fetch("/api/email", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					values,
+					sendSecondEmail,
 				}),
 			});
+			const data = await res.json();
+			const { lastContactedDate, secondContactEmailSent, id } = data;
+			console.log(lastContactedDate, secondContactEmailSent);
+			setJobs((prev) =>
+				prev.map((job) =>
+					job.id === id
+						? { ...job, secondContactEmailSent, lastContactedDate }
+						: job
+				)
+			);
+			setSelectedJob(data);
+
 			if (!res.ok) throw new Error("Failed to send email");
 		},
 		[session?.user?.id]

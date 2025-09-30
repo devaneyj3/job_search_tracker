@@ -15,9 +15,9 @@ export default function JobBox({ j }) {
 	const secondContactDate = readableDate(j.secondContactDate);
 
 	//check if second contact date is today or any time before today and the second email is not sent
-	const shouldSendSecondEmail =
-		moment(secondContactDate).isSameOrBefore(Date.now()) &&
-		j.secondContactEmailSent === false;
+	const shouldSendSecondEmail = moment(secondContactDate).isSameOrBefore(
+		Date.now()
+	);
 	return (
 		<div
 			className={`${styles.job} ${j.id === selectedJob.id && styles.active}`}
