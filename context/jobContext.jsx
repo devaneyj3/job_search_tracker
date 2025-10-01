@@ -163,7 +163,7 @@ export const JobItemProvider = ({ children }) => {
 			});
 			const data = await res.json();
 			const { lastContactedDate, secondContactEmailSent, id } = data;
-			console.log(lastContactedDate, secondContactEmailSent);
+
 			setJobs((prev) =>
 				prev.map((job) =>
 					job.id === id

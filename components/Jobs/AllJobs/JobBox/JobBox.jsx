@@ -6,7 +6,6 @@ import { readableDate } from "@/utils";
 import { Badge } from "@/components/ui/badge";
 import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 
 export default function JobBox({ j }) {
 	const { selectedJob, setSelectedJob, setModalOpen } = useJob();

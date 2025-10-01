@@ -8,21 +8,6 @@ export function buildApplicationHtml({
 	skill1,
 	skill2,
 }) {
-	// 		How to send a follow-up email after no response
-	// Use this follow-up email after no response template to gently nudge the recipient while keeping a respectful tone.
-
-	// Template #4: Follow-up email after no response
-
-	// Subject Line: Following up – [Your name]
-
-	// Dear [recipient's name],
-
-	// I hope this message finds you well. I wanted to follow up on my previous email sent on [specific date] regarding [topic]. I understand you’re likely busy, but I’m checking in to see if you’ve had a chance to review it or if there’s anything further I can assist with.
-
-	// Please don’t hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.
-
-	// Best regards,
-	// [Your full name]
 	let body = "";
 	let preheader = "";
 	if (sendSecondEmail) {

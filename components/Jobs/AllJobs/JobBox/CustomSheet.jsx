@@ -27,9 +27,6 @@ export default function CustomSheet({ j }) {
 	const lastContactedDate = readableDate(j.lastContactedDate);
 	const initialContactDate = readableDate(j.initialContactDate);
 	const secondContactDate = readableDate(j.secondContactDate);
-
-	console.log(j);
-
 	//check if second contact date is today or any time before today and the second email is not sent
 	const shouldSendSecondEmail =
 		moment(secondContactDate).isSameOrBefore(Date.now()) &&
