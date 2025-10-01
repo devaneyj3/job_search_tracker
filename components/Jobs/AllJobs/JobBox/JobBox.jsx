@@ -51,7 +51,7 @@ export default function JobBox({ j }) {
 					<p>{j.initialContactDate ? initialContactDate : "Not Set"}</p>
 				</div>
 			)}
-			{shouldSendSecondEmail && (
+			{shouldSendSecondEmail && j.contactEmail && (
 				<div className={styles.contactBox}>
 					<span>Second email</span>
 					<p>{j.initialContactEmailSent && secondContactDate}</p>

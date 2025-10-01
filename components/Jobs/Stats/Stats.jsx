@@ -4,16 +4,16 @@ import { jobsLength } from "@/utils";
 
 export default function Stats({ jobs }) {
 	// placeholder metrics
-	const appliedJobsLength = jobsLength("Applied", jobs);
-	const interviewsJobsLength = jobsLength("Interview", jobs);
-	const offersJobsLength = jobsLength("Offer", jobs);
-	const rejectedJobsLength = jobsLength("Rejected", jobs);
+	const appliedJobs = jobsLength("Applied", jobs);
+	const interviewsJobs = jobsLength("Interview", jobs);
+	const offersJobs = jobsLength("Offer", jobs);
+	const rejectedJobs = jobsLength("Rejected", jobs);
 
 	const metrics = [
-		{ id: "applied", label: "Applied", value: appliedJobsLength },
-		{ id: "interviews", label: "Interviews", value: interviewsJobsLength },
-		{ id: "offers", label: "Offers", value: offersJobsLength },
-		{ id: "rejected", label: "Rejected", value: rejectedJobsLength },
+		{ id: "applied", label: "Applied", value: appliedJobs.length },
+		{ id: "interviews", label: "Interviews", value: interviewsJobs.length },
+		{ id: "offers", label: "Offers", value: offersJobs.length },
+		{ id: "rejected", label: "Rejected", value: rejectedJobs.length },
 	];
 
 	return (

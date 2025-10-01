@@ -12,6 +12,14 @@
   cursor: pointer;
 
 }
+.filter_container {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .title {
   margin-bottom: 1rem;
   font-size: 1.5rem;

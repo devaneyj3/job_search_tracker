@@ -84,47 +84,57 @@ export default function CustomSheet({ j }) {
 								{j.contactEmail ? j.contactEmail : "Not Set"}
 							</p>
 						</div>
-						<section className={styles.contactDates}>
-							<div className={styles.contact}>
-								<Label htmlFor="initailContactDate">
-									Initial Contact Date:{" "}
-								</Label>
-								<p
-									id="firstContactDate"
-									className={`${
-										j.initialContactEmailSent ? styles.sent : null
-									}`}>
-									{j.initialContactDate ? initialContactDate : "Not Set"}
-								</p>
-								{j.initialContactEmailSent && (
-									<span className={styles.small}>Email sent</span>
-								)}
-							</div>
-							<div className={styles.contact}>
-								<Label htmlFor="secondContactDate">Second Contact Date: </Label>
-								<p
-									id="secondContactDate"
-									className={`${
-										j.secondContactEmailSent ? styles.sent : null
-									}`}>
-									{j.secondContactDate ? secondContactDate : "Not Set"}
-									{shouldSendSecondEmail && (
-										<Button className={styles.btn} onClick={sendSecondEmail}>
-											Send Follow-Up Email
-										</Button>
-									)}
-								</p>
-								{j.secondContactEmailSent && (
-									<span className={styles.small}>Email sent</span>
-								)}
-							</div>
-						</section>
-						<div className={styles.contact}>
-							<Label htmlFor="lastContactedDate">Last Contacted Date: </Label>
-							<p id="lastContactedDate">
-								{j.lastContactedDate ? lastContactedDate : "Not Set"}
-							</p>
-						</div>
+						{j.contactEmail && (
+							<>
+								<section className={styles.contactDates}>
+									<div className={styles.contact}>
+										<Label htmlFor="initailContactDate">
+											Initial Contact Date:{" "}
+										</Label>
+										<p
+											id="firstContactDate"
+											className={`${
+												j.initialContactEmailSent ? styles.sent : null
+											}`}>
+											{j.initialContactDate ? initialContactDate : "Not Set"}
+										</p>
+										{j.initialContactEmailSent && (
+											<span className={styles.small}>Email sent</span>
+										)}
+									</div>
+									<div className={styles.contact}>
+										<Label htmlFor="secondContactDate">
+											Second Contact Date:{" "}
+										</Label>
+										<p
+											id="secondContactDate"
+											className={`${
+												j.secondContactEmailSent ? styles.sent : null
+											}`}>
+											{j.secondContactDate ? secondContactDate : "Not Set"}
+											{shouldSendSecondEmail && (
+												<Button
+													className={styles.btn}
+													onClick={sendSecondEmail}>
+													Send Follow-Up Email
+												</Button>
+											)}
+										</p>
+										{j.secondContactEmailSent && (
+											<span className={styles.small}>Email sent</span>
+										)}
+									</div>
+								</section>
+								<div className={styles.contact}>
+									<Label htmlFor="lastContactedDate">
+										Last Contacted Date:{" "}
+									</Label>
+									<p id="lastContactedDate">
+										{j.lastContactedDate ? lastContactedDate : "Not Set"}
+									</p>
+								</div>
+							</>
+						)}
 					</div>
 					<SheetDescription className={styles.jobDescription}>
 						{j.jobDescription}

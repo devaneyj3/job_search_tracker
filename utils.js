@@ -1,7 +1,7 @@
 import moment from "moment";
 import business from "moment-business";
 export const jobsLength = (status, jobs) => {
-	return jobs.filter((job) => job.status == status).length;
+	return jobs.filter((job) => job.status == status);
 };
 
 export const readableDate = (date) => {

@@ -1,40 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AllJobs.module.scss";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import JobBox from "./JobBox/JobBox";
 import CreateApplicationMenuItem from "@/components/Header/CreateApplicationItem";
 import { useJob } from "@/context/jobContext";
 import CustomSheet from "./JobBox/CustomSheet";
-import EmailContacts from "./EmailContacts/EmailContacts";
+import { Button } from "@/components/ui/button";
 
-export default function AllJobs({ jobs, noJobMsg }) {
-	const { selectedJob } = useJob();
+export default function AllJobs() {
+	const { selectedJob, jobs, noJobMsg } = useJob();
+	const [chosenStatus, setChosenStatus] = useState("All");
 
-	//determine jobs with contact email
+	// add array for filtering with not duplicates
+	const statuses = ["All", ...new Set(jobs.map((job) => job.status))];
 
-	const jobsWithContactEmail = jobs.filter((job) => job.contactEmail);
-	if (jobs.length < 1 && !noJobMsg) {
-		return (
-			<div className={styles.container}>
-				<LoadingSpinner />
-			</div>
-		);
-	}
+	//filter the jobs based on status
+
+	const filteredJob = jobs.filter((job) => {
+		if (chosenStatus === "All") return job;
+		return job.status === chosenStatus;
+	});
 
 	return (
 		<main className={styles.container}>
-			<h1 className={styles.title}>
-				{jobsWithContactEmail.length} Jobs with contact info
-			</h1>
-			{!noJobMsg && jobs.length > 0 && (
-				<EmailContacts jobs={jobsWithContactEmail} />
-			)}
 			<section className={styles.btn_container}>
 				<CreateApplicationMenuItem />
 			</section>
 			<h1 className={styles.title}>All Jobs</h1>
+			<div className={styles.filter_container}>
+				{statuses.map((status) => (
+					<div key={status}>
+						<Button
+							onClick={() => setChosenStatus(status)}
+							className={styles.filter_btn}
+							variant="outline">
+							{status}
+						</Button>
+					</div>
+				))}
+			</div>
 			{!noJobMsg && jobs.length > 0 ? (
-				jobs.map((j, index) => {
+				filteredJob.map((j, index) => {
 					return <JobBox key={index} j={j} />;
 				})
 			) : (
