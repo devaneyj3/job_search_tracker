@@ -17,6 +17,11 @@ export default function JobBox({ j }) {
 	const shouldSendSecondEmail = moment(secondContactDate).isSameOrBefore(
 		Date.now()
 	);
+
+	// check to see if an applications email cycle was completed
+	const emailCycleComplete =
+		j.initialContactEmailSent && j.secondContactEmailSent;
+
 	return (
 		<div
 			className={`${styles.job} ${j.id === selectedJob.id && styles.active}`}
@@ -45,17 +50,25 @@ export default function JobBox({ j }) {
 					{j.contactEmail ? j.contactEmail : "No Contact Email"}
 				</p>
 			</div>
-			{j.initialContactEmailSent && (
-				<div className={styles.contactBox}>
-					<span>First email sent</span>
-					<p>{j.initialContactDate ? initialContactDate : "Not Set"}</p>
-				</div>
-			)}
-			{shouldSendSecondEmail && j.contactEmail && (
-				<div className={styles.contactBox}>
-					<span>Second email</span>
-					<p>{j.initialContactEmailSent && secondContactDate}</p>
-				</div>
+			{/* Email info */}
+			{emailCycleComplete ? (
+				<p>Email cycle is complete</p>
+			) : (
+				<>
+					{j.initialContactEmailSent && (
+						<div className={styles.contactBox}>
+							<span>First email sent</span>
+							<p>{j.initialContactDate ? initialContactDate : "Not Set"}</p>
+						</div>
+					)}
+
+					{shouldSendSecondEmail && j.contactEmail && (
+						<div className={styles.contactBox}>
+							<span>Second email</span>
+							<p>{j.secondContactDate ? secondContactDate : "Not Set"}</p>
+						</div>
+					)}
+				</>
 			)}
 			<JobStatusSelect jobId={j.id} />
 		</div>
