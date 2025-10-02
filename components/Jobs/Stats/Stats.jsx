@@ -8,12 +8,14 @@ export default function Stats({ jobs }) {
 	const interviewsJobs = jobsLength("Interview", jobs);
 	const offersJobs = jobsLength("Offer", jobs);
 	const rejectedJobs = jobsLength("Rejected", jobs);
+	const archivedJobs = jobs.filter((job) => job.archived);
 
 	const metrics = [
 		{ id: "applied", label: "Applied", value: appliedJobs.length },
 		{ id: "interviews", label: "Interviews", value: interviewsJobs.length },
 		{ id: "offers", label: "Offers", value: offersJobs.length },
 		{ id: "rejected", label: "Rejected", value: rejectedJobs.length },
+		{ id: "archived", label: "Archived", value: archivedJobs.length },
 	];
 
 	return (

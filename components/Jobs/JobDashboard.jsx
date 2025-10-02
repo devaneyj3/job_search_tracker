@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useJob } from "@/context/jobContext";
 import Stats from "./Stats/Stats";
 import AllJobs from "./AllJobs/AllJobs";
@@ -10,11 +10,22 @@ import styles from "./JobDashboard.module.scss";
 
 export default function JobDashboard() {
 	const { jobs, noJobMsg } = useJob();
+	const [chosenStatus, setChosenStatus] = useState("All");
 
-	const appliedJobs = jobsLength("Applied", jobs);
-	const interviewsJobs = jobsLength("Interview", jobs);
-	const offersJobs = jobsLength("Offer", jobs);
-	const rejectedJobs = jobsLength("Rejected", jobs);
+	// add array for filtering with not duplicates
+	const statuses = [
+		"All",
+		...new Set(jobs.map((job) => job.status)),
+		"Archived",
+	];
+
+	//filter the jobs based on status and if a job is archived
+
+	const filteredJobs = jobs.filter((job) => {
+		if (chosenStatus === "All") return job;
+		if (chosenStatus === "Archived") return job.archived;
+		return job.status === chosenStatus && job.archived !== true;
+	});
 
 	//determine jobs with contact email
 
@@ -37,7 +48,11 @@ export default function JobDashboard() {
 				<EmailContacts jobs={jobsWithContactEmail} />
 			)} */}
 
-			<AllJobs />
+			<AllJobs
+				filteredJobs={filteredJobs}
+				statuses={statuses}
+				setChosenStatus={setChosenStatus}
+			/>
 		</>
 	);
 }

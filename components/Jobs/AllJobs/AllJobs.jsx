@@ -6,26 +6,15 @@ import { useJob } from "@/context/jobContext";
 import CustomSheet from "./JobBox/CustomSheet";
 import { Button } from "@/components/ui/button";
 
-export default function AllJobs() {
+export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 	const { selectedJob, jobs, noJobMsg } = useJob();
-	const [chosenStatus, setChosenStatus] = useState("All");
-
-	// add array for filtering with not duplicates
-	const statuses = ["All", ...new Set(jobs.map((job) => job.status))];
-
-	//filter the jobs based on status
-
-	const filteredJob = jobs.filter((job) => {
-		if (chosenStatus === "All") return job;
-		return job.status === chosenStatus;
-	});
 
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
 				<CreateApplicationMenuItem />
 			</section>
-			<h1 className={styles.title}>All Jobs</h1>
+			<h1 className={styles.title}>{filteredJobs.length} TOTAL JOBS</h1>
 			<div className={styles.filter_container}>
 				{statuses.map((status) => (
 					<div key={status}>
@@ -39,7 +28,7 @@ export default function AllJobs() {
 				))}
 			</div>
 			{!noJobMsg && jobs.length > 0 ? (
-				filteredJob.map((j, index) => {
+				filteredJobs.map((j, index) => {
 					return <JobBox key={index} j={j} />;
 				})
 			) : (

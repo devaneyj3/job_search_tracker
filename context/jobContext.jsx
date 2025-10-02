@@ -162,12 +162,12 @@ export const JobItemProvider = ({ children }) => {
 				}),
 			});
 			const data = await res.json();
-			const { lastContactedDate, secondContactEmailSent, id } = data;
+			const { lastContactedDate, secondContactEmailSent, id, archived } = data;
 
 			setJobs((prev) =>
 				prev.map((job) =>
 					job.id === id
-						? { ...job, secondContactEmailSent, lastContactedDate }
+						? { ...job, secondContactEmailSent, lastContactedDate, archived }
 						: job
 				)
 			);

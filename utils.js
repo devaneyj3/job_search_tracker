@@ -1,7 +1,10 @@
 import moment from "moment";
 import business from "moment-business";
+
 export const jobsLength = (status, jobs) => {
-	return jobs.filter((job) => job.status == status);
+	return jobs.filter((job) => {
+		return job.status === status && job.archived !== true;
+	});
 };
 
 export const readableDate = (date) => {

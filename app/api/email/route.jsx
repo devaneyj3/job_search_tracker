@@ -18,6 +18,8 @@ export async function POST(req) {
 				data: {
 					secondContactEmailSent: true,
 					lastContactedDate: new Date(),
+					// if second email is sent, set archived to true
+					archived: true,
 				},
 			});
 		}
