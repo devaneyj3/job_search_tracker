@@ -47,7 +47,7 @@ export default function JobBox({ j }) {
 				</div>
 				<p id="contactEmail" className={styles.contactEmail}>
 					<Mail size={15} className={styles.icon} />
-					{j.contactEmail ? j.contactEmail : "No Contact Email"}
+					{j.contactEmail ? j.contactName : "No Contact Email"}
 				</p>
 			</div>
 			{/* Email info */}
