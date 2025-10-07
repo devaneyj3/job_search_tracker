@@ -8,6 +8,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+
 model User {
   id              String        @id @default(uuid()) @db.Uuid
   name            String        @default("NO_NAME")
@@ -92,6 +93,8 @@ model Application {
   rejectionReason   String?
   dateArchived      DateTime?
   notes             String?
+  heard_back        Boolean?      @default(false)
+  heard_back_date DateTime?
   companyInfoId     Int?         @unique
   createdAt         DateTime     @default(now()) @db.Timestamp(6)
   updatedAt         DateTime     @updatedAt

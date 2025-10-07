@@ -62,12 +62,14 @@ export default function JobBox({ j }) {
 						</div>
 					)}
 
-					{shouldSendSecondEmail && j.contactEmail && (
-						<div className={styles.contactBox}>
-							<span>Second email</span>
-							<p>{j.secondContactDate ? secondContactDate : "Not Set"}</p>
-						</div>
-					)}
+					{shouldSendSecondEmail &&
+						j.contactEmail &&
+						j.heard_back === false && (
+							<div className={styles.contactBox}>
+								<span>Second email</span>
+								<p>{j.secondContactDate ? secondContactDate : "Not Set"}</p>
+							</div>
+						)}
 				</>
 			)}
 			<JobStatusSelect jobId={j.id} />

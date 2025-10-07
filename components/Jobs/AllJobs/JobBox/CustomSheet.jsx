@@ -35,6 +35,7 @@ export default function CustomSheet({ j }) {
 	const sendSecondEmail = () => {
 		sendEmail(j, true);
 	};
+
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -84,7 +85,7 @@ export default function CustomSheet({ j }) {
 								{j.contactEmail ? j.contactEmail : "Not Set"}
 							</p>
 						</div>
-						{j.contactEmail && (
+						{j.heard_back !== true && (
 							<>
 								<section className={styles.contactDates}>
 									<div className={styles.contact}>
