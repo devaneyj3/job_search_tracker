@@ -36,7 +36,7 @@ export default function CustomSheet({ j }) {
 		sendEmail(j, true);
 	};
 
-	console.log(j.jobUrl);
+	console.log(j);
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>

@@ -194,8 +194,9 @@ export const JobItemProvider = ({ children }) => {
 				prevJobs.map((job) => (job.id === jobId ? { ...job, status } : job))
 			);
 
-			setSelectedJob({ ...selectedJob, status });
+			setSelectedJob((prev) => ({ ...prev, status }));
 		},
+
 		[session?.user?.id]
 	);
 

@@ -9,7 +9,6 @@ export async function GET(request) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const userId = searchParams.get("userId");
-		console.log(userId);
 
 		if (!userId) {
 			return NextResponse.json(
@@ -72,6 +71,8 @@ export async function POST(req) {
 				location,
 				contactName,
 				contactEmail,
+				heard_back: false,
+				heard_back_date: null,
 				jobDescription,
 				companyInfoId: company.id,
 			},
