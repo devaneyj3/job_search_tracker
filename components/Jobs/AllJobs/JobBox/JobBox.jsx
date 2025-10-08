@@ -4,7 +4,7 @@ import styles from "./JobBox.module.scss";
 import { MapPinned, Building, Mail } from "lucide-react";
 import { readableDate } from "@/utils";
 import { Badge } from "@/components/ui/badge";
-import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
+import { JobStatusSelect } from "@/components/shared/JobStatusSelect/JobStatusSelect";
 import moment from "moment";
 
 export default function JobBox({ j }) {

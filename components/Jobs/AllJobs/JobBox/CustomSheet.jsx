@@ -18,7 +18,7 @@ import Link from "next/link";
 import DeleteJobButton from "../../DeleteJobButton/DeleteJobButton";
 import { useJob } from "@/context/jobContext";
 import { Badge } from "@/components/ui/badge";
-import { JobStatusSelect } from "@/components/shared/JobStatusSelect";
+import { JobStatusSelect } from "@/components/shared/JobStatusSelect/JobStatusSelect";
 import moment from "moment";
 
 export default function CustomSheet({ j }) {
@@ -35,6 +35,8 @@ export default function CustomSheet({ j }) {
 	const sendSecondEmail = () => {
 		sendEmail(j, true);
 	};
+
+	console.log(j.jobUrl);
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
