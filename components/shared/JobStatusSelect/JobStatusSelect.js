@@ -9,8 +9,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import jobStatus from "@/lib/jobStatus";
+
 import { useJob } from "@/context/jobContext";
+import { jobStatus } from "@/Constants";
 
 export function JobStatusSelect({ jobId }) {
 	const { updateJobStatus } = useJob();

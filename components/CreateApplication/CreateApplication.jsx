@@ -22,7 +22,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { jobKeys } from "@/lib/formKeys";
-import { formSchema, STATUS } from "@/lib/formSchema";
+import { formSchema } from "@/lib/formSchema";
+import { jobStatus, contactPosition } from "@/Constants";
 import { toast } from "sonner";
 import { useJob } from "@/context/jobContext";
 
@@ -49,6 +50,7 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 			jobDescription: "",
 			skill1: "",
 			skill2: "",
+			contactPosition: "",
 		},
 		mode: "onBlur",
 	});
@@ -117,9 +119,24 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{STATUS.map((stat) => (
+									{jobStatus.map((stat) => (
 										<SelectItem key={stat} value={stat}>
 											{stat}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						) : name === "contactPosition" ? (
+							<Select onValueChange={field.onChange} value={field.value || ""}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder={placeholder} />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{contactPosition.map((pos) => (
+										<SelectItem key={pos} value={pos}>
+											{pos}
 										</SelectItem>
 									))}
 								</SelectContent>
@@ -176,6 +193,9 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 					<RenderField name="contactName" />
 					<RenderField name="contactEmail" />
 				</div>
+
+				{/* Row 6: Contact Position */}
+				<RenderField name="contactPosition" />
 
 				{/* Full-width: Job Description */}
 				<RenderField name="jobDescription" />

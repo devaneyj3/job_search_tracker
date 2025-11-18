@@ -1,4 +1,4 @@
-// put this near your sendEmail (same file or a small util)
+// High-conversion application email builder
 export function buildApplicationHtml({
 	sendSecondEmail,
 	lastDateSent,
@@ -10,112 +10,139 @@ export function buildApplicationHtml({
 }) {
 	let body = "";
 	let preheader = "";
+
 	if (sendSecondEmail) {
-		preheader = `Following up on the ${jobTitle} role - Jordan Devaney`;
-		body = ` <p style="margin:0 0 14px 0;">I wanted to follow up on my previous email sent on ${lastDateSent} regarding the <strong>${jobTitle}</strong> role. I understand you’re likely busy, but I’m checking in to see if you’ve had a chance to review it or if there’s anything further I can assist with.</p>
+		// FOLLOW-UP EMAIL
+		preheader = `Quick follow-up about the ${jobTitle} role`;
 
-	  <p style="margin:0 0 14px 0;">Please don’t hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.</p>`;
-	} else {
-		preheader = `Regarding my application for ${jobTitle} at ${companyName}`;
 		body = `
-                <p style="margin:0 0 14px 0;">
-                  I recently applied for the <strong>${jobTitle}</strong> role at <strong>${companyName}</strong> and wanted to introduce myself directly.
-                </p>
+      <p style="margin:0 0 20px 0;color:#000000;">
+        Hi ${contactName},
+      </p>
 
-                <p style="margin:0 0 14px 0;">
-                  I believe my skills are a great match for the position as the role combines my interests and experience in <strong>${skill1}</strong> and <strong>${skill2}</strong>, and I’d be excited to contribute from day one.
-                </p>
+      <p style="margin:0 0 20px 0;color:#000000;">
+        I know you're busy, so I'll keep this brief — I wanted to follow up on my note from ${lastDateSent} about the <strong style="font-weight:700;color:#000000;">${jobTitle}</strong> role.
+      </p>
 
-                <p style="margin:0 0 18px 0;">
-                  If helpful, I’m happy to share more details on relevant projects and outcomes. I’ve attached my resume for your convenience.
-                </p>`;
+      <p style="margin:0 0 20px 0;color:#000000;">
+        If you have a moment, I'd really appreciate your quick perspective on what the hiring manager values most for this position.
+      </p>
+
+      <p style="margin:0 0 20px 0;color:#000000;">
+        No rush at all — even a sentence or two would be super helpful. And if there's someone else I should reach out to, I'd be grateful for a quick nudge in the right direction.
+      </p>
+    `;
+	} else {
+		// FIRST EMAIL
+		preheader = `Quick question about the ${jobTitle} role`;
+
+		body = `
+      <p style="margin:0 0 20px 0;color:#000000;">
+        Hi ${contactName},
+      </p>
+
+      <p style="margin:0 0 20px 0;color:#000000;">
+        I hope you're doing well. I recently applied for the <strong style="font-weight:700;color:#000000;">${jobTitle}</strong> role at <strong style="font-weight:700;color:#000000;">${companyName}</strong> and wanted to reach out personally.
+      </p>
+
+      <p style="margin:0 0 20px 0;color:#000000;">
+        If you had a quick moment — what would you say the hiring manager values most in a strong candidate for this role?
+      </p>
+
+      <p style="margin:0 0 20px 0;color:#000000;">
+        I've been working heavily with <strong style="font-weight:700;color:#000000;">${skill1}</strong> and <strong style="font-weight:700;color:#000000;">${skill2}</strong>, and I want to make sure I'm highlighting the right strengths when discussing my experience.
+      </p>
+
+      <p style="margin:0 0 20px 0;color:#000000;">
+        If there's someone else on your team I should connect with, I'd really appreciate a quick nudge in the right direction.
+      </p>
+    `;
 	}
+
 	return `<!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
 <head>
   <meta charset="utf-8" />
   <meta name="x-apple-disable-message-reformatting" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Application for ${jobTitle}</title>
+  <title>${jobTitle} Application</title>
+
   <style>
-    /* dark mode friendly tweaks (supported in many clients) */
-    @media (prefers-color-scheme: dark) {
-      .bg { background:#0f172a !important; }
-      .card { background:#111827 !important; border-color:#1f2937 !important; }
-      .text { color:#e5e7eb !important; }
-      .muted { color:#9ca3af !important; }
-      .btn { background:#3b82f6 !important; color:#ffffff !important; }
-      a { color:#93c5fd !important; }
+
+    @media only screen and (max-width: 600px) {
+      .card { padding:24px 20px !important; }
+      .text { font-size:17px !important; }
     }
   </style>
 </head>
-<body style="margin:0;padding:0;background:#f5f7fb;">
-  <!-- Preheader (hidden preview text) -->
+
+<body style="margin:0;padding:0;">
+
+  <!-- Preheader -->
   <div style="display:none;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden;mso-hide:all;">
     ${preheader}
   </div>
 
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="bg" style="background:#f5f7fb;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="bg" style="background:#ffffff;">
     <tr>
-      <td align="center" style="padding:28px 16px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;">
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;">
+
           <!-- Header -->
           <tr>
-            <td style="text-align:center;padding:6px 8px 14px;">
-              <div class="text" style="font:700 20px/1.2 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
+            <td style="text-align:center;padding:8px 8px 20px;">
+              <div class="text" style="font:700 22px/1.3 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#000000;">
                 Jordan Devaney
               </div>
-              <div class="muted" style="font:400 13px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#64748b;margin-top:4px;">
-                Whitmore Lake, MI · 810.772-0086 · <a href="mailto:jordandevaney28@gmail.com" style="color:#2563eb;text-decoration:none;">jordandevaney28@gmail.com</a>
+              <div class="muted" style="font:400 14px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;margin-top:6px;">
+                Whitmore Lake, MI · 810.772-0086 · 
+                <a href="mailto:jordandevaney28@gmail.com" style="color:#1e40af;text-decoration:none;font-weight:600;">jordandevaney28@gmail.com</a>
               </div>
             </td>
           </tr>
 
           <!-- Card -->
           <tr>
-            <td class="card" style="background:#ffffff;border:1px solid #e6e8ee;border-radius:14px;padding:28px;">
-              <div class="text" style="font:400 16px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
-                <p style="margin:0 0 16px 0;">Hi ${contactName},</p>
+            <td class="card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:32px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+              <div class="text" style="font:400 17px/1.75 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#000000;">
                 ${body}
 
-                <!-- Bulletproof CTA button -->
-                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:4px 0 22px 0;">
+                <!-- CTA -->
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0 28px 0;">
                   <tr>
                     <td>
                       <a href="https://jordandevaney.com" target="_blank"
-                        style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;
-                               font:600 14px/1 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-                               padding:12px 18px;border-radius:10px;">
+                        style="display:inline-block;background:#1e40af;color:#ffffff;text-decoration:none;font:600 15px/1 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:14px 24px;border-radius:8px;">
                         View Portfolio
                       </a>
                     </td>
                   </tr>
                 </table>
 
-                <p style="margin:0 0 6px 0;">Best regards,</p>
-                <p style="margin:0;"><strong>Jordan Devaney</strong></p>
+                <p style="margin:24px 0 8px 0;color:#000000;">Best regards,</p>
+                <p style="margin:0;color:#000000;"><strong style="font-weight:700;color:#000000;">Jordan Devaney</strong></p>
               </div>
 
               <!-- Divider -->
-              <div style="height:1px;background:#eceff4;margin:22px 0;"></div>
+              <div style="height:1px;background:#e2e8f0;margin:28px 0;"></div>
 
-              <!-- Footer links -->
-              <div class="muted" style="font:400 13px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#6b7280;">
-                <div style="margin:2px 0;">
-                  GitHub: <a href="https://github.com/devaneyj3" style="color:#2563eb;text-decoration:none;">github.com/devaneyj3</a>
+              <!-- Footer -->
+              <div class="muted" style="font:400 14px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;">
+                <div style="margin:4px 0;">
+                  GitHub: <a href="https://github.com/devaneyj3" style="color:#1e40af;text-decoration:none;font-weight:600;">github.com/devaneyj3</a>
                 </div>
-                <div style="margin:2px 0;">
-                  LinkedIn: <a href="https://www.linkedin.com/in/jordandevaney/" style="color:#2563eb;text-decoration:none;">linkedin.com/in/jordandevaney</a>
+                <div style="margin:4px 0;">
+                  LinkedIn: <a href="https://www.linkedin.com/in/jordandevaney/" style="color:#1e40af;text-decoration:none;font-weight:600;">linkedin.com/in/jordandevaney</a>
                 </div>
               </div>
             </td>
           </tr>
 
-          <!-- Small footer note -->
+          <!-- Footer Note -->
           <tr>
-            <td style="text-align:center;padding:12px 6px 0;">
-              <div class="muted" style="font:400 12px/1.4 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#94a3b8;">
-                If this reached the wrong contact, I’d appreciate a forward to the appropriate recruiter or hiring manager.
+            <td style="text-align:center;padding:16px 8px 0;">
+              <div class="muted" style="font:400 13px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#333333;">
+                If this reached the wrong contact, I'd appreciate a forward to the appropriate recruiter or hiring manager.
               </div>
             </td>
           </tr>

@@ -7,6 +7,8 @@ import { jobsLength } from "@/utils";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import EmailContacts from "./AllJobs/EmailContacts/EmailContacts";
 import styles from "./JobDashboard.module.scss";
+import Link from "next/link";
+import JobBoard from "../JobBoard/JobBoard";
 
 export default function JobDashboard() {
 	const { jobs, noJobMsg } = useJob();
@@ -40,6 +42,8 @@ export default function JobDashboard() {
 
 	return (
 		<>
+			<JobBoard />
+
 			<Stats jobs={jobs} />
 			{/* <h1 className={styles.title}>
 				{jobsWithContactEmail.length} Jobs with contacts
