@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { daysFromNow } from "@/utils";
-
-const prisma = new PrismaClient();
+import {
+	getApplicationsByUserId,
+	createJobApplication,
+	deleteJobApplication,
+	updateJobStatus,
+} from "@/lib/services/jobs";
 
 // GET /api/job?userId=123
 export async function GET(request) {
@@ -17,10 +19,7 @@ export async function GET(request) {
 			);
 		}
 
-		const applications = await prisma.application.findMany({
-			where: { userId },
-			orderBy: { appliedDate: "asc" },
-		});
+		const applications = await getApplicationsByUserId(userId);
 
 		return NextResponse.json(applications);
 	} catch (error) {
@@ -31,6 +30,7 @@ export async function GET(request) {
 		);
 	}
 }
+
 export async function POST(req) {
 	try {
 		const {
@@ -48,34 +48,19 @@ export async function POST(req) {
 			jobDescription,
 		} = await req.json();
 
-		const company = await prisma.companyInfo.create({
-			data: {
-				industry: "Software",
-				size: "2",
-				website: "www.jordandevaney.com",
-				linkedin: "linkedin.com",
-			},
-		});
-
-		const newJob = await prisma.application.create({
-			data: {
-				userId,
-				jobTitle,
-				companyName,
-				jobUrl,
-				status,
-				secondContactDate: daysFromNow(new Date.now(), "5"),
-				lastContactedDate,
-				initialContactEmailSent,
-				salary,
-				location,
-				contactName,
-				contactEmail,
-				heard_back: false,
-				heard_back_date: null,
-				jobDescription,
-				companyInfoId: company.id,
-			},
+		const newJob = await createJobApplication({
+			userId,
+			jobTitle,
+			companyName,
+			jobUrl,
+			status,
+			salary,
+			location,
+			contactName,
+			contactEmail,
+			lastContactedDate,
+			initialContactEmailSent,
+			jobDescription,
 		});
 
 		return NextResponse.json({ success: true, job: newJob });
@@ -91,16 +76,7 @@ export async function POST(req) {
 export async function DELETE(req) {
 	try {
 		const { id, companyInfoId } = await req.json();
-		await prisma.companyInfo.delete({
-			where: {
-				id: companyInfoId,
-			},
-		});
-		const deletedJob = await prisma.application.delete({
-			where: {
-				id: id,
-			},
-		});
+		const deletedJob = await deleteJobApplication(id, companyInfoId);
 		return NextResponse.json({ success: true, id: deletedJob.id });
 	} catch (error) {
 		console.error("Error deleting Job:", error);
@@ -114,17 +90,10 @@ export async function DELETE(req) {
 export async function PUT(req) {
 	try {
 		const { jobId, status } = await req.json();
-		const updateJobStatus = await prisma.application.update({
-			where: {
-				id: jobId,
-			},
-			data: {
-				status: status,
-			},
-		});
+		const updatedJob = await updateJobStatus(jobId, status);
 		return NextResponse.json({
 			success: true,
-			id: `Change job id: ${updateJobStatus.id} to status: ${updateJobStatus.status}`,
+			id: `Change job id: ${updatedJob.id} to status: ${updatedJob.status}`,
 		});
 	} catch (error) {
 		console.log("Error updating job");

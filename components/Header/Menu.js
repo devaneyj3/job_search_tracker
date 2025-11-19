@@ -15,6 +15,9 @@ const Menu = () => {
 					<Link href="/tracker">Job Tracker</Link>
 				</Button>
 				<Button asChild variant="ghost">
+					<Link href="/outreach">Outreach</Link>
+				</Button>
+				<Button asChild variant="ghost">
 					<Link href="/profile">Profile</Link>
 				</Button>
 				<UserButton />
@@ -30,10 +33,13 @@ const Menu = () => {
 							<Link href="/dashboard">Dashboard</Link>
 						</Button>
 						<Button asChild variant="ghost">
-							<Link href="/profile">Profile</Link>
+							<Link href="/tracker">Job Tracker</Link>
 						</Button>
 						<Button asChild variant="ghost">
-							<Link href="/tracker">Job Tracker</Link>
+							<Link href="/outreach">Outreach</Link>
+						</Button>
+						<Button asChild variant="ghost">
+							<Link href="/profile">Profile</Link>
 						</Button>
 						<UserButton />
 					</SheetContent>

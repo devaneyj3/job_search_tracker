@@ -8,6 +8,26 @@ import GoogleButtonText from "./GoogleButton";
 // taken from https://developers.google.com/identity/branding-guidelines
 
 export default async function GoogleSignIn() {
+	// Check if signIn is available
+	if (!signIn || typeof signIn !== "function") {
+		console.error("signIn is not available:", typeof signIn);
+		return (
+			<div style={{ padding: "20px", color: "red" }}>
+				Authentication is not available. Please check your configuration.
+			</div>
+		);
+	}
+
+	// Ensure GoogleButtonText is available
+	if (!GoogleButtonText) {
+		console.error("GoogleButtonText is not available");
+		return (
+			<div style={{ padding: "20px", color: "red" }}>
+				Sign in button component is not available.
+			</div>
+		);
+	}
+
 	return (
 		<form
 			action={async () => {

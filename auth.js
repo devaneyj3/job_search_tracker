@@ -1,9 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 let handlers, signIn, signOut, auth;
 
@@ -59,7 +57,8 @@ try {
 	auth = nextAuthResult.auth;
 } catch (err) {
 	console.error("NextAuth initialization failed:", err);
-	// Optional: export fallbacks to prevent runtime crash
+	console.error("Error details:", err.message, err.stack);
+	// Export fallbacks to prevent runtime crash
 	handlers = {};
 	signIn = async () => {
 		throw new Error("Auth not initialized");
@@ -69,6 +68,14 @@ try {
 	};
 	auth = async () => {
 		throw new Error("Auth not initialized");
+	};
+}
+
+// Ensure signIn is always a function
+if (typeof signIn !== "function") {
+	console.error("signIn is not a function, setting fallback");
+	signIn = async () => {
+		throw new Error("Auth not initialized - signIn is not available");
 	};
 }
 
