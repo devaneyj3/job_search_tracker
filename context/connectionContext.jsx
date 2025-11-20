@@ -190,6 +190,7 @@ export const ConnectionProvider = ({ children }) => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					connectionId,
+					userId: session?.user?.id,
 					updateData,
 				}),
 			});
