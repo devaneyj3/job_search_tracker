@@ -45,6 +45,8 @@ export type ConnectionMinAggregateOutputType = {
   position: string | null
   linkedinUrl: string | null
   connectedDate: Date | null
+  status: string | null
+  statusDate: Date | null
   emailSent: boolean | null
   firstEmailDate: Date | null
   lastEmailDate: Date | null
@@ -67,6 +69,8 @@ export type ConnectionMaxAggregateOutputType = {
   position: string | null
   linkedinUrl: string | null
   connectedDate: Date | null
+  status: string | null
+  statusDate: Date | null
   emailSent: boolean | null
   firstEmailDate: Date | null
   lastEmailDate: Date | null
@@ -89,6 +93,8 @@ export type ConnectionCountAggregateOutputType = {
   position: number
   linkedinUrl: number
   connectedDate: number
+  status: number
+  statusDate: number
   emailSent: number
   firstEmailDate: number
   lastEmailDate: number
@@ -123,6 +129,8 @@ export type ConnectionMinAggregateInputType = {
   position?: true
   linkedinUrl?: true
   connectedDate?: true
+  status?: true
+  statusDate?: true
   emailSent?: true
   firstEmailDate?: true
   lastEmailDate?: true
@@ -145,6 +153,8 @@ export type ConnectionMaxAggregateInputType = {
   position?: true
   linkedinUrl?: true
   connectedDate?: true
+  status?: true
+  statusDate?: true
   emailSent?: true
   firstEmailDate?: true
   lastEmailDate?: true
@@ -167,6 +177,8 @@ export type ConnectionCountAggregateInputType = {
   position?: true
   linkedinUrl?: true
   connectedDate?: true
+  status?: true
+  statusDate?: true
   emailSent?: true
   firstEmailDate?: true
   lastEmailDate?: true
@@ -276,6 +288,8 @@ export type ConnectionGroupByOutputType = {
   position: string | null
   linkedinUrl: string | null
   connectedDate: Date | null
+  status: string | null
+  statusDate: Date | null
   emailSent: boolean
   firstEmailDate: Date | null
   lastEmailDate: Date | null
@@ -321,6 +335,8 @@ export type ConnectionWhereInput = {
   position?: Prisma.StringNullableFilter<"Connection"> | string | null
   linkedinUrl?: Prisma.StringNullableFilter<"Connection"> | string | null
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
+  status?: Prisma.StringNullableFilter<"Connection"> | string | null
+  statusDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   emailSent?: Prisma.BoolFilter<"Connection"> | boolean
   firstEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   lastEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -344,6 +360,8 @@ export type ConnectionOrderByWithRelationInput = {
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   connectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusDate?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSent?: Prisma.SortOrder
   firstEmailDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastEmailDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -370,6 +388,8 @@ export type ConnectionWhereUniqueInput = Prisma.AtLeast<{
   position?: Prisma.StringNullableFilter<"Connection"> | string | null
   linkedinUrl?: Prisma.StringNullableFilter<"Connection"> | string | null
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
+  status?: Prisma.StringNullableFilter<"Connection"> | string | null
+  statusDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   emailSent?: Prisma.BoolFilter<"Connection"> | boolean
   firstEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   lastEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -393,6 +413,8 @@ export type ConnectionOrderByWithAggregationInput = {
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   connectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusDate?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSent?: Prisma.SortOrder
   firstEmailDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastEmailDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -423,6 +445,8 @@ export type ConnectionScalarWhereWithAggregatesInput = {
   position?: Prisma.StringNullableWithAggregatesFilter<"Connection"> | string | null
   linkedinUrl?: Prisma.StringNullableWithAggregatesFilter<"Connection"> | string | null
   connectedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Connection"> | Date | string | null
+  status?: Prisma.StringNullableWithAggregatesFilter<"Connection"> | string | null
+  statusDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Connection"> | Date | string | null
   emailSent?: Prisma.BoolWithAggregatesFilter<"Connection"> | boolean
   firstEmailDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Connection"> | Date | string | null
   lastEmailDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Connection"> | Date | string | null
@@ -443,6 +467,8 @@ export type ConnectionCreateInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -466,6 +492,8 @@ export type ConnectionUncheckedCreateInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -486,6 +514,8 @@ export type ConnectionUpdateInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -509,6 +539,8 @@ export type ConnectionUncheckedUpdateInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -531,6 +563,8 @@ export type ConnectionCreateManyInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -551,6 +585,8 @@ export type ConnectionUpdateManyMutationInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -573,6 +609,8 @@ export type ConnectionUncheckedUpdateManyInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -605,6 +643,8 @@ export type ConnectionCountOrderByAggregateInput = {
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  statusDate?: Prisma.SortOrder
   emailSent?: Prisma.SortOrder
   firstEmailDate?: Prisma.SortOrder
   lastEmailDate?: Prisma.SortOrder
@@ -632,6 +672,8 @@ export type ConnectionMaxOrderByAggregateInput = {
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  statusDate?: Prisma.SortOrder
   emailSent?: Prisma.SortOrder
   firstEmailDate?: Prisma.SortOrder
   lastEmailDate?: Prisma.SortOrder
@@ -654,6 +696,8 @@ export type ConnectionMinOrderByAggregateInput = {
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  statusDate?: Prisma.SortOrder
   emailSent?: Prisma.SortOrder
   firstEmailDate?: Prisma.SortOrder
   lastEmailDate?: Prisma.SortOrder
@@ -721,6 +765,8 @@ export type ConnectionCreateWithoutUserInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -742,6 +788,8 @@ export type ConnectionUncheckedCreateWithoutUserInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -793,6 +841,8 @@ export type ConnectionScalarWhereInput = {
   position?: Prisma.StringNullableFilter<"Connection"> | string | null
   linkedinUrl?: Prisma.StringNullableFilter<"Connection"> | string | null
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
+  status?: Prisma.StringNullableFilter<"Connection"> | string | null
+  statusDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   emailSent?: Prisma.BoolFilter<"Connection"> | boolean
   firstEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   lastEmailDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -814,6 +864,8 @@ export type ConnectionCreateManyUserInput = {
   position?: string | null
   linkedinUrl?: string | null
   connectedDate?: Date | string | null
+  status?: string | null
+  statusDate?: Date | string | null
   emailSent?: boolean
   firstEmailDate?: Date | string | null
   lastEmailDate?: Date | string | null
@@ -834,6 +886,8 @@ export type ConnectionUpdateWithoutUserInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -855,6 +909,8 @@ export type ConnectionUncheckedUpdateWithoutUserInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -876,6 +932,8 @@ export type ConnectionUncheckedUpdateManyWithoutUserInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -900,6 +958,8 @@ export type ConnectionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
+  status?: boolean
+  statusDate?: boolean
   emailSent?: boolean
   firstEmailDate?: boolean
   lastEmailDate?: boolean
@@ -923,6 +983,8 @@ export type ConnectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
+  status?: boolean
+  statusDate?: boolean
   emailSent?: boolean
   firstEmailDate?: boolean
   lastEmailDate?: boolean
@@ -946,6 +1008,8 @@ export type ConnectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
+  status?: boolean
+  statusDate?: boolean
   emailSent?: boolean
   firstEmailDate?: boolean
   lastEmailDate?: boolean
@@ -969,6 +1033,8 @@ export type ConnectionSelectScalar = {
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
+  status?: boolean
+  statusDate?: boolean
   emailSent?: boolean
   firstEmailDate?: boolean
   lastEmailDate?: boolean
@@ -982,7 +1048,7 @@ export type ConnectionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "company" | "position" | "linkedinUrl" | "connectedDate" | "emailSent" | "firstEmailDate" | "lastEmailDate" | "emailCount" | "responded" | "responseDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["connection"]>
+export type ConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "company" | "position" | "linkedinUrl" | "connectedDate" | "status" | "statusDate" | "emailSent" | "firstEmailDate" | "lastEmailDate" | "emailCount" | "responded" | "responseDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["connection"]>
 export type ConnectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -1007,6 +1073,8 @@ export type $ConnectionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     position: string | null
     linkedinUrl: string | null
     connectedDate: Date | null
+    status: string | null
+    statusDate: Date | null
     emailSent: boolean
     firstEmailDate: Date | null
     lastEmailDate: Date | null
@@ -1450,6 +1518,8 @@ export interface ConnectionFieldRefs {
   readonly position: Prisma.FieldRef<"Connection", 'String'>
   readonly linkedinUrl: Prisma.FieldRef<"Connection", 'String'>
   readonly connectedDate: Prisma.FieldRef<"Connection", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Connection", 'String'>
+  readonly statusDate: Prisma.FieldRef<"Connection", 'DateTime'>
   readonly emailSent: Prisma.FieldRef<"Connection", 'Boolean'>
   readonly firstEmailDate: Prisma.FieldRef<"Connection", 'DateTime'>
   readonly lastEmailDate: Prisma.FieldRef<"Connection", 'DateTime'>

@@ -1081,6 +1081,8 @@ export const ConnectionScalarFieldEnum = {
   position: 'position',
   linkedinUrl: 'linkedinUrl',
   connectedDate: 'connectedDate',
+  status: 'status',
+  statusDate: 'statusDate',
   emailSent: 'emailSent',
   firstEmailDate: 'firstEmailDate',
   lastEmailDate: 'lastEmailDate',

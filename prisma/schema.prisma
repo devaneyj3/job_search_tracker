@@ -123,6 +123,8 @@ model Connection {
   position          String?
   linkedinUrl       String?
   connectedDate     DateTime?    @default(now()) @db.Timestamp(6)
+  status            String
+  statusDate        DateTime?
   emailSent         Boolean      @default(false)
   firstEmailDate    DateTime?    @db.Timestamp(6)
   lastEmailDate     DateTime?    @db.Timestamp(6)
@@ -140,4 +142,5 @@ model Connection {
   @@index([emailSent])
   @@index([connectedDate])
   @@index([company])
+  @@index([status])
 }

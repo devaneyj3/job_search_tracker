@@ -1,45 +1,11 @@
-.outreachDashboard {
-	width: 100%;
-	min-height: 100vh;
-	padding: 2rem;
-}
 
 .container {
-	max-width: 1200px;
-	margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
 .title {
-	font-size: 2rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	color: #0f172a;
-}
-
-.subtitle {
-	font-size: 1rem;
-	color: #64748b;
-	margin-bottom: 2rem;
-}
-
-.steps {
-	list-style: decimal;
-	margin-left: 2rem;
-}
-
-.steps li {
-	margin-bottom: 1rem;
-}
-
-.steps li h2 {	
-	font-size: 1.25rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	color: #0f172a;
-}
-
-.steps li p {
-	font-size: 1rem;
-	color: #64748b;
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }

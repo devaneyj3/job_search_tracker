@@ -1,4 +1,4 @@
-import OutreachDashboard from "@/components/Outreach/OutreachDashboard";
+import OutreachDashboard from "@/components/Outreach/OutreachDasboard";
 import React from "react";
 
 export const metadata = {

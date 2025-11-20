@@ -1,4 +1,4 @@
-.job {
+.item {
   padding: 20px;
   width: 80%;
   display: flex;
@@ -14,10 +14,10 @@
     background-color: rgb(204, 234, 246);
   }
 }
-.jobTitle {
+.itemTitle {
   font-weight: 600;
 }
-.company, .location, .salary, .jobPosting, .contactEmail {
+.company, .location, .salary, .itemPosting, .contactEmail {
   color: #666;
   display: flex;
   align-items: center;
@@ -54,6 +54,4 @@
 .contactEmail {
 
 }
-
-
 

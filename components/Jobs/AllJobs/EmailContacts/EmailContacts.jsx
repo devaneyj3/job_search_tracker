@@ -1,11 +1,21 @@
 import React from "react";
-import JobBox from "../JobBox/JobBox";
+import ItemBox from "@/components/shared/ItemBox/ItemBox";
+import { useJob } from "@/context/jobContext";
 
 export default function EmailContacts({ jobs }) {
+	const jobContext = useJob();
+
+	// Map job context to generic context format
+	const context = {
+		selectedItem: jobContext.selectedJob,
+		setSelectedItem: jobContext.setSelectedJob,
+		setModalOpen: jobContext.setModalOpen,
+	};
+
 	return (
 		<>
-			{jobs.map((j, index) => {
-				return <JobBox key={index} j={j} />;
+			{jobs.map((job, index) => {
+				return <ItemBox key={index} item={job} type="job" context={context} />;
 			})}
 		</>
 	);
