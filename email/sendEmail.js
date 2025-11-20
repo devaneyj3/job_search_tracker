@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import path from "path";
 import { buildApplicationHtml } from "./EmalHTML";
-import { readableDate } from "@/utils";
+import { readableDate } from "@/lib/utils";
 
 export const sendEmail = async (values, sendSecondEmail) => {
 	const {
