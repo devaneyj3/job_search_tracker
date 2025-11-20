@@ -23,7 +23,7 @@ export default function OutreachHeader() {
 	];
 
 	return (
-		<div className={styles.outreachDashboard}>
+		<>
 			<div className={styles.container}>
 				<h1 className={styles.title}>How to Outreach</h1>
 				<p className={styles.subtitle}>
@@ -46,8 +46,8 @@ export default function OutreachHeader() {
 						</p>
 					</li>
 				</ol>
-				<Metrics items={metrics} noItemMsg={noConnectionMsg} title="Outreach" />
 			</div>
-		</div>
+			<Metrics items={metrics} noItemMsg={noConnectionMsg} title="Outreach" />
+		</>
 	);
 }
