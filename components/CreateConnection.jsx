@@ -21,36 +21,36 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { jobKeys } from "@/lib/formKeys";
-import { formSchema } from "@/lib/formSchema";
-import { jobStatus, contactPosition } from "@/Constants";
+import { connectionStatus } from "@/Constants";
 import { toast } from "sonner";
 import { useJob } from "@/context/jobContext";
+import { outreachFormSchema } from "@/lib/outreachSchema";
+import { outreachKeys } from "@/lib/outreachKeys";
 
-// helper: fetch field config by name from jobKeys
+// helper: fetch field config by name from connectionKeys
 function getCfg(name) {
-	const cfg = jobKeys.find((f) => f.name === name);
-	if (!cfg) throw new Error(`Missing field config for "${name}" in jobKeys`);
+	const cfg = outreachKeys.find((f) => f.name === name);
+	if (!cfg)
+		throw new Error(`Missing field config for "${name}" in outreachkeys`);
 	return cfg;
 }
 
-export default function CreateApplication({ setInvoiceDialogOpen }) {
+export default function CreateConnection({ setInvoiceDialogOpen }) {
 	const { createJob, createCalendarEvent, sendEmail } = useJob();
 	const form = useForm({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(outreachFormSchema),
 		defaultValues: {
-			jobTitle: "",
-			companyName: "",
-			jobUrl: "",
-			status: "Applied",
-			salary: "",
-			location: "",
-			contactName: "",
-			contactEmail: "",
-			jobDescription: "",
-			skill1: "",
-			skill2: "",
-			contactPosition: "",
+			name: "",
+			email: "",
+			company: "",
+			position: "",
+			linkedinUrl: "",
+			status: "Connected",
+			statusDate: "",
+			emailSent: "",
+			firstEmailDate: "",
+			emailCount: "",
+			notes: "",
 		},
 		mode: "onBlur",
 	});
@@ -119,32 +119,13 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{jobStatus.map((stat) => (
+									{connectionStatus.map((stat) => (
 										<SelectItem key={stat} value={stat}>
 											{stat}
 										</SelectItem>
 									))}
 								</SelectContent>
 							</Select>
-						) : name === "contactPosition" ? (
-							<Select onValueChange={field.onChange} value={field.value || ""}>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder={placeholder} />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{contactPosition.map((pos) => (
-										<SelectItem key={pos} value={pos}>
-											{pos}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						) : name === "jobDescription" ? (
-							<FormControl>
-								<Textarea placeholder={placeholder} {...field} />
-							</FormControl>
 						) : (
 							<FormControl>
 								<Input
@@ -167,39 +148,19 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
 				{/* Row 1: Title + Company */}
 				<div className={styles.twoCol}>
-					<RenderField name="jobTitle" />
-					<RenderField name="companyName" />
+					<RenderField name="name" />
+					<RenderField name="email" />
 				</div>
-
 				{/* Row 2: Job URL + Status */}
 				<div className={styles.twoCol}>
-					<RenderField name="jobUrl" />
-					<RenderField name="status" />
+					<RenderField name="company" />
+					<RenderField name="position" />
 				</div>
-
 				{/* Row 3: Location + Salary */}
 				<div className={styles.twoCol}>
-					<RenderField name="location" />
-					<RenderField name="salary" />
+					<RenderField name="linkedinUrl" />
+					<RenderField name="notes" />
 				</div>
-				{/* Row 4: Skill + Company's Goal */}
-				<div className={styles.twoCol}>
-					<RenderField name="skill1" />
-					<RenderField name="skill2" />
-				</div>
-
-				{/* Row 5: Contact Name + Contact Email */}
-				<div className={styles.twoCol}>
-					<RenderField name="contactName" />
-					<RenderField name="contactEmail" />
-				</div>
-
-				{/* Row 6: Contact Position */}
-				<RenderField name="contactPosition" />
-
-				{/* Full-width: Job Description */}
-				<RenderField name="jobDescription" />
-
 				<Button className={styles.btn} type="submit">
 					Submit
 				</Button>

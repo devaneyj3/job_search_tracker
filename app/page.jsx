@@ -1,4 +1,4 @@
-import Welcome from "@/components/Welcome/welcome";
+import Welcome from "@/components/Welcome";
 import styles from "./page.module.scss";
 
 export default function Home() {

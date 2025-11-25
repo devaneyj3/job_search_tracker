@@ -1,8 +1,0 @@
-@use "../../../../styles/tokens.module" as *;
-
-.block { display: grid; gap: .5rem; }
-.h2 { font-size: 1.25rem; font-weight: 600; }
-.ol { margin-left: 1.25rem; display: grid; gap: .5rem; }
-.strong { font-weight: 600; }
-.note { color: $muted-600; font-size: .9rem; }
-.note a { text-decoration: underline; }

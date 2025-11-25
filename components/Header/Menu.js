@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { EllipsisVertical } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
-import UserButton from "./user-button";
+import UserButton from "./UserButton";
 
 const Menu = () => {
 	return (

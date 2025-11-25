@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { useJob } from "@/context/jobContext";
-import AllJobs from "./AllJobs/AllJobs";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import EmailContacts from "./AllJobs/EmailContacts/EmailContacts";
-import styles from "./JobDashboard.module.scss";
+import AllJobs from "./AllJobs";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import EmailContacts from "./EmailContacts";
+import styles from "@/styles/JobDashboard.module.scss";
 import Link from "next/link";
-import JobBoard from "../JobBoard/JobBoard";
-import Metrics from "../shared/Metrics/Metrics";
+import JobBoard from "@/components/JobBoard";
+import Metrics from "../shared/Metrics";
 import { itemLength } from "@/lib/utils";
 
 export default function JobDashboard() {
