@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ItemList.module.scss";
 import ItemBox from "../ItemBox/ItemBox";
 import CreateApplicationMenuItem from "@/components/Header/CreateApplicationItem";
+import CreateConnectionMenuItem from "@/components/Outreach/CreateConnectionMenuItem";
 import ItemSheet from "../ItemSheet/ItemSheet";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +21,11 @@ export default function ItemList({
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
-				<CreateApplicationMenuItem />
+				{type === "job" ? (
+					<CreateApplicationMenuItem />
+				) : (
+					<CreateConnectionMenuItem />
+				)}
 			</section>
 			<h1 className={styles.title}>
 				{filteredItems.length} {displayTitle}

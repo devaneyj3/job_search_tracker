@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./CreateApplication.module.scss";
+import styles from "../styles/CreateForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
