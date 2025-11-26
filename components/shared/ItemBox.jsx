@@ -3,14 +3,14 @@ import { MapPinned, Building, Mail } from "lucide-react";
 import styles from "@/styles/ItemBox.module.scss";
 
 import { Badge } from "@/components/ui/badge";
-import { JobStatusSelect } from "./JobStatusSelect";
+import { StatusSelect } from "./StatusSelect";
 import moment from "moment";
 import { readableDate } from "@/lib/utils";
 
-export default function ItemBox({ item, type = "job", context }) {
+export default function ItemBox({ item, type = "job", context, status }) {
 	if (!context) return null;
 
-	const { selectedItem, setSelectedItem, setModalOpen } = context;
+	const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 
 	// Determine if this is a job or connection
 	const isJob = type === "job";
@@ -62,7 +62,9 @@ export default function ItemBox({ item, type = "job", context }) {
 						</Badge>
 					)}
 					{!isJob && (
-						<Badge className={styles.status}>Connected on {date}</Badge>
+						<Badge className={styles.status}>
+							{item.status} on {date}
+						</Badge>
 					)}
 				</div>
 				<div className={styles.itemTitle}>{title}</div>
@@ -83,35 +85,25 @@ export default function ItemBox({ item, type = "job", context }) {
 					{contactEmail ? item.contactName || item.name : "No Contact Email"}
 				</p>
 			</div>
-			{/* Email info */}
-			{isJob && (
+			{emailCycleComplete ? (
+				<p>Email cycle is complete</p>
+			) : (
 				<>
-					{emailCycleComplete ? (
-						<p>Email cycle is complete</p>
-					) : (
-						<>
-							{item.initialContactEmailSent && (
-								<div className={styles.contactBox}>
-									<span>First email sent</span>
-									<p>
-										{item.initialContactDate ? initialContactDate : "Not Set"}
-									</p>
-								</div>
-							)}
-
-							{shouldSendSecondEmail &&
-								item.contactEmail &&
-								item.heard_back === false && (
-									<div className={styles.contactBox}>
-										<span>Second email</span>
-										<p>
-											{item.secondContactDate ? secondContactDate : "Not Set"}
-										</p>
-									</div>
-								)}
-						</>
+					{item.initialContactEmailSent && (
+						<div className={styles.contactBox}>
+							<span>First email sent</span>
+							<p>{item.initialContactDate ? initialContactDate : "Not Set"}</p>
+						</div>
 					)}
-					<JobStatusSelect jobId={item.id} />
+
+					{shouldSendSecondEmail &&
+						item.contactEmail &&
+						item.heard_back === false && (
+							<div className={styles.contactBox}>
+								<span>Second email</span>
+								<p>{item.secondContactDate ? secondContactDate : "Not Set"}</p>
+							</div>
+						)}
 				</>
 			)}
 			{!isJob && item.emailSent && (
@@ -120,6 +112,7 @@ export default function ItemBox({ item, type = "job", context }) {
 					<p>{item.firstEmailDate ? initialContactDate : "Not Set"}</p>
 				</div>
 			)}
+			<StatusSelect id={item.id} update={update} status={status} />
 		</div>
 	);
 }

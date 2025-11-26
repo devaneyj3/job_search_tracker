@@ -23,11 +23,11 @@ import { readableDate } from "@/lib/utils";
 import Link from "next/link";
 import DeleteItemButton from "./DeleteItemButton";
 import { Badge } from "@/components/ui/badge";
-import { JobStatusSelect } from "./JobStatusSelect";
+import { StatusSelect } from "./StatusSelect";
 import moment from "moment";
 
-export default function ItemSheet({ item, type = "job", context }) {
-	const { modalOpen, setModalOpen, sendEmail } = context;
+export default function ItemSheet({ item, type = "job", context, status }) {
+	const { modalOpen, setModalOpen, sendEmail, update } = context;
 	const isJob = type === "job";
 
 	// Get dates based on type
@@ -123,7 +123,9 @@ export default function ItemSheet({ item, type = "job", context }) {
 							<Badge className={styles.status}>Connected on {date}</Badge>
 						)}
 					</div>
-					{isJob && <JobStatusSelect jobId={item.id} />}
+					{isJob && (
+						<StatusSelect id={item.id} status={status} update={update} />
+					)}
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
 							<Label htmlFor="contactName">Contact Name: </Label>

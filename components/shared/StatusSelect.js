@@ -10,19 +10,15 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-import { useJob } from "@/context/jobContext";
-import { jobStatus } from "@/Constants";
-
-export function JobStatusSelect({ jobId }) {
-	const { updateJobStatus } = useJob();
+export function StatusSelect({ id, update, status }) {
 	return (
-		<Select onValueChange={(value) => updateJobStatus(jobId, value)}>
+		<Select onValueChange={(value) => update(id, value)}>
 			<SelectTrigger className="w-[180px] font-bold">
 				<SelectValue placeholder="Status" />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					{jobStatus.map((status) => {
+					{status.map((status) => {
 						return (
 							<SelectItem key={status} value={status}>
 								{status}

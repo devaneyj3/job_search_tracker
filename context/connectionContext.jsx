@@ -183,15 +183,14 @@ export const ConnectionProvider = ({ children }) => {
 		[session?.user?.id]
 	);
 
-	const updateConnection = useCallback(
-		async (connectionId, updateData) => {
+	const updateConnectionStatus = useCallback(
+		async (connectionId, status) => {
 			const response = await fetch("/api/connection", {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					connectionId,
-					userId: session?.user?.id,
-					updateData,
+					status,
 				}),
 			});
 
@@ -199,12 +198,12 @@ export const ConnectionProvider = ({ children }) => {
 			setConnections((prevConnections) =>
 				prevConnections.map((connection) =>
 					connection.id === connectionId
-						? { ...connection, ...updateData }
+						? { ...connection, status }
 						: connection
 				)
 			);
 
-			setSelectedConnection((prev) => ({ ...prev, ...updateData }));
+			setSelectedConnection((prev) => (prev ? { ...prev, status } : prev));
 		},
 
 		[session?.user?.id]
@@ -225,7 +224,7 @@ export const ConnectionProvider = ({ children }) => {
 			setModalOpen,
 			error,
 			isLoading,
-			updateConnection,
+			updateConnectionStatus,
 		}),
 		[
 			connections,
@@ -237,7 +236,7 @@ export const ConnectionProvider = ({ children }) => {
 			modalOpen,
 			error,
 			isLoading,
-			updateConnection,
+			updateConnectionStatus,
 		]
 	);
 	return (

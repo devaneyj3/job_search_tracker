@@ -1,6 +1,7 @@
 import React from "react";
 import { useConnection } from "@/context/connectionContext";
 import ItemList from "@/components/shared/ItemList";
+import { connectionStatus } from "@/Constants";
 
 export default function Connections({
 	filteredConnections,
@@ -17,6 +18,7 @@ export default function Connections({
 		items: connectionContext.connections,
 		noItemMsg: connectionContext.noConnectionMsg,
 		sendEmail: connectionContext.sendEmail,
+		update: connectionContext.updateConnectionStatus,
 		modalOpen: connectionContext.modalOpen,
 	};
 
@@ -28,6 +30,7 @@ export default function Connections({
 			type="connection"
 			context={context}
 			title="TOTAL CONNECTIONS"
+			status={connectionStatus}
 		/>
 	);
 }

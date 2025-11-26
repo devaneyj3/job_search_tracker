@@ -13,11 +13,11 @@ export default function ItemList({
 	type = "job",
 	context,
 	title,
+	status,
 }) {
-	const { selectedItem, items, noItemMsg } = context;
+	const { selectedItem, items, noItemMsg, update } = context;
 	const displayTitle =
 		title || (type === "job" ? "TOTAL JOBS" : "TOTAL CONNECTIONS");
-
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
@@ -47,14 +47,27 @@ export default function ItemList({
 			{!noItemMsg && items.length > 0 ? (
 				filteredItems.map((item, index) => {
 					return (
-						<ItemBox key={index} item={item} type={type} context={context} />
+						<ItemBox
+							key={index}
+							item={item}
+							type={type}
+							context={context}
+							status={status}
+							update={update}
+						/>
 					);
 				})
 			) : (
 				<div>{noItemMsg}</div>
 			)}
 			{selectedItem && (
-				<ItemSheet item={selectedItem} type={type} context={context} />
+				<ItemSheet
+					item={selectedItem}
+					type={type}
+					context={context}
+					status={status}
+					update={update}
+				/>
 			)}
 		</main>
 	);

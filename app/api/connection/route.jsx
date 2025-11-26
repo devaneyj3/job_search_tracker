@@ -3,7 +3,7 @@ import {
 	getConnectionsByUserId,
 	createNewConnection,
 	deleteConnection,
-	updateConnection,
+	updateConnectionStatus,
 } from "@/lib/services/contacts";
 
 // GET /api/connection?userId=123
@@ -87,15 +87,15 @@ export async function DELETE(req) {
 
 export async function PUT(req) {
 	try {
-		const { connectionId, userId, updateData } = await req.json();
-		const updatedConnection = await updateConnection(
+		const { connectionId, status } = await req.json();
+		const updatedConnection = await updateConnectionStatus(
 			connectionId,
-			userId,
-			updateData
+			status
 		);
+
 		return NextResponse.json({
 			success: true,
-			id: `Change connection id: ${updatedConnection.id} to updated data`,
+			connection: updatedConnection,
 		});
 	} catch (error) {
 		console.log("Error updating connection");
