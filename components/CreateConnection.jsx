@@ -23,9 +23,9 @@ import {
 } from "@/components/ui/select";
 import { connectionStatus } from "@/Constants";
 import { toast } from "sonner";
-import { useJob } from "@/context/jobContext";
 import { outreachFormSchema } from "@/lib/outreachSchema";
 import { outreachKeys } from "@/lib/outreachKeys";
+import { useConnection } from "@/context/connectionContext";
 
 // helper: fetch field config by name from connectionKeys
 function getCfg(name) {
@@ -36,7 +36,7 @@ function getCfg(name) {
 }
 
 export default function CreateConnection({ setInvoiceDialogOpen }) {
-	const { createJob, createCalendarEvent, sendEmail } = useJob();
+	const { createConnection, createCalendarEvent, sendEmail } = useConnection();
 	const form = useForm({
 		resolver: zodResolver(outreachFormSchema),
 		defaultValues: {
@@ -46,10 +46,6 @@ export default function CreateConnection({ setInvoiceDialogOpen }) {
 			position: "",
 			linkedinUrl: "",
 			status: "Connected",
-			statusDate: "",
-			emailSent: "",
-			firstEmailDate: "",
-			emailCount: "",
 			notes: "",
 		},
 		mode: "onBlur",
@@ -57,32 +53,8 @@ export default function CreateConnection({ setInvoiceDialogOpen }) {
 
 	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
-		const hasContact = Boolean(values.contactEmail?.trim());
-
-		// Choose one format and stick with it:
-		// If your DB uses Prisma DateTime, pass a Date object.
-		const lastContacted = hasContact ? new Date() : null;
-
-		// Build one payload
-		const jobPayload = {
-			...values,
-			lastContactedDate: lastContacted, // Date (preferred for Prisma)
-			initialContactEmailSent: hasContact, // boolean
-		};
 		try {
-			const job = await createJob(jobPayload);
-
-			// 2) Optional side effects if contact email exists
-			if (hasContact) {
-				// If these don't depend on each other, do them in parallel:
-				await Promise.allSettled([
-					sendEmail(values), // or sendEmail({ ...values, jobId: job.id })
-					createCalendarEvent(job), // needs the created job
-				]);
-				toast("Application has been created and email sent!", {
-					action: { label: "Close", onClick: () => {} },
-				});
-			}
+			await createConnection(values);
 
 			toast("Application has been created", {
 				action: { label: "Close", onClick: () => {} },

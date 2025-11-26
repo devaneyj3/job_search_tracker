@@ -118,24 +118,24 @@ model Connection {
   id                Int          @id @default(autoincrement())
   userId            String       @db.Uuid
   name              String
-  email             String?
-  company           String?
-  position          String?
-  linkedinUrl       String?
+  email             String
+  company           String
+  position          String
+  linkedinUrl       String
   connectedDate     DateTime?    @default(now()) @db.Timestamp(6)
   status            String
   statusDate        DateTime?
-  emailSent         Boolean      @default(false)
-  firstEmailDate    DateTime?    @db.Timestamp(6)
-  lastEmailDate     DateTime?    @db.Timestamp(6)
-  emailCount        Int          @default(0)
-  responded         Boolean      @default(false)
+  emailSent         Boolean?      @default(false)
+  firstEmailDate    DateTime?    @default(now()) @db.Timestamp(6)
+  lastEmailDate     DateTime?    @default(now()) @db.Timestamp(6)
+  emailCount        Int?          @default(0)
+  responded         Boolean?      @default(false)
   responseDate      DateTime?    @db.Timestamp(6)
   notes             String?
-  archived          Boolean      @default(false)
+  archived          Boolean?      @default(false)
   archivedDate      DateTime?    @db.Timestamp(6)
-  createdAt         DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt         DateTime     @updatedAt
+  createdAt         DateTime?     @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime?     @default(now()) @db.Timestamp(6)
   user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
