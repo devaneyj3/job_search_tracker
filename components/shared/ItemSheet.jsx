@@ -112,20 +112,16 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						<p className={styles.position}>{item.position}</p>
 					)}
 					<div className={styles.badge}>
-						{isJob ? (
-							<Badge
-								className={
-									item.status === "Rejected" ? styles.red : styles.status
-								}>
-								{item.status} on {date}
-							</Badge>
-						) : (
-							<Badge className={styles.status}>Connected on {date}</Badge>
-						)}
+						<Badge
+							className={
+								item.status === "Rejected" ? styles.red : styles.status
+							}>
+							{item.status} on {date}
+						</Badge>
 					</div>
-					{isJob && (
-						<StatusSelect id={item.id} status={status} update={update} />
-					)}
+
+					<StatusSelect id={item.id} status={status} update={update} />
+
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
 							<Label htmlFor="contactName">Contact Name: </Label>
