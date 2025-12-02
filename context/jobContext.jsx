@@ -188,10 +188,13 @@ export const JobItemProvider = ({ children }) => {
 					status,
 				}),
 			});
-
+			const data = await response.json();
+			const { archived, dateArcived } = data;
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
 			setJobs((prevJobs) =>
-				prevJobs.map((job) => (job.id === jobId ? { ...job, status } : job))
+				prevJobs.map((job) =>
+					job.id === jobId ? { ...job, status, archived, dateArcived } : job
+				)
 			);
 
 			setSelectedJob((prev) => ({ ...prev, status }));
@@ -199,7 +202,6 @@ export const JobItemProvider = ({ children }) => {
 
 		[session?.user?.id]
 	);
-
 	const values = useMemo(
 		() => ({
 			jobs,

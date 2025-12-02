@@ -93,7 +93,9 @@ export async function PUT(req) {
 		const updatedJob = await updateJobStatus(jobId, status);
 		return NextResponse.json({
 			success: true,
-			id: `Change job id: ${updatedJob.id} to status: ${updatedJob.status}`,
+			message: `Change job id: ${updatedJob.id} to status: ${updatedJob.status}`,
+			archived: updatedJob.archived,
+			dateArchived: updatedJob.dateArchive,
 		});
 	} catch (error) {
 		console.log("Error updating job");
