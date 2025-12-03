@@ -19,6 +19,7 @@ export default function Connections({
 		noItemMsg: connectionContext.noConnectionMsg,
 		sendEmail: connectionContext.sendEmail,
 		update: connectionContext.updateConnectionStatus,
+		updateConnectionFields: connectionContext.updateConnectionFields,
 		modalOpen: connectionContext.modalOpen,
 	};
 

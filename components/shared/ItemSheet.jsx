@@ -1,7 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
 	Sheet,
 	SheetClose,
@@ -17,6 +19,7 @@ import {
 	Currency,
 	ExternalLink,
 	Linkedin,
+	Pencil,
 } from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/lib/utils";
@@ -25,10 +28,127 @@ import DeleteItemButton from "./DeleteItemButton";
 import { Badge } from "@/components/ui/badge";
 import { StatusSelect } from "./StatusSelect";
 import moment from "moment";
+import { toast } from "sonner";
 
 export default function ItemSheet({ item, type = "job", context, status }) {
-	const { modalOpen, setModalOpen, sendEmail, update } = context;
+	const {
+		modalOpen,
+		setModalOpen,
+		sendEmail,
+		update,
+		updateJobFields,
+		updateConnectionFields,
+	} = context;
 	const isJob = type === "job";
+	const [isEditing, setIsEditing] = useState(false);
+
+	// Form state for editing
+	const [formData, setFormData] = useState({
+		// Job fields
+		jobTitle: item.jobTitle || "",
+		companyName: item.companyName || "",
+		jobUrl: item.jobUrl || "",
+		salary: item.salary || "",
+		location: item.location || "",
+		contactName: item.contactName || "",
+		contactEmail: item.contactEmail || "",
+		jobDescription: item.jobDescription || "",
+		// Connection fields
+		name: item.name || "",
+		email: item.email || "",
+		company: item.company || "",
+		position: item.position || "",
+		linkedinUrl: item.linkedinUrl || "",
+		notes: item.notes || "",
+	});
+
+	// Update form data when item changes
+	useEffect(() => {
+		setFormData({
+			// Job fields
+			jobTitle: item.jobTitle || "",
+			companyName: item.companyName || "",
+			jobUrl: item.jobUrl || "",
+			salary: item.salary || "",
+			location: item.location || "",
+			contactName: item.contactName || "",
+			contactEmail: item.contactEmail || "",
+			jobDescription: item.jobDescription || "",
+			// Connection fields
+			name: item.name || "",
+			email: item.email || "",
+			company: item.company || "",
+			position: item.position || "",
+			linkedinUrl: item.linkedinUrl || "",
+			notes: item.notes || "",
+		});
+	}, [item]);
+
+	const handleInputChange = (field, value) => {
+		setFormData((prev) => ({ ...prev, [field]: value }));
+	};
+
+	const handleSave = async () => {
+		try {
+			const updateFunction = isJob ? updateJobFields : updateConnectionFields;
+
+			if (!updateFunction) {
+				toast.error("Update function not available");
+				return;
+			}
+
+			const id = item.id;
+
+			// Prepare data based on type
+			const dataToUpdate = isJob
+				? {
+						jobTitle: formData.jobTitle,
+						companyName: formData.companyName,
+						jobUrl: formData.jobUrl,
+						salary: formData.salary,
+						location: formData.location,
+						contactName: formData.contactName,
+						contactEmail: formData.contactEmail,
+						jobDescription: formData.jobDescription,
+				  }
+				: {
+						name: formData.name,
+						email: formData.email,
+						company: formData.company,
+						position: formData.position,
+						linkedinUrl: formData.linkedinUrl,
+						notes: formData.notes,
+				  };
+
+			await updateFunction(id, dataToUpdate);
+			toast.success(`${isJob ? "Job" : "Connection"} updated successfully`);
+			setIsEditing(false);
+		} catch (error) {
+			console.error("Error updating:", error);
+			toast.error("Failed to update. Please try again.");
+		}
+	};
+
+	const handleCancel = () => {
+		// Reset form data to original item values
+		setFormData({
+			jobTitle: item.jobTitle || "",
+			companyName: item.companyName || "",
+			jobUrl: item.jobUrl || "",
+			salary: item.salary || "",
+			location: item.location || "",
+			contactName: item.contactName || "",
+			contactEmail: item.contactEmail || "",
+			jobDescription: item.jobDescription || "",
+			name: item.name || "",
+			email: item.email || "",
+			company: item.company || "",
+			position: item.position || "",
+			linkedinUrl: item.linkedinUrl || "",
+			notes: item.notes || "",
+		});
+		setIsEditing(false);
+	};
 
 	// Get dates based on type
 	const date = isJob
@@ -67,49 +187,144 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
 				<SheetHeader>
 					<div className={styles.itemTitleContainer}>
-						<SheetTitle className={styles.itemTitle}>{title}</SheetTitle>
-						<DeleteItemButton
-							id={item.id}
-							type={type}
-							companyInfoId={item.companyInfoId}
-						/>
+						<SheetTitle className={styles.itemTitle}>
+							{isEditing ? (
+								isJob ? (
+									<Input
+										value={formData.jobTitle}
+										onChange={(e) =>
+											handleInputChange("jobTitle", e.target.value)
+										}
+										placeholder={item.jobTitle || "Job Title"}
+										className="text-lg font-semibold"
+									/>
+								) : (
+									<Input
+										value={formData.name}
+										onChange={(e) => handleInputChange("name", e.target.value)}
+										placeholder={item.name || "Name"}
+										className="text-lg font-semibold"
+									/>
+								)
+							) : (
+								title
+							)}
+						</SheetTitle>
+						<div style={{ display: "flex", gap: "8px" }}>
+							<Button
+								variant="outline"
+								size="icon"
+								onClick={() => setIsEditing(!isEditing)}>
+								<Pencil size={16} />
+							</Button>
+							<DeleteItemButton
+								id={item.id}
+								type={type}
+								companyInfoId={item.companyInfoId}
+							/>
+						</div>
 					</div>
-					{isJob && item.jobUrl && (
-						<p className={styles.itemPosting}>
+					{isJob && (
+						<div className={styles.itemPosting}>
 							<ExternalLink size={15} className={styles.icon} />
-							<Link href={item.jobUrl} target="_blank">
-								Go to Job Posting
-							</Link>
-						</p>
-					)}
-					{!isJob && item.linkedinUrl && (
-						<p className={styles.itemPosting}>
-							<Linkedin size={15} className={styles.icon} />
-							<Link href={item.linkedinUrl} target="_blank">
-								View LinkedIn Profile
-							</Link>
-						</p>
-					)}
-					{isJob && item.salary && (
-						<div className={styles.salary}>
-							<Currency size={15} className={styles.icon} />
-							{item.salary}
+							{isEditing ? (
+								<Input
+									value={formData.jobUrl}
+									onChange={(e) => handleInputChange("jobUrl", e.target.value)}
+									placeholder={item.jobUrl || "Job URL"}
+									type="url"
+								/>
+							) : item.jobUrl ? (
+								<Link href={item.jobUrl} target="_blank">
+									Go to Job Posting
+								</Link>
+							) : null}
 						</div>
 					)}
-					{(item.companyName || item.company) && (
-						<p className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.companyName || item.company}
-						</p>
+					{!isJob && (
+						<div className={styles.itemPosting}>
+							<Linkedin size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.linkedinUrl}
+									onChange={(e) =>
+										handleInputChange("linkedinUrl", e.target.value)
+									}
+									placeholder={item.linkedinUrl || "LinkedIn URL"}
+									type="url"
+								/>
+							) : item.linkedinUrl ? (
+								<Link href={item.linkedinUrl} target="_blank">
+									View LinkedIn Profile
+								</Link>
+							) : null}
+						</div>
 					)}
-					{isJob && item.location && (
-						<p className={styles.location}>
+					{isJob && (
+						<div className={styles.salary}>
+							<Currency size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.salary}
+									onChange={(e) => handleInputChange("salary", e.target.value)}
+									placeholder={item.salary || "Salary"}
+								/>
+							) : (
+								item.salary
+							)}
+						</div>
+					)}
+					<div className={styles.company}>
+						<Building size={15} className={styles.icon} />
+						{isEditing ? (
+							<Input
+								value={isJob ? formData.companyName : formData.company}
+								onChange={(e) =>
+									handleInputChange(
+										isJob ? "companyName" : "company",
+										e.target.value
+									)
+								}
+								placeholder={
+									isJob
+										? item.companyName || "Company Name"
+										: item.company || "Company"
+								}
+							/>
+						) : (
+							item.companyName || item.company
+						)}
+					</div>
+					{isJob && (
+						<div className={styles.location}>
 							<MapPinned size={15} className={styles.icon} />
-							{item.location}
-						</p>
+							{isEditing ? (
+								<Input
+									value={formData.location}
+									onChange={(e) =>
+										handleInputChange("location", e.target.value)
+									}
+									placeholder={item.location || "Location"}
+								/>
+							) : (
+								item.location
+							)}
+						</div>
 					)}
-					{!isJob && item.position && (
-						<p className={styles.position}>{item.position}</p>
+					{!isJob && (
+						<div className={styles.position}>
+							{isEditing ? (
+								<Input
+									value={formData.position}
+									onChange={(e) =>
+										handleInputChange("position", e.target.value)
+									}
+									placeholder={item.position || "Position"}
+								/>
+							) : (
+								item.position
+							)}
+						</div>
 					)}
 					<div className={styles.badge}>
 						<Badge
@@ -125,15 +340,52 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
 							<Label htmlFor="contactName">Contact Name: </Label>
-							<p id="contactName">
-								{item.contactName || item.name || "Not Set"}
-							</p>
+							{isEditing ? (
+								<Input
+									id="contactName"
+									value={isJob ? formData.contactName : formData.name}
+									onChange={(e) =>
+										handleInputChange(
+											isJob ? "contactName" : "name",
+											e.target.value
+										)
+									}
+									placeholder={
+										isJob
+											? item.contactName || "Contact Name"
+											: item.name || "Name"
+									}
+								/>
+							) : (
+								<p id="contactName">
+									{item.contactName || item.name || "Not Set"}
+								</p>
+							)}
 						</div>
 						<div className={styles.contact}>
 							<Label htmlFor="contactEmail">Contact Email: </Label>
-							<p id="contactEmail">
-								{item.contactEmail || item.email || "Not Set"}
-							</p>
+							{isEditing ? (
+								<Input
+									id="contactEmail"
+									type="email"
+									value={isJob ? formData.contactEmail : formData.email}
+									onChange={(e) =>
+										handleInputChange(
+											isJob ? "contactEmail" : "email",
+											e.target.value
+										)
+									}
+									placeholder={
+										isJob
+											? item.contactEmail || "Contact Email"
+											: item.email || "Email"
+									}
+								/>
+							) : (
+								<p id="contactEmail">
+									{item.contactEmail || item.email || "Not Set"}
+								</p>
+							)}
 						</div>
 						{isJob && item.heard_back !== true && (
 							<>
@@ -220,20 +472,57 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 							</>
 						)}
 					</div>
-					{description && (
-						<SheetDescription className={styles.itemDescription}>
-							{description}
-						</SheetDescription>
+					{isEditing ? (
+						<div className={styles.contact}>
+							<Label htmlFor="description">
+								{isJob ? "Job Description" : "Notes"}:{" "}
+							</Label>
+							<Textarea
+								id="description"
+								value={isJob ? formData.jobDescription : formData.notes}
+								onChange={(e) =>
+									handleInputChange(
+										isJob ? "jobDescription" : "notes",
+										e.target.value
+									)
+								}
+								placeholder={
+									isJob
+										? item.jobDescription || "Job Description"
+										: item.notes || "Notes"
+								}
+								rows={6}
+							/>
+						</div>
+					) : (
+						description && (
+							<SheetDescription className={styles.itemDescription}>
+								{description}
+							</SheetDescription>
+						)
 					)}
 				</SheetHeader>
 
 				<SheetFooter>
-					<Button type="submit" onClick={() => setModalOpen(false)}>
-						Save changes
-					</Button>
-					<SheetClose asChild>
-						<Button variant="outline">Close</Button>
-					</SheetClose>
+					{isEditing ? (
+						<>
+							<Button type="submit" onClick={handleSave}>
+								Save changes
+							</Button>
+							<Button variant="outline" onClick={handleCancel}>
+								Cancel
+							</Button>
+						</>
+					) : (
+						<>
+							<Button type="submit" onClick={() => setModalOpen(false)}>
+								Close
+							</Button>
+							<SheetClose asChild>
+								<Button variant="outline">Close</Button>
+							</SheetClose>
+						</>
+					)}
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>

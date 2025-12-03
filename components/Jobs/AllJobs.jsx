@@ -14,6 +14,7 @@ export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 		items: jobContext.jobs,
 		noItemMsg: jobContext.noJobMsg,
 		update: jobContext.updateJobStatus,
+		updateJobFields: jobContext.updateJobFields,
 		sendEmail: jobContext.sendEmail,
 		modalOpen: jobContext.modalOpen,
 	};

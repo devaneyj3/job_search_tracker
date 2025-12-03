@@ -208,6 +208,33 @@ export const JobItemProvider = ({ children }) => {
 
 		[session?.user?.id]
 	);
+
+	const updateJobFields = useCallback(
+		async (jobId, data) => {
+			const response = await fetch("/api/job", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					jobId,
+					data,
+				}),
+			});
+
+			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			const result = await response.json();
+			const updatedJob = result.job;
+
+			setJobs((prevJobs) =>
+				prevJobs.map((job) => (job.id === jobId ? updatedJob : job))
+			);
+
+			setSelectedJob((prev) => (prev && prev.id === jobId ? updatedJob : prev));
+
+			return updatedJob;
+		},
+		[session?.user?.id]
+	);
+
 	const values = useMemo(
 		() => ({
 			jobs,
@@ -224,6 +251,7 @@ export const JobItemProvider = ({ children }) => {
 			error,
 			isLoading,
 			updateJobStatus,
+			updateJobFields,
 		}),
 		[
 			jobs,
@@ -236,6 +264,7 @@ export const JobItemProvider = ({ children }) => {
 			error,
 			isLoading,
 			updateJobStatus,
+			updateJobFields,
 		]
 	);
 	return (

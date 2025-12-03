@@ -208,6 +208,37 @@ export const ConnectionProvider = ({ children }) => {
 
 		[session?.user?.id]
 	);
+
+	const updateConnectionFields = useCallback(
+		async (connectionId, data) => {
+			const response = await fetch("/api/connection", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					connectionId,
+					data,
+				}),
+			});
+
+			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			const result = await response.json();
+			const updatedConnection = result.connection;
+
+			setConnections((prevConnections) =>
+				prevConnections.map((connection) =>
+					connection.id === connectionId ? updatedConnection : connection
+				)
+			);
+
+			setSelectedConnection((prev) =>
+				prev && prev.id === connectionId ? updatedConnection : prev
+			);
+
+			return updatedConnection;
+		},
+		[session?.user?.id]
+	);
+
 	const values = useMemo(
 		() => ({
 			connections,
@@ -224,6 +255,7 @@ export const ConnectionProvider = ({ children }) => {
 			error,
 			isLoading,
 			updateConnectionStatus,
+			updateConnectionFields,
 		}),
 		[
 			connections,
@@ -236,6 +268,7 @@ export const ConnectionProvider = ({ children }) => {
 			error,
 			isLoading,
 			updateConnectionStatus,
+			updateConnectionFields,
 		]
 	);
 	return (

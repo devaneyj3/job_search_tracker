@@ -4,6 +4,7 @@ import {
 	createJobApplication,
 	deleteJobApplication,
 	updateJobStatus,
+	updateJobApplication,
 } from "@/lib/services/jobs";
 
 // GET /api/job?userId=123
@@ -103,6 +104,26 @@ export async function PUT(req) {
 			{
 				success: false,
 				error: "Error Updating job status",
+			},
+			{ status: 500 }
+		);
+	}
+}
+
+export async function PATCH(req) {
+	try {
+		const { jobId, data } = await req.json();
+		const updatedJob = await updateJobApplication(jobId, data);
+		return NextResponse.json({
+			success: true,
+			job: updatedJob,
+		});
+	} catch (error) {
+		console.error("Error updating job:", error);
+		return NextResponse.json(
+			{
+				success: false,
+				error: "Failed to update job",
 			},
 			{ status: 500 }
 		);

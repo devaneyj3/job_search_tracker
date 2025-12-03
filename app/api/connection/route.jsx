@@ -4,6 +4,7 @@ import {
 	createNewConnection,
 	deleteConnection,
 	updateConnectionStatus,
+	updateConnectionFields,
 } from "@/lib/services/contacts";
 
 // GET /api/connection?userId=123
@@ -103,6 +104,26 @@ export async function PUT(req) {
 			{
 				success: false,
 				error: "Error Updating connection status",
+			},
+			{ status: 500 }
+		);
+	}
+}
+
+export async function PATCH(req) {
+	try {
+		const { connectionId, data } = await req.json();
+		const updatedConnection = await updateConnectionFields(connectionId, data);
+		return NextResponse.json({
+			success: true,
+			connection: updatedConnection,
+		});
+	} catch (error) {
+		console.error("Error updating connection:", error);
+		return NextResponse.json(
+			{
+				success: false,
+				error: "Failed to update connection",
 			},
 			{ status: 500 }
 		);
