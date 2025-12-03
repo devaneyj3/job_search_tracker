@@ -102,7 +102,7 @@ export async function PUT(req) {
 		return NextResponse.json(
 			{
 				success: false,
-				error: "Error Updating connection",
+				error: "Error Updating connection status",
 			},
 			{ status: 500 }
 		);

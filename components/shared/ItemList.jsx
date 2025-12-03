@@ -18,6 +18,7 @@ export default function ItemList({
 	const { selectedItem, items, noItemMsg, update } = context;
 	const displayTitle =
 		title || (type === "job" ? "TOTAL JOBS" : "TOTAL CONNECTIONS");
+	console.log(items)
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>

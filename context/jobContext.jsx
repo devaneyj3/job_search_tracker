@@ -188,16 +188,22 @@ export const JobItemProvider = ({ children }) => {
 					status,
 				}),
 			});
-			const data = await response.json();
-			const { archived, dateArcived } = data;
+
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			const data = await response.json();
+			const { archived, dateArchived } = data;
+
 			setJobs((prevJobs) =>
 				prevJobs.map((job) =>
-					job.id === jobId ? { ...job, status, archived, dateArcived } : job
+					job.id === jobId ? { ...job, status, archived, dateArchived } : job
 				)
 			);
 
-			setSelectedJob((prev) => ({ ...prev, status }));
+			setSelectedJob((prev) =>
+				prev && prev.id === jobId
+					? { ...prev, status, archived, dateArchived }
+					: prev
+			);
 		},
 
 		[session?.user?.id]

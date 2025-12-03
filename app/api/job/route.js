@@ -95,7 +95,7 @@ export async function PUT(req) {
 			success: true,
 			message: `Change job id: ${updatedJob.id} to status: ${updatedJob.status}`,
 			archived: updatedJob.archived,
-			dateArchived: updatedJob.dateArchive,
+			dateArchived: updatedJob.dateArchived,
 		});
 	} catch (error) {
 		console.log("Error updating job");

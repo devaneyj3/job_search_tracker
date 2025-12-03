@@ -208,7 +208,6 @@ export const ConnectionProvider = ({ children }) => {
 
 		[session?.user?.id]
 	);
-
 	const values = useMemo(
 		() => ({
 			connections,
