@@ -13,15 +13,15 @@ export default function Connections({
 	// Map connection context to generic context format
 	const context = useMemo(
 		() => ({
-			selectedItem: connectionContext.selectedConnection,
-			setSelectedItem: connectionContext.setSelectedConnection,
-			setModalOpen: connectionContext.setModalOpen,
-			items: connectionContext.connections,
-			noItemMsg: connectionContext.noConnectionMsg,
-			sendEmail: connectionContext.sendEmail,
-			update: connectionContext.updateConnectionStatus,
+		selectedItem: connectionContext.selectedConnection,
+		setSelectedItem: connectionContext.setSelectedConnection,
+		setModalOpen: connectionContext.setModalOpen,
+		items: connectionContext.connections,
+		noItemMsg: connectionContext.noConnectionMsg,
+		sendEmail: connectionContext.sendEmail,
+		update: connectionContext.updateConnectionStatus,
 			updateConnectionFields: connectionContext.updateConnectionFields,
-			modalOpen: connectionContext.modalOpen,
+		modalOpen: connectionContext.modalOpen,
 		}),
 		[
 			connectionContext.selectedConnection,
