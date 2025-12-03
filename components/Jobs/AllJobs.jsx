@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useJob } from "@/context/jobContext";
 import ItemList from "@/components/shared/ItemList";
 import { jobStatus } from "@/Constants";
@@ -6,18 +6,31 @@ import { jobStatus } from "@/Constants";
 export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 	const jobContext = useJob();
 
-	// Map job context to generic context format
-	const context = {
-		selectedItem: jobContext.selectedJob,
-		setSelectedItem: jobContext.setSelectedJob,
-		setModalOpen: jobContext.setModalOpen,
-		items: jobContext.jobs,
-		noItemMsg: jobContext.noJobMsg,
-		update: jobContext.updateJobStatus,
-		updateJobFields: jobContext.updateJobFields,
-		sendEmail: jobContext.sendEmail,
-		modalOpen: jobContext.modalOpen,
-	};
+	// In AllJobs.jsx
+	const context = useMemo(
+		() => ({
+			selectedItem: jobContext.selectedJob,
+			setSelectedItem: jobContext.setSelectedJob,
+			setModalOpen: jobContext.setModalOpen,
+			items: jobContext.jobs,
+			noItemMsg: jobContext.noJobMsg,
+			update: jobContext.updateJobStatus,
+			updateJobFields: jobContext.updateJobFields,
+			sendEmail: jobContext.sendEmail,
+			modalOpen: jobContext.modalOpen,
+		}),
+		[
+			jobContext.selectedJob,
+			jobContext.setSelectedJob,
+			jobContext.setModalOpen,
+			jobContext.jobs,
+			jobContext.noJobMsg,
+			jobContext.updateJobStatus,
+			jobContext.updateJobFields,
+			jobContext.sendEmail,
+			jobContext.modalOpen,
+		]
+	);
 
 	return (
 		<ItemList

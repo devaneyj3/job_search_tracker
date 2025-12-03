@@ -210,13 +210,14 @@ export const JobItemProvider = ({ children }) => {
 	);
 
 	const updateJobFields = useCallback(
-		async (jobId, data) => {
+		async (jobId, data, originalEmail) => {
 			const response = await fetch("/api/job", {
 				method: "PATCH",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					jobId,
 					data,
+					originalEmail,
 				}),
 			});
 

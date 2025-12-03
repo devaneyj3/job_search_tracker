@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styles from "@/styles/ItemList.module.scss";
 import ItemBox from "./ItemBox";
 import CreateApplicationButton from "@/components/Header/CreateApplicationButton";
@@ -6,7 +6,7 @@ import CreateConnectionButton from "@/components/Outreach/CreateConnectionButton
 import ItemSheet from "./ItemSheet";
 import { Button } from "@/components/ui/button";
 
-export default function ItemList({
+const ItemList = memo(function ItemList({
 	filteredItems,
 	statuses,
 	setChosenStatus,
@@ -18,7 +18,6 @@ export default function ItemList({
 	const { selectedItem, items, noItemMsg, update } = context;
 	const displayTitle =
 		title || (type === "job" ? "TOTAL JOBS" : "TOTAL CONNECTIONS");
-	console.log(items)
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
@@ -46,10 +45,10 @@ export default function ItemList({
 				</div>
 			)}
 			{!noItemMsg && items.length > 0 ? (
-				filteredItems.map((item, index) => {
+				filteredItems.map((item) => {
 					return (
 						<ItemBox
-							key={index}
+							key={item.id}
 							item={item}
 							type={type}
 							context={context}
@@ -72,4 +71,6 @@ export default function ItemList({
 			)}
 		</main>
 	);
-}
+});
+
+export default ItemList;

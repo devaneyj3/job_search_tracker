@@ -120,7 +120,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						notes: formData.notes,
 				  };
 
-			await updateFunction(id, dataToUpdate);
+			await updateFunction(id, dataToUpdate, item.contactEmail);
 			toast.success(`${isJob ? "Job" : "Connection"} updated successfully`);
 			setIsEditing(false);
 		} catch (error) {

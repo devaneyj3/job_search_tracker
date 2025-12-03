@@ -112,8 +112,8 @@ export async function PUT(req) {
 
 export async function PATCH(req) {
 	try {
-		const { jobId, data } = await req.json();
-		const updatedJob = await updateJobApplication(jobId, data);
+		const { jobId, data, originalEmail } = await req.json();
+		const updatedJob = await updateJobApplication(jobId, data, originalEmail);
 		return NextResponse.json({
 			success: true,
 			job: updatedJob,

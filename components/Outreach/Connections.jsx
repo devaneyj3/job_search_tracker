@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useConnection } from "@/context/connectionContext";
 import ItemList from "@/components/shared/ItemList";
 import { connectionStatus } from "@/Constants";
@@ -11,17 +11,30 @@ export default function Connections({
 	const connectionContext = useConnection();
 
 	// Map connection context to generic context format
-	const context = {
-		selectedItem: connectionContext.selectedConnection,
-		setSelectedItem: connectionContext.setSelectedConnection,
-		setModalOpen: connectionContext.setModalOpen,
-		items: connectionContext.connections,
-		noItemMsg: connectionContext.noConnectionMsg,
-		sendEmail: connectionContext.sendEmail,
-		update: connectionContext.updateConnectionStatus,
-		updateConnectionFields: connectionContext.updateConnectionFields,
-		modalOpen: connectionContext.modalOpen,
-	};
+	const context = useMemo(
+		() => ({
+			selectedItem: connectionContext.selectedConnection,
+			setSelectedItem: connectionContext.setSelectedConnection,
+			setModalOpen: connectionContext.setModalOpen,
+			items: connectionContext.connections,
+			noItemMsg: connectionContext.noConnectionMsg,
+			sendEmail: connectionContext.sendEmail,
+			update: connectionContext.updateConnectionStatus,
+			updateConnectionFields: connectionContext.updateConnectionFields,
+			modalOpen: connectionContext.modalOpen,
+		}),
+		[
+			connectionContext.selectedConnection,
+			connectionContext.setSelectedConnection,
+			connectionContext.setModalOpen,
+			connectionContext.connections,
+			connectionContext.noConnectionMsg,
+			connectionContext.sendEmail,
+			connectionContext.updateConnectionStatus,
+			connectionContext.updateConnectionFields,
+			connectionContext.modalOpen,
+		]
+	);
 
 	return (
 		<ItemList
