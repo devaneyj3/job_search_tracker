@@ -16,9 +16,9 @@ export default function FormDialog({
 	dialogTitle,
 	formComponent: FormComponent,
 }) {
-	const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false);
+	const [dialogOpen, setDialogOpen] = useState(false);
 	return (
-		<Dialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen}>
+		<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
 			<DialogTrigger asChild>
 				<Button variant="primary" className={styles.btn}>
 					{buttonText}
@@ -28,7 +28,7 @@ export default function FormDialog({
 				<DialogHeader>
 					<DialogTitle className={styles.title}>{dialogTitle}</DialogTitle>
 					<DialogDescription className={styles.subtitle}></DialogDescription>
-					<FormComponent setInvoiceDialogOpen={setInvoiceDialogOpen} />
+					<FormComponent setDialogOpen={setDialogOpen} />
 				</DialogHeader>
 			</DialogContent>
 		</Dialog>

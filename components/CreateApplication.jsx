@@ -24,8 +24,8 @@ import {
 import { jobKeys } from "@/lib/formKeys";
 import { formSchema } from "@/lib/formSchema";
 import { jobStatus, contactPosition } from "@/Constants";
-import { toast } from "sonner";
 import { useJob } from "@/context/jobContext";
+import { processJobSubmission } from "@/lib/processJobSubmission";
 
 // helper: fetch field config by name from jobKeys
 function getCfg(name) {
@@ -34,7 +34,7 @@ function getCfg(name) {
 	return cfg;
 }
 
-export default function CreateApplication({ setInvoiceDialogOpen }) {
+export default function CreateApplication({ setDialogOpen }) {
 	const { createJob, createCalendarEvent, sendEmail } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),
@@ -57,46 +57,14 @@ export default function CreateApplication({ setInvoiceDialogOpen }) {
 
 	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
-		const hasContact = Boolean(values.contactEmail?.trim());
-
-		// Choose one format and stick with it:
-		// If your DB uses Prisma DateTime, pass a Date object.
-		const lastContacted = hasContact ? new Date() : null;
-
-		// Build one payload
-		const jobPayload = {
-			...values,
-			lastContactedDate: lastContacted, // Date (preferred for Prisma)
-			initialContactEmailSent: hasContact, // boolean
+		const jobObj = {
+			createFn: createJob,
+			sendEmail,
+			createCalendarEvent,
+			values,
+			setDialogOpen,
 		};
-		try {
-			const job = await createJob(jobPayload);
-
-			// 2) Optional side effects if contact email exists
-			if (hasContact) {
-				// If these don't depend on each other, do them in parallel:
-				await Promise.allSettled([
-					sendEmail(values), // or sendEmail({ ...values, jobId: job.id })
-					createCalendarEvent(job), // needs the created job
-				]);
-				toast("Application has been created and email sent!", {
-					action: { label: "Close", onClick: () => {} },
-				});
-			}
-
-			toast("Application has been created", {
-				action: { label: "Close", onClick: () => {} },
-			});
-			setInvoiceDialogOpen(false);
-		} catch (error) {
-			console.error("Error in onSubmit:", error);
-			toast(
-				"Application created, but failed to send email. Please try again.",
-				{
-					action: { label: "Close", onClick: () => {} },
-				}
-			);
-		}
+		await processJobSubmission(jobObj);
 	}
 
 	const RenderField = ({ name }) => {
