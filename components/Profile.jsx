@@ -7,8 +7,6 @@ import styles from "@/styles/Profile.module.scss";
 export default function Profile() {
 	const { data: session } = useSession();
 
-	console.log(session);
-
 	return (
 		<div className={styles.container}>
 			{session?.user?.image && (

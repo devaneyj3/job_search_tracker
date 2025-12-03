@@ -38,6 +38,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 		update,
 		updateJobFields,
 		updateConnectionFields,
+		createCalendarEvent,
 	} = context;
 	const isJob = type === "job";
 	const [isEditing, setIsEditing] = useState(false);
@@ -53,6 +54,8 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 		contactName: item.contactName || "",
 		contactEmail: item.contactEmail || "",
 		jobDescription: item.jobDescription || "",
+		skill1: item.skill1 || "",
+		skill2: item.skill2 || "",
 		// Connection fields
 		name: item.name || "",
 		email: item.email || "",
@@ -74,6 +77,8 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 			contactName: item.contactName || "",
 			contactEmail: item.contactEmail || "",
 			jobDescription: item.jobDescription || "",
+			skill1: item.skill1 || "",
+			skill2: item.skill2 || "",
 			// Connection fields
 			name: item.name || "",
 			email: item.email || "",
@@ -110,6 +115,8 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						contactName: formData.contactName,
 						contactEmail: formData.contactEmail,
 						jobDescription: formData.jobDescription,
+						skill1: formData.skill1,
+						skill2: formData.skill2,
 				  }
 				: {
 						name: formData.name,
@@ -119,8 +126,22 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						linkedinUrl: formData.linkedinUrl,
 						notes: formData.notes,
 				  };
-
-			await updateFunction(id, dataToUpdate, item.contactEmail);
+			const updatedData = await updateFunction(
+				id,
+				dataToUpdate,
+				item.contactEmail
+			);
+			// ensure that calendar is created and email is sent with data from api
+			if (updatedData.contactEmail) {
+				// If these don't depend on each other, do them in parallel:
+				await Promise.allSettled([
+					sendEmail(updatedData), // or sendEmail({ ...values, jobId: job.id })
+					createCalendarEvent(updatedData), // needs the created job
+				]);
+				toast("Application has been updated and new email sent!", {
+					action: { label: "Close", onClick: () => {} },
+				});
+			}
 			toast.success(`${isJob ? "Job" : "Connection"} updated successfully`);
 			setIsEditing(false);
 		} catch (error) {
@@ -140,6 +161,8 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 			contactName: item.contactName || "",
 			contactEmail: item.contactEmail || "",
 			jobDescription: item.jobDescription || "",
+			skill1: item.skill1 || "",
+			skill2: item.skill2 || "",
 			name: item.name || "",
 			email: item.email || "",
 			company: item.company || "",
@@ -479,6 +502,32 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 							</>
 						)}
 					</div>
+					{isEditing && isJob && (
+						<>
+							<div className={styles.contact}>
+								<Label htmlFor="skill1">Skill 1: </Label>
+								<Input
+									id="skill1"
+									value={formData.skill1}
+									onChange={(e) => handleInputChange("skill1", e.target.value)}
+									placeholder={
+										item.skill1 || "What skill can benefit the company?"
+									}
+								/>
+							</div>
+							<div className={styles.contact}>
+								<Label htmlFor="skill2">Skill 2: </Label>
+								<Input
+									id="skill2"
+									value={formData.skill2}
+									onChange={(e) => handleInputChange("skill2", e.target.value)}
+									placeholder={
+										item.skill2 || "What skill can benefit the company?"
+									}
+								/>
+							</div>
+						</>
+					)}
 					{isEditing ? (
 						<div className={styles.contact}>
 							<Label htmlFor="description">

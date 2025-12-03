@@ -99,7 +99,6 @@ export async function PUT(req) {
 			connection: updatedConnection,
 		});
 	} catch (error) {
-		console.log("Error updating connection");
 		return NextResponse.json(
 			{
 				success: false,

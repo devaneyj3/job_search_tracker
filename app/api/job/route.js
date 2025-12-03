@@ -47,6 +47,8 @@ export async function POST(req) {
 			lastContactedDate,
 			initialContactEmailSent,
 			jobDescription,
+			skill1,
+			skill2,
 		} = await req.json();
 
 		const newJob = await createJobApplication({
@@ -62,6 +64,8 @@ export async function POST(req) {
 			lastContactedDate,
 			initialContactEmailSent,
 			jobDescription,
+			skill1,
+			skill2,
 		});
 
 		return NextResponse.json({ success: true, job: newJob });
@@ -99,7 +103,6 @@ export async function PUT(req) {
 			dateArchived: updatedJob.dateArchived,
 		});
 	} catch (error) {
-		console.log("Error updating job");
 		return NextResponse.json(
 			{
 				success: false,

@@ -17,6 +17,7 @@ export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 			update: jobContext.updateJobStatus,
 			updateJobFields: jobContext.updateJobFields,
 			sendEmail: jobContext.sendEmail,
+			createCalendarEvent: jobContext.createCalendarEvent,
 			modalOpen: jobContext.modalOpen,
 		}),
 		[
@@ -29,6 +30,7 @@ export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 			jobContext.updateJobFields,
 			jobContext.sendEmail,
 			jobContext.modalOpen,
+			jobContext.createCalendarEvent,
 		]
 	);
 

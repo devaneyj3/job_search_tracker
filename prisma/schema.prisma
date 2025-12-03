@@ -86,6 +86,8 @@ model Application {
   initialContactEmailSent   Boolean?      @default(false)
   secondContactEmailSent  Boolean?      @default(false)
   jobDescription    String?
+  skill1            String?
+  skill2            String?
   interviewNotes    String?
   interviewDate     DateTime?
   offerDetails      String?

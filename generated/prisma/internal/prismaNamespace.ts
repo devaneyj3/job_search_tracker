@@ -1045,6 +1045,8 @@ export const ApplicationScalarFieldEnum = {
   initialContactEmailSent: 'initialContactEmailSent',
   secondContactEmailSent: 'secondContactEmailSent',
   jobDescription: 'jobDescription',
+  skill1: 'skill1',
+  skill2: 'skill2',
   interviewNotes: 'interviewNotes',
   interviewDate: 'interviewDate',
   offerDetails: 'offerDetails',

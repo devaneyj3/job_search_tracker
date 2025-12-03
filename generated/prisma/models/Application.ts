@@ -56,6 +56,8 @@ export type ApplicationMinAggregateOutputType = {
   initialContactEmailSent: boolean | null
   secondContactEmailSent: boolean | null
   jobDescription: string | null
+  skill1: string | null
+  skill2: string | null
   interviewNotes: string | null
   interviewDate: Date | null
   offerDetails: string | null
@@ -89,6 +91,8 @@ export type ApplicationMaxAggregateOutputType = {
   initialContactEmailSent: boolean | null
   secondContactEmailSent: boolean | null
   jobDescription: string | null
+  skill1: string | null
+  skill2: string | null
   interviewNotes: string | null
   interviewDate: Date | null
   offerDetails: string | null
@@ -122,6 +126,8 @@ export type ApplicationCountAggregateOutputType = {
   initialContactEmailSent: number
   secondContactEmailSent: number
   jobDescription: number
+  skill1: number
+  skill2: number
   interviewNotes: number
   interviewDate: number
   offerDetails: number
@@ -167,6 +173,8 @@ export type ApplicationMinAggregateInputType = {
   initialContactEmailSent?: true
   secondContactEmailSent?: true
   jobDescription?: true
+  skill1?: true
+  skill2?: true
   interviewNotes?: true
   interviewDate?: true
   offerDetails?: true
@@ -200,6 +208,8 @@ export type ApplicationMaxAggregateInputType = {
   initialContactEmailSent?: true
   secondContactEmailSent?: true
   jobDescription?: true
+  skill1?: true
+  skill2?: true
   interviewNotes?: true
   interviewDate?: true
   offerDetails?: true
@@ -233,6 +243,8 @@ export type ApplicationCountAggregateInputType = {
   initialContactEmailSent?: true
   secondContactEmailSent?: true
   jobDescription?: true
+  skill1?: true
+  skill2?: true
   interviewNotes?: true
   interviewDate?: true
   offerDetails?: true
@@ -353,6 +365,8 @@ export type ApplicationGroupByOutputType = {
   initialContactEmailSent: boolean | null
   secondContactEmailSent: boolean | null
   jobDescription: string | null
+  skill1: string | null
+  skill2: string | null
   interviewNotes: string | null
   interviewDate: Date | null
   offerDetails: string | null
@@ -409,6 +423,8 @@ export type ApplicationWhereInput = {
   initialContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   secondContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   jobDescription?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill1?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill2?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewNotes?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   offerDetails?: Prisma.StringNullableFilter<"Application"> | string | null
@@ -444,6 +460,8 @@ export type ApplicationOrderByWithRelationInput = {
   initialContactEmailSent?: Prisma.SortOrderInput | Prisma.SortOrder
   secondContactEmailSent?: Prisma.SortOrderInput | Prisma.SortOrder
   jobDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  skill1?: Prisma.SortOrderInput | Prisma.SortOrder
+  skill2?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewDate?: Prisma.SortOrderInput | Prisma.SortOrder
   offerDetails?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -483,6 +501,8 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   initialContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   secondContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   jobDescription?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill1?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill2?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewNotes?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   offerDetails?: Prisma.StringNullableFilter<"Application"> | string | null
@@ -517,6 +537,8 @@ export type ApplicationOrderByWithAggregationInput = {
   initialContactEmailSent?: Prisma.SortOrderInput | Prisma.SortOrder
   secondContactEmailSent?: Prisma.SortOrderInput | Prisma.SortOrder
   jobDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  skill1?: Prisma.SortOrderInput | Prisma.SortOrder
+  skill2?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewDate?: Prisma.SortOrderInput | Prisma.SortOrder
   offerDetails?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -558,6 +580,8 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   initialContactEmailSent?: Prisma.BoolNullableWithAggregatesFilter<"Application"> | boolean | null
   secondContactEmailSent?: Prisma.BoolNullableWithAggregatesFilter<"Application"> | boolean | null
   jobDescription?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  skill1?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  skill2?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   interviewNotes?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   interviewDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
   offerDetails?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
@@ -589,6 +613,8 @@ export type ApplicationCreateInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -623,6 +649,8 @@ export type ApplicationUncheckedCreateInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -654,6 +682,8 @@ export type ApplicationUpdateInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -688,6 +718,8 @@ export type ApplicationUncheckedUpdateInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -721,6 +753,8 @@ export type ApplicationCreateManyInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -752,6 +786,8 @@ export type ApplicationUpdateManyMutationInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -784,6 +820,8 @@ export type ApplicationUncheckedUpdateManyInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -827,6 +865,8 @@ export type ApplicationCountOrderByAggregateInput = {
   initialContactEmailSent?: Prisma.SortOrder
   secondContactEmailSent?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
+  skill1?: Prisma.SortOrder
+  skill2?: Prisma.SortOrder
   interviewNotes?: Prisma.SortOrder
   interviewDate?: Prisma.SortOrder
   offerDetails?: Prisma.SortOrder
@@ -865,6 +905,8 @@ export type ApplicationMaxOrderByAggregateInput = {
   initialContactEmailSent?: Prisma.SortOrder
   secondContactEmailSent?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
+  skill1?: Prisma.SortOrder
+  skill2?: Prisma.SortOrder
   interviewNotes?: Prisma.SortOrder
   interviewDate?: Prisma.SortOrder
   offerDetails?: Prisma.SortOrder
@@ -898,6 +940,8 @@ export type ApplicationMinOrderByAggregateInput = {
   initialContactEmailSent?: Prisma.SortOrder
   secondContactEmailSent?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
+  skill1?: Prisma.SortOrder
+  skill2?: Prisma.SortOrder
   interviewNotes?: Prisma.SortOrder
   interviewDate?: Prisma.SortOrder
   offerDetails?: Prisma.SortOrder
@@ -1025,6 +1069,8 @@ export type ApplicationCreateWithoutUserInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -1057,6 +1103,8 @@ export type ApplicationUncheckedCreateWithoutUserInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -1119,6 +1167,8 @@ export type ApplicationScalarWhereInput = {
   initialContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   secondContactEmailSent?: Prisma.BoolNullableFilter<"Application"> | boolean | null
   jobDescription?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill1?: Prisma.StringNullableFilter<"Application"> | string | null
+  skill2?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewNotes?: Prisma.StringNullableFilter<"Application"> | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   offerDetails?: Prisma.StringNullableFilter<"Application"> | string | null
@@ -1150,6 +1200,8 @@ export type ApplicationCreateWithoutCompanyInfoInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -1183,6 +1235,8 @@ export type ApplicationUncheckedCreateWithoutCompanyInfoInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -1229,6 +1283,8 @@ export type ApplicationUpdateWithoutCompanyInfoInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1262,6 +1318,8 @@ export type ApplicationUncheckedUpdateWithoutCompanyInfoInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1293,6 +1351,8 @@ export type ApplicationCreateManyUserInput = {
   initialContactEmailSent?: boolean | null
   secondContactEmailSent?: boolean | null
   jobDescription?: string | null
+  skill1?: string | null
+  skill2?: string | null
   interviewNotes?: string | null
   interviewDate?: Date | string | null
   offerDetails?: string | null
@@ -1324,6 +1384,8 @@ export type ApplicationUpdateWithoutUserInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1356,6 +1418,8 @@ export type ApplicationUncheckedUpdateWithoutUserInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1388,6 +1452,8 @@ export type ApplicationUncheckedUpdateManyWithoutUserInput = {
   initialContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   secondContactEmailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   jobDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skill2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   offerDetails?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1423,6 +1489,8 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   initialContactEmailSent?: boolean
   secondContactEmailSent?: boolean
   jobDescription?: boolean
+  skill1?: boolean
+  skill2?: boolean
   interviewNotes?: boolean
   interviewDate?: boolean
   offerDetails?: boolean
@@ -1458,6 +1526,8 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   initialContactEmailSent?: boolean
   secondContactEmailSent?: boolean
   jobDescription?: boolean
+  skill1?: boolean
+  skill2?: boolean
   interviewNotes?: boolean
   interviewDate?: boolean
   offerDetails?: boolean
@@ -1493,6 +1563,8 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   initialContactEmailSent?: boolean
   secondContactEmailSent?: boolean
   jobDescription?: boolean
+  skill1?: boolean
+  skill2?: boolean
   interviewNotes?: boolean
   interviewDate?: boolean
   offerDetails?: boolean
@@ -1528,6 +1600,8 @@ export type ApplicationSelectScalar = {
   initialContactEmailSent?: boolean
   secondContactEmailSent?: boolean
   jobDescription?: boolean
+  skill1?: boolean
+  skill2?: boolean
   interviewNotes?: boolean
   interviewDate?: boolean
   offerDetails?: boolean
@@ -1541,7 +1615,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobTitle" | "companyName" | "jobUrl" | "appliedDate" | "status" | "statusDate" | "archived" | "salary" | "location" | "contactName" | "contactEmail" | "initialContactDate" | "secondContactDate" | "lastContactedDate" | "initialContactEmailSent" | "secondContactEmailSent" | "jobDescription" | "interviewNotes" | "interviewDate" | "offerDetails" | "rejectionReason" | "dateArchived" | "notes" | "heard_back" | "heard_back_date" | "companyInfoId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobTitle" | "companyName" | "jobUrl" | "appliedDate" | "status" | "statusDate" | "archived" | "salary" | "location" | "contactName" | "contactEmail" | "initialContactDate" | "secondContactDate" | "lastContactedDate" | "initialContactEmailSent" | "secondContactEmailSent" | "jobDescription" | "skill1" | "skill2" | "interviewNotes" | "interviewDate" | "offerDetails" | "rejectionReason" | "dateArchived" | "notes" | "heard_back" | "heard_back_date" | "companyInfoId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   companyInfo?: boolean | Prisma.Application$companyInfoArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1581,6 +1655,8 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     initialContactEmailSent: boolean | null
     secondContactEmailSent: boolean | null
     jobDescription: string | null
+    skill1: string | null
+    skill2: string | null
     interviewNotes: string | null
     interviewDate: Date | null
     offerDetails: string | null
@@ -2036,6 +2112,8 @@ export interface ApplicationFieldRefs {
   readonly initialContactEmailSent: Prisma.FieldRef<"Application", 'Boolean'>
   readonly secondContactEmailSent: Prisma.FieldRef<"Application", 'Boolean'>
   readonly jobDescription: Prisma.FieldRef<"Application", 'String'>
+  readonly skill1: Prisma.FieldRef<"Application", 'String'>
+  readonly skill2: Prisma.FieldRef<"Application", 'String'>
   readonly interviewNotes: Prisma.FieldRef<"Application", 'String'>
   readonly interviewDate: Prisma.FieldRef<"Application", 'DateTime'>
   readonly offerDetails: Prisma.FieldRef<"Application", 'String'>

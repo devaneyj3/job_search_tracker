@@ -58,7 +58,7 @@ export default function CreateApplication({ setDialogOpen }) {
 	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
 		const jobObj = {
-			createFn: createJob,
+			customFn: createJob,
 			sendEmail,
 			createCalendarEvent,
 			values,
