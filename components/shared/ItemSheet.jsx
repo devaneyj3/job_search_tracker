@@ -365,26 +365,33 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						<div className={styles.contact}>
 							<Label htmlFor="contactEmail">Contact Email: </Label>
 							{isEditing ? (
-								<Input
-									id="contactEmail"
-									type="email"
-									value={isJob ? formData.contactEmail : formData.email}
-									onChange={(e) =>
-										handleInputChange(
-											isJob ? "contactEmail" : "email",
-											e.target.value
-										)
-									}
-									placeholder={
-										isJob
-											? item.contactEmail || "Contact Email"
-											: item.email || "Email"
-									}
-								/>
+								<div className={styles.inputWrapper}>
+									<Input
+										id="contactEmail"
+										type="email"
+										value={isJob ? formData.contactEmail : formData.email}
+										onChange={(e) =>
+											handleInputChange(
+												isJob ? "contactEmail" : "email",
+												e.target.value
+											)
+										}
+										placeholder={
+											isJob
+												? item.contactEmail || "Contact Email"
+												: item.email || "Email"
+										}
+									/>
+									<p className={styles.contactWarning}>
+										Changing this will make a new contact date
+									</p>
+								</div>
 							) : (
-								<p id="contactEmail">
-									{item.contactEmail || item.email || "Not Set"}
-								</p>
+								<>
+									<p id="contactEmail">
+										{item.contactEmail || item.email || "Not Set"}
+									</p>
+								</>
 							)}
 						</div>
 						{isJob && item.heard_back !== true && (
