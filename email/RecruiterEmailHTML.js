@@ -46,7 +46,7 @@ export function RecruiterEmailHTML({
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">
-        Are you the correct recruiter to speak with about ${jobTitle} roles, or is there someone else on the team you'd recommend?
+        Are you the correct recruiter to speak with about ${jobTitle} role, or is there someone else on the team you'd recommend?
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">
