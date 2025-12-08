@@ -25,7 +25,7 @@ export function RecruiterEmailHTML({
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">
-        When you have a moment, could you let me know who the best contact is for the <strong style="font-weight:700;color:#000;">${jobTitle}</strong> role or similar frontend openings at <strong style="font-weight:700;color:#000;">${companyName}</strong>?
+        When you have a moment, could you let me know who the best contact is for the <strong style="font-weight:700;color:#000;">${jobTitle}</strong> role or similar openings at <strong style="font-weight:700;color:#000;">${companyName}</strong>?
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">
@@ -46,7 +46,7 @@ export function RecruiterEmailHTML({
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">
-        Are you the correct recruiter to speak with about frontend roles, or is there someone else on the team you'd recommend?
+        Are you the correct recruiter to speak with about ${jobTitle} roles, or is there someone else on the team you'd recommend?
       </p>
 
       <p style="margin:0 0 20px 0;color:#000;">

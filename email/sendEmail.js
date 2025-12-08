@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import path from "path";
 import { buildApplicationHtml } from "./EmalHTML";
+import { RecruiterEmailHTML } from "./RecruiterEmailHTML";
 import { readableDate } from "@/lib/utils";
 
 export const sendEmail = async (values, sendSecondEmail) => {
@@ -12,9 +13,15 @@ export const sendEmail = async (values, sendSecondEmail) => {
 		skill1,
 		skill2,
 		lastContactedDate,
+		contactPosition,
 	} = values;
 
 	const lastDateSent = readableDate(lastContactedDate);
+
+	// Determine which HTML builder to use based on contact position
+	const isRecruiter = contactPosition === "Recruiter";
+	const buildHtml = isRecruiter ? RecruiterEmailHTML : buildApplicationHtml;
+
 	try {
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
@@ -32,13 +39,13 @@ export const sendEmail = async (values, sendSecondEmail) => {
 				subject: `Following up on the ${jobTitle} role - Jordan Devaney`,
 				text: `Hi ${contactName}
 
-	I wanted to follow up on my previous email sent on ${lastDateSent} regarding the ${jobTitle} role. I understand you’re likely busy, but I’m checking in to see if you’ve had a chance to review it or if there’s anything further I can assist with.
+	I wanted to follow up on my previous email sent on ${lastDateSent} regarding the ${jobTitle} role. I understand you're likely busy, but I'm checking in to see if you've had a chance to review it or if there's anything further I can assist with.
 
-	Please don’t hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.
+	Please don't hesitate to reach out if you need additional information or clarification. I appreciate your time and look forward to hearing from you.
 
 	Best regards,
 	Jordan Devaney`,
-				html: buildApplicationHtml({
+				html: buildHtml({
 					sendSecondEmail,
 					lastDateSent,
 					contactName,
@@ -57,12 +64,12 @@ export const sendEmail = async (values, sendSecondEmail) => {
 				subject: `Application for ${jobTitle} - Jordan Devaney`,
 				text: `Hi ${contactName}
 		I recently applied for the ${jobTitle} role at ${companyName}.
-		I believe my skills are a great match for the position as the role combines my interests and experience in ${skill1} and ${skill2} , and I’d be excited to contribute from day one.
+		I believe my skills are a great match for the position as the role combines my interests and experience in ${skill1} and ${skill2} , and I'd be excited to contribute from day one.
 		I've attached my resume and would welcome a quick conversation.
 
 		Best regards,
 		Jordan Devaney`,
-				html: buildApplicationHtml({
+				html: buildHtml({
 					sendSecondEmail,
 					lastDateSent,
 					contactName,

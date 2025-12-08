@@ -148,6 +148,7 @@ export const ApplicationScalarFieldEnum = {
   location: 'location',
   contactName: 'contactName',
   contactEmail: 'contactEmail',
+  contactPosition: 'contactPosition',
   initialContactDate: 'initialContactDate',
   secondContactDate: 'secondContactDate',
   lastContactedDate: 'lastContactedDate',

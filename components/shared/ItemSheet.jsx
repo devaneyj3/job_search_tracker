@@ -29,6 +29,14 @@ import { Badge } from "@/components/ui/badge";
 import { StatusSelect } from "./StatusSelect";
 import moment from "moment";
 import { toast } from "sonner";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { contactPosition } from "@/Constants";
 
 export default function ItemSheet({ item, type = "job", context, status }) {
 	const {
@@ -53,6 +61,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 		location: item.location || "",
 		contactName: item.contactName || "",
 		contactEmail: item.contactEmail || "",
+		contactPosition: item.contactPosition || "",
 		jobDescription: item.jobDescription || "",
 		skill1: item.skill1 || "",
 		skill2: item.skill2 || "",
@@ -76,6 +85,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 			location: item.location || "",
 			contactName: item.contactName || "",
 			contactEmail: item.contactEmail || "",
+			contactPosition: item.contactPosition || "",
 			jobDescription: item.jobDescription || "",
 			skill1: item.skill1 || "",
 			skill2: item.skill2 || "",
@@ -114,6 +124,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						location: formData.location,
 						contactName: formData.contactName,
 						contactEmail: formData.contactEmail,
+						contactPosition: formData.contactPosition,
 						jobDescription: formData.jobDescription,
 						skill1: formData.skill1,
 						skill2: formData.skill2,
@@ -160,6 +171,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 			location: item.location || "",
 			contactName: item.contactName || "",
 			contactEmail: item.contactEmail || "",
+			contactPosition: item.contactPosition || "",
 			jobDescription: item.jobDescription || "",
 			skill1: item.skill1 || "",
 			skill2: item.skill2 || "",
@@ -417,6 +429,35 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 								</>
 							)}
 						</div>
+						{isJob && (
+							<div className={styles.contact}>
+								<Label htmlFor="contactPosition">Contact Position: </Label>
+								{isEditing ? (
+									<Select
+										value={formData.contactPosition}
+										onValueChange={(value) =>
+											handleInputChange("contactPosition", value)
+										}>
+										<SelectTrigger>
+											<SelectValue
+												placeholder={item.contactPosition || "Select Position"}
+											/>
+										</SelectTrigger>
+										<SelectContent>
+											{contactPosition.map((pos) => (
+												<SelectItem key={pos} value={pos}>
+													{pos}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								) : (
+									<p id="contactPosition">
+										{item.contactPosition || "Not Set"}
+									</p>
+								)}
+							</div>
+						)}
 						{isJob && item.heard_back !== true && (
 							<>
 								<section className={styles.contactDates}>

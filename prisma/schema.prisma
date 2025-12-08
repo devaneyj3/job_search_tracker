@@ -80,6 +80,7 @@ model Application {
   location          String?
   contactName       String?
   contactEmail      String?
+  contactPosition   String?
   initialContactDate  DateTime? @default(now()) @db.Timestamp(6)
   secondContactDate DateTime?
   lastContactedDate DateTime?

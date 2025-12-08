@@ -50,6 +50,7 @@ export type ApplicationMinAggregateOutputType = {
   location: string | null
   contactName: string | null
   contactEmail: string | null
+  contactPosition: string | null
   initialContactDate: Date | null
   secondContactDate: Date | null
   lastContactedDate: Date | null
@@ -85,6 +86,7 @@ export type ApplicationMaxAggregateOutputType = {
   location: string | null
   contactName: string | null
   contactEmail: string | null
+  contactPosition: string | null
   initialContactDate: Date | null
   secondContactDate: Date | null
   lastContactedDate: Date | null
@@ -120,6 +122,7 @@ export type ApplicationCountAggregateOutputType = {
   location: number
   contactName: number
   contactEmail: number
+  contactPosition: number
   initialContactDate: number
   secondContactDate: number
   lastContactedDate: number
@@ -167,6 +170,7 @@ export type ApplicationMinAggregateInputType = {
   location?: true
   contactName?: true
   contactEmail?: true
+  contactPosition?: true
   initialContactDate?: true
   secondContactDate?: true
   lastContactedDate?: true
@@ -202,6 +206,7 @@ export type ApplicationMaxAggregateInputType = {
   location?: true
   contactName?: true
   contactEmail?: true
+  contactPosition?: true
   initialContactDate?: true
   secondContactDate?: true
   lastContactedDate?: true
@@ -237,6 +242,7 @@ export type ApplicationCountAggregateInputType = {
   location?: true
   contactName?: true
   contactEmail?: true
+  contactPosition?: true
   initialContactDate?: true
   secondContactDate?: true
   lastContactedDate?: true
@@ -359,6 +365,7 @@ export type ApplicationGroupByOutputType = {
   location: string | null
   contactName: string | null
   contactEmail: string | null
+  contactPosition: string | null
   initialContactDate: Date | null
   secondContactDate: Date | null
   lastContactedDate: Date | null
@@ -417,6 +424,7 @@ export type ApplicationWhereInput = {
   location?: Prisma.StringNullableFilter<"Application"> | string | null
   contactName?: Prisma.StringNullableFilter<"Application"> | string | null
   contactEmail?: Prisma.StringNullableFilter<"Application"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Application"> | string | null
   initialContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   secondContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   lastContactedDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -454,6 +462,7 @@ export type ApplicationOrderByWithRelationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   initialContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   secondContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastContactedDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -495,6 +504,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   location?: Prisma.StringNullableFilter<"Application"> | string | null
   contactName?: Prisma.StringNullableFilter<"Application"> | string | null
   contactEmail?: Prisma.StringNullableFilter<"Application"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Application"> | string | null
   initialContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   secondContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   lastContactedDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -531,6 +541,7 @@ export type ApplicationOrderByWithAggregationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   initialContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   secondContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastContactedDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -574,6 +585,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   location?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   contactName?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   contactEmail?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  contactPosition?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   initialContactDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
   secondContactDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
   lastContactedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
@@ -607,6 +619,7 @@ export type ApplicationCreateInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -643,6 +656,7 @@ export type ApplicationUncheckedCreateInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -676,6 +690,7 @@ export type ApplicationUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -712,6 +727,7 @@ export type ApplicationUncheckedUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -747,6 +763,7 @@ export type ApplicationCreateManyInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -780,6 +797,7 @@ export type ApplicationUpdateManyMutationInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -814,6 +832,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -859,6 +878,7 @@ export type ApplicationCountOrderByAggregateInput = {
   location?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   contactEmail?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   initialContactDate?: Prisma.SortOrder
   secondContactDate?: Prisma.SortOrder
   lastContactedDate?: Prisma.SortOrder
@@ -899,6 +919,7 @@ export type ApplicationMaxOrderByAggregateInput = {
   location?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   contactEmail?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   initialContactDate?: Prisma.SortOrder
   secondContactDate?: Prisma.SortOrder
   lastContactedDate?: Prisma.SortOrder
@@ -934,6 +955,7 @@ export type ApplicationMinOrderByAggregateInput = {
   location?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   contactEmail?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   initialContactDate?: Prisma.SortOrder
   secondContactDate?: Prisma.SortOrder
   lastContactedDate?: Prisma.SortOrder
@@ -1063,6 +1085,7 @@ export type ApplicationCreateWithoutUserInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -1097,6 +1120,7 @@ export type ApplicationUncheckedCreateWithoutUserInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -1161,6 +1185,7 @@ export type ApplicationScalarWhereInput = {
   location?: Prisma.StringNullableFilter<"Application"> | string | null
   contactName?: Prisma.StringNullableFilter<"Application"> | string | null
   contactEmail?: Prisma.StringNullableFilter<"Application"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Application"> | string | null
   initialContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   secondContactDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   lastContactedDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -1194,6 +1219,7 @@ export type ApplicationCreateWithoutCompanyInfoInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -1229,6 +1255,7 @@ export type ApplicationUncheckedCreateWithoutCompanyInfoInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -1277,6 +1304,7 @@ export type ApplicationUpdateWithoutCompanyInfoInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1312,6 +1340,7 @@ export type ApplicationUncheckedUpdateWithoutCompanyInfoInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1345,6 +1374,7 @@ export type ApplicationCreateManyUserInput = {
   location?: string | null
   contactName?: string | null
   contactEmail?: string | null
+  contactPosition?: string | null
   initialContactDate?: Date | string | null
   secondContactDate?: Date | string | null
   lastContactedDate?: Date | string | null
@@ -1378,6 +1408,7 @@ export type ApplicationUpdateWithoutUserInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1412,6 +1443,7 @@ export type ApplicationUncheckedUpdateWithoutUserInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1446,6 +1478,7 @@ export type ApplicationUncheckedUpdateManyWithoutUserInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initialContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secondContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1483,6 +1516,7 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   location?: boolean
   contactName?: boolean
   contactEmail?: boolean
+  contactPosition?: boolean
   initialContactDate?: boolean
   secondContactDate?: boolean
   lastContactedDate?: boolean
@@ -1520,6 +1554,7 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   location?: boolean
   contactName?: boolean
   contactEmail?: boolean
+  contactPosition?: boolean
   initialContactDate?: boolean
   secondContactDate?: boolean
   lastContactedDate?: boolean
@@ -1557,6 +1592,7 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   location?: boolean
   contactName?: boolean
   contactEmail?: boolean
+  contactPosition?: boolean
   initialContactDate?: boolean
   secondContactDate?: boolean
   lastContactedDate?: boolean
@@ -1594,6 +1630,7 @@ export type ApplicationSelectScalar = {
   location?: boolean
   contactName?: boolean
   contactEmail?: boolean
+  contactPosition?: boolean
   initialContactDate?: boolean
   secondContactDate?: boolean
   lastContactedDate?: boolean
@@ -1615,7 +1652,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobTitle" | "companyName" | "jobUrl" | "appliedDate" | "status" | "statusDate" | "archived" | "salary" | "location" | "contactName" | "contactEmail" | "initialContactDate" | "secondContactDate" | "lastContactedDate" | "initialContactEmailSent" | "secondContactEmailSent" | "jobDescription" | "skill1" | "skill2" | "interviewNotes" | "interviewDate" | "offerDetails" | "rejectionReason" | "dateArchived" | "notes" | "heard_back" | "heard_back_date" | "companyInfoId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobTitle" | "companyName" | "jobUrl" | "appliedDate" | "status" | "statusDate" | "archived" | "salary" | "location" | "contactName" | "contactEmail" | "contactPosition" | "initialContactDate" | "secondContactDate" | "lastContactedDate" | "initialContactEmailSent" | "secondContactEmailSent" | "jobDescription" | "skill1" | "skill2" | "interviewNotes" | "interviewDate" | "offerDetails" | "rejectionReason" | "dateArchived" | "notes" | "heard_back" | "heard_back_date" | "companyInfoId" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   companyInfo?: boolean | Prisma.Application$companyInfoArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1649,6 +1686,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     location: string | null
     contactName: string | null
     contactEmail: string | null
+    contactPosition: string | null
     initialContactDate: Date | null
     secondContactDate: Date | null
     lastContactedDate: Date | null
@@ -2106,6 +2144,7 @@ export interface ApplicationFieldRefs {
   readonly location: Prisma.FieldRef<"Application", 'String'>
   readonly contactName: Prisma.FieldRef<"Application", 'String'>
   readonly contactEmail: Prisma.FieldRef<"Application", 'String'>
+  readonly contactPosition: Prisma.FieldRef<"Application", 'String'>
   readonly initialContactDate: Prisma.FieldRef<"Application", 'DateTime'>
   readonly secondContactDate: Prisma.FieldRef<"Application", 'DateTime'>
   readonly lastContactedDate: Prisma.FieldRef<"Application", 'DateTime'>
