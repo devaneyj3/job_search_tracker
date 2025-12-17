@@ -25,7 +25,7 @@ import { jobKeys } from "@/lib/formKeys";
 import { formSchema } from "@/lib/formSchema";
 import { jobStatus, contactPosition } from "@/Constants";
 import { useJob } from "@/context/jobContext";
-import { processJobSubmission } from "@/lib/processJobSubmission";
+import { processSubmission } from "@/lib/processSubmission";
 
 // helper: fetch field config by name from jobKeys
 function getCfg(name) {
@@ -64,7 +64,7 @@ export default function CreateApplication({ setDialogOpen }) {
 			values,
 			setDialogOpen,
 		};
-		await processJobSubmission(jobObj);
+		await processSubmission(jobObj);
 	}
 
 	const RenderField = ({ name }) => {

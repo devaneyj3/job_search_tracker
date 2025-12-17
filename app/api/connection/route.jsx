@@ -36,30 +36,29 @@ export async function POST(req) {
 	try {
 		const {
 			userId,
-			name,
-			email,
-			company,
-			position,
+			contactName,
+			contactEmail,
+			companyName,
+			contactPosition,
 			linkedinUrl,
-			connectedDate,
-			emailSent,
-			firstEmailDate,
-			lastEmailDate,
+			status,
 			notes,
+			lastContactedDate,
+			initialContactEmailSent,
 		} = await req.json();
 
 		const newConnection = await createNewConnection({
 			userId,
-			name,
-			email,
-			company,
-			position,
+			name: contactName,
+			email: contactEmail,
+			company: companyName,
+			position: contactPosition,
 			linkedinUrl,
-			connectedDate,
-			emailSent,
-			firstEmailDate,
-			lastEmailDate,
+			status,
 			notes,
+			lastEmailDate: lastContactedDate,
+			emailSent: initialContactEmailSent,
+			firstEmailDate: initialContactEmailSent ? lastContactedDate : null,
 		});
 
 		return NextResponse.json({ success: true, connection: newConnection });

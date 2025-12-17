@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { outreachFormSchema } from "@/lib/outreachSchema";
 import { outreachKeys } from "@/lib/outreachKeys";
 import { useConnection } from "@/context/connectionContext";
+import { processSubmission } from "@/lib/processSubmission";
 
 // helper: fetch field config by name from connectionKeys
 function getCfg(name) {
@@ -35,15 +36,15 @@ function getCfg(name) {
 	return cfg;
 }
 
-export default function CreateConnection({ setInvoiceDialogOpen }) {
+export default function CreateConnection({ setDialogOpen }) {
 	const { createConnection, createCalendarEvent, sendEmail } = useConnection();
 	const form = useForm({
 		resolver: zodResolver(outreachFormSchema),
 		defaultValues: {
-			name: "",
-			email: "",
-			company: "",
-			position: "",
+			contactName: "",
+			contactEmail: "",
+			companyName: "",
+			contactPosition: "",
 			linkedinUrl: "",
 			status: "Connected",
 			notes: "",
@@ -53,22 +54,14 @@ export default function CreateConnection({ setInvoiceDialogOpen }) {
 
 	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
-		try {
-			await createConnection(values);
-
-			toast("Application has been created", {
-				action: { label: "Close", onClick: () => {} },
-			});
-			setInvoiceDialogOpen(false);
-		} catch (error) {
-			console.error("Error in onSubmit:", error);
-			toast(
-				"Application created, but failed to send email. Please try again.",
-				{
-					action: { label: "Close", onClick: () => {} },
-				}
-			);
-		}
+		const ConnectionObj = {
+			customFn: createConnection,
+			sendEmail,
+			createCalendarEvent,
+			values,
+			setDialogOpen,
+		};
+		await processSubmission(ConnectionObj);
 	}
 
 	const RenderField = ({ name }) => {
@@ -120,13 +113,13 @@ export default function CreateConnection({ setInvoiceDialogOpen }) {
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
 				{/* Row 1: Title + Company */}
 				<div className={styles.twoCol}>
-					<RenderField name="name" />
-					<RenderField name="email" />
+					<RenderField name="contactName" />
+					<RenderField name="contactEmail" />
 				</div>
 				{/* Row 2: Job URL + Status */}
 				<div className={styles.twoCol}>
-					<RenderField name="company" />
-					<RenderField name="position" />
+					<RenderField name="companyName" />
+					<RenderField name="contactPosition" />
 				</div>
 				{/* Row 3: Location + Salary */}
 				<div className={styles.twoCol}>
