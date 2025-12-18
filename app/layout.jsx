@@ -1,6 +1,6 @@
 import { plex } from "@/lib/fonts";
 import "./tailwind.css";
-import Providers from "@/components/Providers";
+import Providers from "@/features/shared/components/Providers";
 
 export const metadata = {
 	title: "Job Tracker",

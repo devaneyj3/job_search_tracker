@@ -5,7 +5,7 @@ import {
 	deleteConnection,
 	updateConnectionStatus,
 	updateConnectionFields,
-} from "@/lib/services/contacts";
+} from "@/features/connections/lib/services";
 
 // GET /api/connection?userId=123
 export async function GET(request) {

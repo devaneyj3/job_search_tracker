@@ -5,7 +5,7 @@ import {
 	deleteJobApplication,
 	updateJobStatus,
 	updateJobApplication,
-} from "@/lib/services/jobs";
+} from "@/features/jobs/lib/services";
 
 // GET /api/job?userId=123
 export async function GET(request) {

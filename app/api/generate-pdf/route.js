@@ -4,7 +4,7 @@ export const runtime = "nodejs";
 import React from "react";
 import { NextResponse } from "next/server";
 import { pdf, Document, Page, View, Text } from "@react-pdf/renderer";
-import ResumePDF from "@/components/ResumePDF";
+import ResumePDF from "@/features/jobs/components/ResumePDF";
 
 // Keep TestPDF minimal to verify the route/environment first.
 function TestPDF() {

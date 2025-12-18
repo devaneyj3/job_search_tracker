@@ -1,6 +1,6 @@
-import { sendEmail } from "@/email/sendEmail";
+import { sendEmail } from "@/features/email/lib/sendEmail";
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import prisma from "@/features/shared/lib/prisma";
 
 export async function POST(req) {
 	const { values, sendSecondEmail } = await req.json();

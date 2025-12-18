@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { vi } from "vitest";
 
 // Mock the context hooks directly - this is faster and avoids provider issues
-vi.mock("@/context/jobContext", () => ({
+vi.mock("@/features/jobs/context/jobContext", () => ({
 	useJob: () => ({
 		jobs: [],
 		selectedJob: null,
@@ -22,7 +22,7 @@ vi.mock("@/context/jobContext", () => ({
 	JobItemProvider: ({ children }) => children,
 }));
 
-vi.mock("@/context/authContext", () => ({
+vi.mock("@/features/shared/context/authContext", () => ({
 	useAuth: () => ({
 		signedInUser: {
 			id: "test-user-id",
@@ -34,7 +34,7 @@ vi.mock("@/context/authContext", () => ({
 	AuthProvider: ({ children }) => children,
 }));
 
-vi.mock("@/context/connectionContext", () => ({
+vi.mock("@/features/connections/context/connectionContext", () => ({
 	useConnection: () => ({
 		connections: [],
 		selectedConnection: null,

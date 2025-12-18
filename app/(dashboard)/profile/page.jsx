@@ -1,4 +1,4 @@
-import JobDashboard from "@/components/Jobs/JobDashboard";
+import JobDashboard from "@/features/jobs/components/Jobs/JobDashboard";
 import React from "react";
 export const metadata = {
 	title: "Profile | Job Tracker",

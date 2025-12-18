@@ -1,4 +1,4 @@
-import FollowUpDashboard from "@/components/FollowUpDashboard";
+import FollowUpDashboard from "@/features/shared/components/dashboard/FollowUpDashboard";
 import React from "react";
 export const metadata = {
 	title: "Dashboard | Job Tracker",
