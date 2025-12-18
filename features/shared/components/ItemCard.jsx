@@ -4,12 +4,12 @@ import { MapPinned, Building, Mail } from "lucide-react";
 import styles from "@/styles/ItemBox.module.scss";
 
 import { Badge } from "@/features/shared/ui/badge";
-import { StatusSelect } from "./StatusSelect";
+import { ItemStatusSelect } from "./ItemStatusSelect";
 import moment from "moment";
 import { readableDate } from "@/features/shared/lib/utils";
 
-const ItemBox = memo(
-	function ItemBox({ item, type = "job", context, status }) {
+const ItemCard = memo(
+	function ItemCard({ item, type = "job", context, status }) {
 		if (!context) return null;
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
@@ -120,7 +120,7 @@ const ItemBox = memo(
 						<p>{item.firstEmailDate ? initialContactDate : "Not Set"}</p>
 					</div>
 				)}
-				<StatusSelect id={item.id} update={update} status={status} />
+				<ItemStatusSelect id={item.id} update={update} status={status} />
 			</div>
 		);
 	},
@@ -150,4 +150,4 @@ const ItemBox = memo(
 	}
 );
 
-export default ItemBox;
+export default ItemCard;

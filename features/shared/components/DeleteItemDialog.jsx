@@ -16,7 +16,7 @@ import styles from "@/styles/DeleteItem.module.scss";
 import { useJob } from "@/features/jobs/context/jobContext";
 import { useConnection } from "@/features/connections/context/connectionContext";
 
-export default function DeleteItemButton({ id, type = "job", companyInfoId }) {
+export default function DeleteItemDialog({ id, type = "job", companyInfoId }) {
 	const jobContext = useJob();
 	const connectionContext = useConnection();
 	const context = type === "job" ? jobContext : connectionContext;

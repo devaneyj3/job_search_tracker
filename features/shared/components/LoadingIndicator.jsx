@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { styles } from "@/styles/LoadingSpinner.module.scss";
 
-function LoadingSpinner() {
+function LoadingIndicator() {
 	let [color] = useState("silver");
 
 	const override = {
@@ -23,4 +23,4 @@ function LoadingSpinner() {
 	);
 }
 
-export default LoadingSpinner;
+export default LoadingIndicator;

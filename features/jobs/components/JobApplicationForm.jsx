@@ -34,7 +34,7 @@ function getCfg(name) {
 	return cfg;
 }
 
-export default function CreateApplication({ setDialogOpen }) {
+export default function JobApplicationForm({ setDialogOpen }) {
 	const { createJob, createCalendarEvent, sendEmail } = useJob();
 	const form = useForm({
 		resolver: zodResolver(formSchema),

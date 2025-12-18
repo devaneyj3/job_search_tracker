@@ -1,4 +1,4 @@
-import OutreachDashboard from "@/features/connections/components/Outreach/OutreachDashboard";
+import ConnectionsDashboard from "@/features/connections/components/Outreach/ConnectionsDashboard";
 import React from "react";
 
 export const metadata = {
@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function OutreachPage() {
-	return <OutreachDashboard />;
+	return <ConnectionsDashboard />;
 }

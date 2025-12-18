@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import { useConnection } from "../../../context/connectionContext";
-import ItemList from "@/features/shared/components/ItemList";
+import { useConnection } from "@/features/connections/context/connectionContext";
+import ItemsListView from "@/features/shared/components/ItemsListView";
 import { connectionStatus } from "@/Constants";
 
-export default function Connections({
+export default function ConnectionsList({
 	filteredConnections,
 	statuses,
 	setChosenStatus,
@@ -37,7 +37,7 @@ export default function Connections({
 	);
 
 	return (
-		<ItemList
+		<ItemsListView
 			filteredItems={filteredConnections}
 			statuses={statuses}
 			setChosenStatus={setChosenStatus}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styles from "@/styles/JobBoard.module.scss";
 
-export default function JobBoard() {
+export default function ExternalJobBoardsLinks() {
 	const jobBoards = [
 		{
 			name: "LinkedIn",

@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import styles from "@/styles/ItemList.module.scss";
-import ItemBox from "./ItemBox";
-import CreateApplicationButton from "@/features/shared/components/layout/Header/CreateApplicationButton";
-import CreateConnectionButton from "@/features/connections/components/Outreach/CreateConnectionButton";
-import ItemSheet from "./ItemSheet";
+import ItemCard from "./ItemCard";
+import CreateJobApplicationButton from "@/features/shared/components/layout/Header/CreateJobApplicationButton";
+import AddConnectionButton from "@/features/connections/components/Outreach/AddConnectionButton";
+import ItemDetailsSheet from "./ItemDetailsSheet";
 import { Button } from "@/features/shared/ui/button";
 
-const ItemList = memo(function ItemList({
+const ItemsListView = memo(function ItemsListView({
 	filteredItems,
 	statuses,
 	setChosenStatus,
@@ -22,9 +22,9 @@ const ItemList = memo(function ItemList({
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
 				{type === "job" ? (
-					<CreateApplicationButton />
+					<CreateJobApplicationButton />
 				) : (
-					<CreateConnectionButton />
+					<AddConnectionButton />
 				)}
 			</section>
 			<h1 className={styles.title}>
@@ -47,7 +47,7 @@ const ItemList = memo(function ItemList({
 			{!noItemMsg && items.length > 0 ? (
 				filteredItems.map((item) => {
 					return (
-						<ItemBox
+						<ItemCard
 							key={item.id}
 							item={item}
 							type={type}
@@ -61,7 +61,7 @@ const ItemList = memo(function ItemList({
 				<div>{noItemMsg}</div>
 			)}
 			{selectedItem && (
-				<ItemSheet
+				<ItemDetailsSheet
 					item={selectedItem}
 					type={type}
 					context={context}
@@ -73,4 +73,4 @@ const ItemList = memo(function ItemList({
 	);
 });
 
-export default ItemList;
+export default ItemsListView;

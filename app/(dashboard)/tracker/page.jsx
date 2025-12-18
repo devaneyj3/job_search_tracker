@@ -1,4 +1,4 @@
-import JobDashboard from "@/features/jobs/components/Jobs/JobDashboard";
+import JobsDashboard from "@/features/jobs/components/Jobs/JobsDashboard";
 import React from "react";
 export const metadata = {
 	title: "Applications | Job Tracker",
@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function JobTrackerPage() {
-	return <JobDashboard />;
+	return <JobsDashboard />;
 }

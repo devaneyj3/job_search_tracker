@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import styles from "@/styles/OutreachHeader.module.scss";
-import Metrics from "@/features/shared/components/Metrics";
+import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import Link from "next/link";
-import { useConnection } from "../../../context/connectionContext";
+import { useConnection } from "@/features/connections/context/connectionContext";
 import { itemLength } from "@/features/shared/lib/utils";
-export default function OutreachHeader() {
+export default function ConnectionsStatsHeader() {
 	const { connections, noConnectionMsg } = useConnection();
 
 	const connected = itemLength("Connected", connections);
@@ -47,7 +47,11 @@ export default function OutreachHeader() {
 					</li>
 				</ol>
 			</div>
-			<Metrics items={metrics} noItemMsg={noConnectionMsg} title="Outreach" />
+			<StatsMetrics
+				items={metrics}
+				noItemMsg={noConnectionMsg}
+				title="Outreach"
+			/>
 		</>
 	);
 }

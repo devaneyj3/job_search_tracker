@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import path from "path";
-import { buildApplicationHtml } from "../templates/EmalHTML";
-import { RecruiterEmailHTML } from "../templates/RecruiterEmailHTML";
-import { buildConnectionHtml } from "../templates/ConnectionEmailHTML";
+import { buildApplicationHtml } from "../templates/JobApplicationEmailTemplate";
+import { RecruiterEmailHTML } from "../templates/RecruiterEmailTemplate";
+import { buildConnectionHtml } from "../templates/ConnectionEmailTemplate";
 import { readableDate } from "@/features/shared/lib/utils";
 
 export const sendEmail = async (values, sendSecondEmail) => {

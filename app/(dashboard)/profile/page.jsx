@@ -1,4 +1,4 @@
-import JobDashboard from "@/features/jobs/components/Jobs/JobDashboard";
+import JobsDashboard from "@/features/jobs/components/Jobs/JobsDashboard";
 import React from "react";
 export const metadata = {
 	title: "Profile | Job Tracker",
@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function ProfilePage() {
-	return <JobDashboard />;
+	return <JobsDashboard />;
 }

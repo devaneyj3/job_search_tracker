@@ -10,7 +10,7 @@ import {
 	SelectValue,
 } from "@/features/shared/ui/select";
 
-export function StatusSelect({ id, update, status }) {
+export function ItemStatusSelect({ id, update, status }) {
 	return (
 		<Select onValueChange={(value) => update(id, value)}>
 			<SelectTrigger className="w-[180px] font-bold">

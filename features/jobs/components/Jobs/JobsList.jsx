@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { useJob } from "../../context/jobContext";
-import ItemList from "@/features/shared/components/ItemList";
+import ItemsListView from "@/features/shared/components/ItemsListView";
 import { jobStatus } from "@/Constants";
 
-export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
+export default function JobsList({ filteredJobs, statuses, setChosenStatus }) {
 	const jobContext = useJob();
 
 	// In AllJobs.jsx
@@ -35,7 +35,7 @@ export default function AllJobs({ filteredJobs, statuses, setChosenStatus }) {
 	);
 
 	return (
-		<ItemList
+		<ItemsListView
 			filteredItems={filteredJobs}
 			statuses={statuses}
 			setChosenStatus={setChosenStatus}

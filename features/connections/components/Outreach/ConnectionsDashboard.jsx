@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import LoadingSpinner from "@/features/shared/components/LoadingSpinner";
+import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
 import styles from "@/styles/OutreachDashboard.module.scss";
-import { useConnection } from "../../../context/connectionContext";
-import OutreachHeader from "./OutreachHeader";
-import Connections from "./Connections";
+import { useConnection } from "@/features/connections/context/connectionContext";
+import ConnectionsStatsHeader from "./ConnectionsStatsHeader";
+import ConnectionsList from "./ConnectionsList";
 
-export default function OutreachDashboard() {
+export default function ConnectionsDashboard() {
 	const { connections, noConnectionMsg } = useConnection();
 	const [chosenStatus, setChosenStatus] = useState("All");
 
@@ -26,16 +26,16 @@ export default function OutreachDashboard() {
 	if (connections.length < 1 && !noConnectionMsg) {
 		return (
 			<div className={styles.container}>
-				<LoadingSpinner />
+				<LoadingIndicator />
 			</div>
 		);
 	}
 
 	return (
 		<>
-			<OutreachHeader />
+			<ConnectionsStatsHeader />
 
-			<Connections
+			<ConnectionsList
 				filteredConnections={filteredConnections}
 				statuses={statuses}
 				setChosenStatus={setChosenStatus}

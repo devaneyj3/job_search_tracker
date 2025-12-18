@@ -1,16 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { useJob } from "../../context/jobContext";
-import AllJobs from "./AllJobs";
-import LoadingSpinner from "@/features/shared/components/LoadingSpinner";
-import EmailContacts from "./EmailContacts";
+import JobsList from "./JobsList";
+import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
 import styles from "@/styles/JobDashboard.module.scss";
-import Link from "next/link";
-import JobBoard from "../JobBoard";
-import Metrics from "@/features/shared/components/Metrics";
+import ExternalJobBoardsLinks from "../ExternalJobBoardsLinks";
+import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import { itemLength } from "@/features/shared/lib/utils";
 
-export default function JobDashboard() {
+export default function JobsDashboard() {
 	const { jobs, noJobMsg } = useJob();
 	const [chosenStatus, setChosenStatus] = useState("All");
 
@@ -29,13 +27,10 @@ export default function JobDashboard() {
 		return job.status === chosenStatus && job.archived !== true;
 	});
 
-	//determine jobs with contact email
-
-	const jobsWithContactEmail = jobs.filter((job) => job.contactEmail);
 	if (jobs.length < 1 && !noJobMsg) {
 		return (
 			<div className={styles.container}>
-				<LoadingSpinner />
+				<LoadingIndicator />
 			</div>
 		);
 	}
@@ -56,17 +51,11 @@ export default function JobDashboard() {
 
 	return (
 		<>
-			<JobBoard />
+			<ExternalJobBoardsLinks />
 
-			<Metrics items={metrics} title="Stats" noItemMsg={noJobMsg} />
-			{/* <h1 className={styles.title}>
-				{jobsWithContactEmail.length} Jobs with contacts
-			</h1>
-			{!noJobMsg && jobs.length > 0 && (
-				<EmailContacts jobs={jobsWithContactEmail} />
-			)} */}
+			<StatsMetrics items={metrics} title="Stats" noItemMsg={noJobMsg} />
 
-			<AllJobs
+			<JobsList
 				filteredJobs={filteredJobs}
 				statuses={statuses}
 				setChosenStatus={setChosenStatus}

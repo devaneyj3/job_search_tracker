@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "@/styles/Welcome.module.scss";
-import { Rotating } from "./RotatingText";
+import { AnimatedRotatingText } from "../AnimatedRotatingText";
 import SignInCard from "./SignInCard";
 import Image from "next/image";
 
@@ -18,7 +18,7 @@ export default function Welcome() {
 			<p className={styles.tagline}>Your job hunt, organized and stress free</p>
 			<div className={styles.jobBox}>
 				<ul className="benefits">
-					<Rotating text={benefits} />
+					<AnimatedRotatingText text={benefits} />
 				</ul>
 			</div>
 			<div className={styles.sign_in}>

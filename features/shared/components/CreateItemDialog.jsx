@@ -11,7 +11,7 @@ import styles from "@/styles/CreateForm.module.scss";
 import { Button } from "@/features/shared/ui/button";
 import { useState } from "react";
 
-export default function FormDialog({
+export default function CreateItemDialog({
 	buttonText,
 	dialogTitle,
 	formComponent: FormComponent,

@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "@/styles/Metrics.module.scss";
-import LoadingSpinner from "@/features/shared/components/LoadingSpinner";
-export default function Metrics({ items, title, noItemMsg }) {
+import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
+export default function StatsMetrics({ items, title, noItemMsg }) {
 	if (items.length < 1 && !noItemMsg) {
 		return (
 			<div className={styles.container}>
-				<LoadingSpinner />
+				<LoadingIndicator />
 			</div>
 		);
 	}

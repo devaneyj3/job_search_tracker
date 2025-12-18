@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "../../../../tests/testing-provider";
 import "@testing-library/jest-dom";
-import CreateApplication from "@/features/jobs/components/CreateApplication";
+import JobApplicationForm from "@/features/jobs/components/JobApplicationForm";
 import { describe, expect, test, vi } from "vitest";
 
 // Mock dependencies
@@ -12,10 +12,10 @@ vi.mock("sonner", () => ({
 	toast: vi.fn(),
 }));
 
-describe("CreateApplication", () => {
+describe("JobApplicationForm", () => {
 	test("renders all form labels correctly", async () => {
 		// ARRANGE
-		render(<CreateApplication setDialogOpen={vi.fn()} />);
+		render(<JobApplicationForm setDialogOpen={vi.fn()} />);
 
 		// Wait for form to render
 		await waitFor(() => {
@@ -41,7 +41,7 @@ describe("CreateApplication", () => {
 
 	test("renders all input placeholders correctly", async () => {
 		// ARRANGE
-		render(<CreateApplication setDialogOpen={vi.fn()} />);
+		render(<JobApplicationForm setDialogOpen={vi.fn()} />);
 
 		// Wait for form to render
 		await waitFor(() => {
@@ -71,7 +71,7 @@ describe("CreateApplication", () => {
 
 	test("renders select placeholders correctly", async () => {
 		// ARRANGE
-		render(<CreateApplication setDialogOpen={vi.fn()} />);
+		render(<JobApplicationForm setDialogOpen={vi.fn()} />);
 
 		// Wait for form to render
 		await waitFor(() => {
@@ -92,7 +92,7 @@ describe("CreateApplication", () => {
 
 	test("renders submit button", async () => {
 		// ARRANGE
-		render(<CreateApplication setDialogOpen={vi.fn()} />);
+		render(<JobApplicationForm setDialogOpen={vi.fn()} />);
 
 		// Wait for form to render
 		await waitFor(() => {

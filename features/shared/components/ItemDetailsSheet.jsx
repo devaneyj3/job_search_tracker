@@ -24,9 +24,9 @@ import {
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
-import DeleteItemButton from "./DeleteItemButton";
+import DeleteItemDialog from "./DeleteItemDialog";
 import { Badge } from "@/features/shared/ui/badge";
-import { StatusSelect } from "./StatusSelect";
+import { ItemStatusSelect } from "./ItemStatusSelect";
 import moment from "moment";
 import { toast } from "sonner";
 import {
@@ -38,7 +38,12 @@ import {
 } from "@/features/shared/ui/select";
 import { contactPosition } from "@/Constants";
 
-export default function ItemSheet({ item, type = "job", context, status }) {
+export default function ItemDetailsSheet({
+	item,
+	type = "job",
+	context,
+	status,
+}) {
 	const {
 		modalOpen,
 		setModalOpen,
@@ -252,7 +257,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 								onClick={() => setIsEditing(!isEditing)}>
 								<Pencil size={16} />
 							</Button>
-							<DeleteItemButton
+							<DeleteItemDialog
 								id={item.id}
 								type={type}
 								companyInfoId={item.companyInfoId}
@@ -370,7 +375,7 @@ export default function ItemSheet({ item, type = "job", context, status }) {
 						</Badge>
 					</div>
 
-					<StatusSelect id={item.id} status={status} update={update} />
+					<ItemStatusSelect id={item.id} status={status} update={update} />
 
 					<div className={styles.contactInfo}>
 						<div className={styles.contact}>
