@@ -5,32 +5,38 @@ import SignInCard from "./SignInCard";
 import Image from "next/image";
 
 const benefits = [
-	"Automate calendar events for follow up emails",
-	"Get email templates for your follow up emails",
+	"Automate calendar events for follow-up emails",
+	"Get email templates for your follow-up emails",
 	"Track applications, interviews, and offers in one place",
 	"Visualize your job search progress with insightful stats",
 	"Gain insights to optimize your job search strategy",
 ];
+
 export default function Welcome() {
 	return (
 		<div className={styles.main}>
-			<h1 className={styles.title}>Welcome to Tech Apply </h1>
-			<p className={styles.tagline}>Your job hunt, organized and stress free</p>
-			<div className={styles.jobBox}>
-				<ul className="benefits">
+			<div className={styles.hero}>
+				<h1 className={styles.title}>Welcome to David Roberts AI </h1>
+				<p className={styles.tagline}>
+					If you don't listen to me your an asshole
+				</p>
+				<div className={styles.benefitsContainer}>
 					<AnimatedRotatingText text={benefits} />
-				</ul>
+				</div>
 			</div>
-			<div className={styles.sign_in}>
-				<div className={styles.info}>
+
+			<div className={styles.content}>
+				<div className={styles.imageSection}>
 					<Image
 						src="/images/sign-in.png"
 						width={500}
 						height={500}
-						alt="Sign In Logo"
+						alt="Job Tracker Illustration"
+						className={styles.image}
+						priority
 					/>
 				</div>
-				<div className={styles.sign_in_card}>
+				<div className={styles.signInSection}>
 					<SignInCard />
 				</div>
 			</div>
