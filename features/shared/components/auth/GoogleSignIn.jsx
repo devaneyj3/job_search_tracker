@@ -34,7 +34,7 @@ export default async function GoogleSignIn() {
 				"use server";
 				try {
 					await signIn("google", {
-						redirectTo: "/profile",
+						redirectTo: "/dashboard",
 					});
 				} catch (error) {
 					if (error instanceof AuthError) {

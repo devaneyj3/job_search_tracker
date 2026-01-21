@@ -18,7 +18,7 @@ const NotFoundPage = () => {
 					<Button
 						variant="outline"
 						className="mt-4 ml-2"
-						onClick={() => (window.location.href = "/outreach")}>
+						onClick={() => (window.location.href = "/dashboard")}>
 						Back To Dashboard
 					</Button>
 				</div>
