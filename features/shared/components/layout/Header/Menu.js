@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/features/shared/ui/button";
 import Link from "next/link";
 import { EllipsisVertical } from "lucide-react";
@@ -16,15 +18,6 @@ const Menu = () => {
 				<Button asChild variant="ghost">
 					<Link href="/dashboard">Dashboard</Link>
 				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/tracker">Job Tracker</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/outreach">Outreach</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/profile">Profile</Link>
-				</Button>
 				<UserButton />
 			</nav>
 			<nav className="md:hidden">
@@ -36,15 +29,6 @@ const Menu = () => {
 						<SheetTitle>Menu</SheetTitle>
 						<Button asChild variant="ghost">
 							<Link href="/dashboard">Dashboard</Link>
-						</Button>
-						<Button asChild variant="ghost">
-							<Link href="/tracker">Job Tracker</Link>
-						</Button>
-						<Button asChild variant="ghost">
-							<Link href="/outreach">Outreach</Link>
-						</Button>
-						<Button asChild variant="ghost">
-							<Link href="/profile">Profile</Link>
 						</Button>
 						<UserButton />
 					</SheetContent>

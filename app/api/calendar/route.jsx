@@ -12,30 +12,15 @@ export async function POST(req) {
 	try {
 		const data = await req.json();
 
-		// Detect if this is a job application or connection
-		const isJob = !!data.jobTitle;
-
-		let title, company, url, contactName, contactEmail, secondContactDate;
-
-		if (isJob) {
-			// Job application fields
-			title = data.jobTitle;
-			company = data.companyName;
-			url = data.jobUrl;
-			contactName = data.contactName;
-			contactEmail = data.contactEmail;
-			secondContactDate = data.secondContactDate;
-		} else {
-			// Connection fields - map from DB names to expected names
-			title = `Connection with ${data.name || data.contactName || "Contact"}`;
-			company = data.company || data.companyName || "";
-			url = data.linkedinUrl || "";
-			contactName = data.name || data.contactName || "";
-			contactEmail = data.email || data.contactEmail || "";
-			// Connections don't have secondContactDate, use a default follow-up date (5 days from now)
-			secondContactDate =
-				data.secondContactDate || moment().add(5, "days").toDate();
-		}
+		// Connection fields - map from DB names to expected names
+		const title = `Connection with ${data.name || data.contactName || "Contact"}`;
+		const company = data.company || data.companyName || "";
+		const url = data.linkedinUrl || "";
+		const contactName = data.name || data.contactName || "";
+		const contactEmail = data.email || data.contactEmail || "";
+		// Connections don't have secondContactDate, use a default follow-up date (5 days from now)
+		const secondContactDate =
+			data.secondContactDate || moment().add(5, "days").toDate();
 
 		const filename = "contact_calendar.ics";
 		const calendar = icalendar({

@@ -9,7 +9,7 @@ const NotFoundPage = () => {
 				src="/images/logo.png"
 				width={200}
 				height={200}
-				alt={"Job Tracker logo"}
+				alt={"Connections Tracker logo"}
 				priority={true}
 			/>
 			<div className="p-6 w-1/3 rounded-lg shadow-md text-center">
@@ -18,7 +18,7 @@ const NotFoundPage = () => {
 					<Button
 						variant="outline"
 						className="mt-4 ml-2"
-						onClick={() => (window.location.href = "/profile")}>
+						onClick={() => (window.location.href = "/outreach")}>
 						Back To Dashboard
 					</Button>
 				</div>

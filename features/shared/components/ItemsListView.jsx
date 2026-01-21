@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import styles from "@/styles/ItemList.module.scss";
 import ItemCard from "./ItemCard";
-import CreateJobApplicationButton from "@/features/shared/components/layout/Header/CreateJobApplicationButton";
 import AddConnectionButton from "@/features/connections/components/Outreach/AddConnectionButton";
 import ItemDetailsSheet from "./ItemDetailsSheet";
 import { Button } from "@/features/shared/ui/button";
@@ -10,22 +9,17 @@ const ItemsListView = memo(function ItemsListView({
 	filteredItems,
 	statuses,
 	setChosenStatus,
-	type = "job",
+	type = "connection",
 	context,
 	title,
 	status,
 }) {
 	const { selectedItem, items, noItemMsg, update } = context;
-	const displayTitle =
-		title || (type === "job" ? "TOTAL JOBS" : "TOTAL CONNECTIONS");
+	const displayTitle = title || "TOTAL CONNECTIONS";
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
-				{type === "job" ? (
-					<CreateJobApplicationButton />
-				) : (
-					<AddConnectionButton />
-				)}
+				<AddConnectionButton />
 			</section>
 			<h1 className={styles.title}>
 				{filteredItems.length} {displayTitle}

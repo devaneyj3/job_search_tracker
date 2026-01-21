@@ -6,10 +6,10 @@ import Image from "next/image";
 
 const benefits = [
 	"Automate calendar events for follow-up emails",
-	"Get email templates for your follow-up emails",
-	"Track applications, interviews, and offers in one place",
-	"Visualize your job search progress with insightful stats",
-	"Gain insights to optimize your job search strategy",
+	"Get email templates for your networking emails",
+	"Track your professional connections in one place",
+	"Visualize your networking progress with insightful stats",
+	"Gain insights to optimize your networking strategy",
 ];
 
 export default function Welcome() {
@@ -18,7 +18,7 @@ export default function Welcome() {
 			<div className={styles.hero}>
 				<h1 className={styles.title}>Welcome to David Roberts AI </h1>
 				<p className={styles.tagline}>
-					If you don't listen to me your an asshole
+					Keep track of your connections
 				</p>
 				<div className={styles.benefitsContainer}>
 					<AnimatedRotatingText text={benefits} />
@@ -31,7 +31,7 @@ export default function Welcome() {
 						src="/images/sign-in.png"
 						width={500}
 						height={500}
-						alt="Job Tracker Illustration"
+						alt="Connections Tracker Illustration"
 						className={styles.image}
 						priority
 					/>

@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/features/shared/ui/button";
 import { UserIcon, LogOut } from "lucide-react";
-
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import {
 	DropdownMenu,
@@ -10,10 +12,17 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 } from "@/features/shared/ui/dropdown-menu";
-import { auth, signOut } from "@/auth";
 
-const UserButton = async () => {
-	const session = await auth();
+const UserButton = () => {
+	const { data: session, status } = useSession();
+
+	if (status === "loading") {
+		return (
+			<Button variant="ghost" disabled>
+				<UserIcon />
+			</Button>
+		);
+	}
 
 	if (!session) {
 		return (
@@ -25,7 +34,13 @@ const UserButton = async () => {
 			</Button>
 		);
 	}
+
 	const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "";
+
+	const handleSignOut = async () => {
+		await signOut({ callbackUrl: "/" });
+	};
+
 	return (
 		<div className="flex gap-2 items-center">
 			<DropdownMenu>
@@ -59,18 +74,13 @@ const UserButton = async () => {
 						</Button>
 					</DropdownMenuItem>
 					<DropdownMenuItem className="p-0 mb-1">
-						<form
-							action={async () => {
-								"use server";
-								await signOut({ redirectTo: "/" });
-							}}>
-							<Button
-								className="w-full py-4 px-2 h-2 justify-start"
-								variant="ghost">
-								<LogOut />
-								Sign Out
-							</Button>
-						</form>
+						<Button
+							className="w-full py-4 px-2 h-2 justify-start"
+							variant="ghost"
+							onClick={handleSignOut}>
+							<LogOut />
+							Sign Out
+						</Button>
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
