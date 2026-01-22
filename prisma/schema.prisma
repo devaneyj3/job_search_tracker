@@ -22,9 +22,9 @@ model User {
   createdAt       DateTime      @default(now()) @db.Timestamp(6)
   updatedAt       DateTime      @updatedAt
   accounts        Account[]
-  applications    Application[]
   sessions        Session[]
   connections     Connection[]
+  companies       Company[]
 }
 
 model Account {
@@ -66,56 +66,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-model Application {
-  id                Int          @id @default(autoincrement())
-  userId            String       @db.Uuid
-  jobTitle          String
-  companyName       String
-  jobUrl            String
-  appliedDate       DateTime?      @default(now()) @db.Timestamp(6)
-  status            String?
-  statusDate        DateTime?
-  archived          Boolean?      @default(false)
-  salary            String?
-  location          String?
-  contactName       String?
-  contactEmail      String?
-  contactPosition   String?
-  initialContactDate  DateTime? @default(now()) @db.Timestamp(6)
-  secondContactDate DateTime?
-  lastContactedDate DateTime?
-  initialContactEmailSent   Boolean?      @default(false)
-  secondContactEmailSent  Boolean?      @default(false)
-  jobDescription    String?
-  skill1            String?
-  skill2            String?
-  interviewNotes    String?
-  interviewDate     DateTime?
-  offerDetails      String?
-  rejectionReason   String?
-  dateArchived      DateTime?
-  notes             String?
-  heard_back        Boolean?      @default(false)
-  heard_back_date DateTime?
-  companyInfoId     Int?         @unique
-  createdAt         DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt         DateTime     @updatedAt
-  companyInfo       CompanyInfo? @relation(fields: [companyInfoId], references: [id])
-  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([status])
-  @@index([appliedDate])
-}
-
-model CompanyInfo {
-  id          Int          @id @default(autoincrement())
-  industry    String?
-  size        String?
-  website     String?
-  linkedin    String?
-  application Application?
-}
 
 model Connection {
   id                Int          @id @default(autoincrement())
@@ -146,4 +96,29 @@ model Connection {
   @@index([connectedDate])
   @@index([company])
   @@index([status])
+}
+
+model Company {
+  id                Int          @id @default(autoincrement())
+  userId            String       @db.Uuid
+  name              String
+  website           String?
+  industry          String?
+  size              String?
+  location          String?
+  description       String?
+  linkedinUrl       String?
+  status            String
+  statusDate        DateTime?
+  notes             String?
+  archived          Boolean?      @default(false)
+  archivedDate      DateTime?    @db.Timestamp(6)
+  createdAt         DateTime?     @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime?     @default(now()) @db.Timestamp(6)
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([name])
+  @@index([industry])
 }

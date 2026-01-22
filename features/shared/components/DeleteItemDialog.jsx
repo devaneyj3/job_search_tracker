@@ -13,20 +13,20 @@ import { Button } from "@/features/shared/ui/button";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import styles from "@/styles/DeleteItem.module.scss";
-import { useConnection } from "@/features/connections/context/connectionContext";
+import { useCompany } from "@/features/companies/context/companyContext";
 
-export default function DeleteItemDialog({ id, type = "connection", companyInfoId }) {
-	const connectionContext = useConnection();
-	const { deleteConnection } = connectionContext;
+export default function DeleteItemDialog({ id, type = "company", companyInfoId }) {
+	const companyContext = useCompany();
+	const { deleteCompany } = companyContext;
 
 	const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false);
 
 	const handleDelete = () => {
-		deleteConnection(id);
+		deleteCompany(id);
 		setInvoiceDialogOpen(false);
 	};
 
-	const itemType = "connection";
+	const itemType = "company";
 
 	return (
 		<Dialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen}>

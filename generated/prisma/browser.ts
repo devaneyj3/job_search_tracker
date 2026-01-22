@@ -38,17 +38,12 @@ export type Session = Prisma.SessionModel
  */
 export type VerificationToken = Prisma.VerificationTokenModel
 /**
- * Model Application
- * 
- */
-export type Application = Prisma.ApplicationModel
-/**
- * Model CompanyInfo
- * 
- */
-export type CompanyInfo = Prisma.CompanyInfoModel
-/**
  * Model Connection
  * 
  */
 export type Connection = Prisma.ConnectionModel
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel

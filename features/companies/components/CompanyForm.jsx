@@ -21,47 +21,51 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
-import { connectionStatus } from "@/Constants";
+import { companyStatus } from "@/Constants";
 import { toast } from "sonner";
-import { outreachFormSchema } from "@/features/connections/lib/schema";
-import { outreachKeys } from "@/features/connections/lib/keys";
-import { useConnection } from "@/features/connections/context/connectionContext";
-import { processSubmission } from "@/features/shared/lib/processSubmission";
+import { companyFormSchema } from "@/features/companies/lib/schema";
+import { companyKeys } from "@/features/companies/lib/keys";
+import { useCompany } from "@/features/companies/context/companyContext";
 
-// helper: fetch field config by name from connectionKeys
+// helper: fetch field config by name from companyKeys
 function getCfg(name) {
-	const cfg = outreachKeys.find((f) => f.name === name);
+	const cfg = companyKeys.find((f) => f.name === name);
 	if (!cfg)
-		throw new Error(`Missing field config for "${name}" in outreachkeys`);
+		throw new Error(`Missing field config for "${name}" in companyKeys`);
 	return cfg;
 }
 
-export default function CreateConnection({ setDialogOpen }) {
-	const { createConnection, createCalendarEvent, sendEmail } = useConnection();
+export default function CreateCompany({ setDialogOpen }) {
+	const { createCompany } = useCompany();
 	const form = useForm({
-		resolver: zodResolver(outreachFormSchema),
+		resolver: zodResolver(companyFormSchema),
 		defaultValues: {
-			contactName: "",
-			contactEmail: "",
-			companyName: "",
-			contactPosition: "",
+			name: "",
+			website: "",
+			industry: "",
+			size: "",
+			location: "",
+			description: "",
 			linkedinUrl: "",
-			status: "Connected",
+			status: "Researching",
 			notes: "",
 		},
 		mode: "onBlur",
 	});
 
-	//create job,calendar event, pdf, toast
 	async function onSubmit(values) {
-		const ConnectionObj = {
-			customFn: createConnection,
-			sendEmail,
-			createCalendarEvent,
-			values,
-			setDialogOpen,
-		};
-		await processSubmission(ConnectionObj);
+		try {
+			await createCompany(values);
+			toast("Company has been created", {
+				action: { label: "Close", onClick: () => {} },
+			});
+			setDialogOpen(false);
+		} catch (error) {
+			console.error("Error in onSubmit:", error);
+			toast("Failed to create company. Please try again.", {
+				action: { label: "Close", onClick: () => {} },
+			});
+		}
 	}
 
 	const RenderField = ({ name }) => {
@@ -84,13 +88,21 @@ export default function CreateConnection({ setDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{connectionStatus.map((stat) => (
+									{companyStatus.map((stat) => (
 										<SelectItem key={stat} value={stat}>
 											{stat}
 										</SelectItem>
 									))}
 								</SelectContent>
 							</Select>
+						) : name === "description" || name === "notes" ? (
+							<FormControl>
+								<Textarea
+									placeholder={placeholder}
+									{...field}
+									rows={name === "description" ? 4 : 3}
+								/>
+							</FormControl>
 						) : (
 							<FormControl>
 								<Input
@@ -111,21 +123,21 @@ export default function CreateConnection({ setDialogOpen }) {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
-				{/* Row 1: Title + Company */}
 				<div className={styles.twoCol}>
-					<RenderField name="contactName" />
-					<RenderField name="contactEmail" />
+					<RenderField name="name" />
+					<RenderField name="website" />
 				</div>
-				{/* Row 2: Job URL + Status */}
 				<div className={styles.twoCol}>
-					<RenderField name="companyName" />
-					<RenderField name="contactPosition" />
+					<RenderField name="industry" />
+					<RenderField name="size" />
 				</div>
-				{/* Row 3: Location + Salary */}
 				<div className={styles.twoCol}>
+					<RenderField name="location" />
 					<RenderField name="linkedinUrl" />
-					<RenderField name="notes" />
 				</div>
+				<RenderField name="status" />
+				<RenderField name="description" />
+				<RenderField name="notes" />
 				<Button className={styles.btn} type="submit">
 					Submit
 				</Button>

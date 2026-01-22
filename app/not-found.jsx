@@ -9,7 +9,7 @@ const NotFoundPage = () => {
 				src="/images/logo.png"
 				width={200}
 				height={200}
-				alt={"Connections Tracker logo"}
+				alt={"Company Tracker logo"}
 				priority={true}
 			/>
 			<div className="p-6 w-1/3 rounded-lg shadow-md text-center">

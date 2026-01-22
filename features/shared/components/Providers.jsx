@@ -2,13 +2,13 @@
 
 import { SessionProvider } from "next-auth/react";
 import { AuthProvider } from "@/features/shared/context/authContext";
-import { ConnectionProvider } from "@/features/connections/context/connectionContext";
+import { CompanyProvider } from "@/features/companies/context/companyContext";
 
 export default function Providers({ children }) {
 	return (
 		<SessionProvider>
 			<AuthProvider>
-				<ConnectionProvider>{children}</ConnectionProvider>
+				<CompanyProvider>{children}</CompanyProvider>
 			</AuthProvider>
 		</SessionProvider>
 	);

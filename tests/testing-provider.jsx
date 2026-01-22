@@ -1,26 +1,7 @@
-import React from "react";
+
 import { render } from "@testing-library/react";
 import { vi } from "vitest";
 
-// Mock the context hooks directly - this is faster and avoids provider issues
-vi.mock("@/features/jobs/context/jobContext", () => ({
-	useJob: () => ({
-		jobs: [],
-		selectedJob: null,
-		createJob: vi.fn().mockResolvedValue({ id: 1 }),
-		sendEmail: vi.fn().mockResolvedValue({}),
-		createCalendarEvent: vi.fn().mockResolvedValue({}),
-		updateJobFields: vi.fn(),
-		updateJobStatus: vi.fn(),
-		deleteJob: vi.fn(),
-		modalOpen: false,
-		setModalOpen: vi.fn(),
-		error: null,
-		isLoading: false,
-		noJobMsg: "",
-	}),
-	JobItemProvider: ({ children }) => children,
-}));
 
 vi.mock("@/features/shared/context/authContext", () => ({
 	useAuth: () => ({
@@ -34,21 +15,21 @@ vi.mock("@/features/shared/context/authContext", () => ({
 	AuthProvider: ({ children }) => children,
 }));
 
-vi.mock("@/features/connections/context/connectionContext", () => ({
-	useConnection: () => ({
-		connections: [],
-		selectedConnection: null,
-		createConnection: vi.fn(),
-		deleteConnection: vi.fn(),
-		updateConnectionFields: vi.fn(),
-		updateConnectionStatus: vi.fn(),
+vi.mock("@/features/companies/context/companyContext", () => ({
+	useCompany: () => ({
+		companies: [],
+		selectedCompany: null,
+		createCompany: vi.fn(),
+		deleteCompany: vi.fn(),
+		updateCompanyFields: vi.fn(),
+		updateCompanyStatus: vi.fn(),
 		modalOpen: false,
 		setModalOpen: vi.fn(),
 		error: null,
 		isLoading: false,
-		noConnectionMsg: "",
+		noCompanyMsg: "",
 	}),
-	ConnectionProvider: ({ children }) => children,
+	CompanyProvider: ({ children }) => children,
 }));
 
 vi.mock("next-auth/react", () => ({

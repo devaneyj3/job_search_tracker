@@ -13,7 +13,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import { Building, Linkedin, Pencil } from "lucide-react";
+import { Building, Linkedin, Pencil, Globe, UserSearch } from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
@@ -24,26 +24,26 @@ import { toast } from "sonner";
 
 export default function ItemDetailsSheet({
 	item,
-	type = "connection",
+	type = "company",
 	context,
 	status,
 }) {
 	const {
 		modalOpen,
 		setModalOpen,
-		sendEmail,
 		update,
-		updateConnectionFields,
-		createCalendarEvent,
+		updateCompanyFields,
 	} = context;
 	const [isEditing, setIsEditing] = useState(false);
 
 	// Form state for editing
 	const [formData, setFormData] = useState({
 		name: item.name || "",
-		email: item.email || "",
-		company: item.company || "",
-		position: item.position || "",
+		website: item.website || "",
+		industry: item.industry || "",
+		size: item.size || "",
+		location: item.location || "",
+		description: item.description || "",
 		linkedinUrl: item.linkedinUrl || "",
 		notes: item.notes || "",
 	});
@@ -52,9 +52,11 @@ export default function ItemDetailsSheet({
 	useEffect(() => {
 		setFormData({
 			name: item.name || "",
-			email: item.email || "",
-			company: item.company || "",
-			position: item.position || "",
+			website: item.website || "",
+			industry: item.industry || "",
+			size: item.size || "",
+			location: item.location || "",
+			description: item.description || "",
 			linkedinUrl: item.linkedinUrl || "",
 			notes: item.notes || "",
 		});
@@ -66,40 +68,27 @@ export default function ItemDetailsSheet({
 
 	const handleSave = async () => {
 		try {
-			if (!updateConnectionFields) {
+			if (!updateCompanyFields) {
 				toast.error("Update function not available");
 				return;
 			}
 
 			const id = item.id;
 
-			// Prepare data for connection
+			// Prepare data for company
 			const dataToUpdate = {
 				name: formData.name,
-				email: formData.email,
-				company: formData.company,
-				position: formData.position,
+				website: formData.website,
+				industry: formData.industry,
+				size: formData.size,
+				location: formData.location,
+				description: formData.description,
 				linkedinUrl: formData.linkedinUrl,
 				notes: formData.notes,
 			};
 
-			const updatedData = await updateConnectionFields(
-				id,
-				dataToUpdate,
-				item.email
-			);
-
-			// Ensure that calendar is created and email is sent with data from api
-			if (updatedData.email) {
-				await Promise.allSettled([
-					sendEmail(updatedData),
-					createCalendarEvent(updatedData),
-				]);
-				toast("Connection has been updated and new email sent!", {
-					action: { label: "Close", onClick: () => {} },
-				});
-			}
-			toast.success("Connection updated successfully");
+			await updateCompanyFields(id, dataToUpdate);
+			toast.success("Company updated successfully");
 			setIsEditing(false);
 		} catch (error) {
 			console.error("Error updating:", error);
@@ -111,24 +100,30 @@ export default function ItemDetailsSheet({
 		// Reset form data to original item values
 		setFormData({
 			name: item.name || "",
-			email: item.email || "",
-			company: item.company || "",
-			position: item.position || "",
+			website: item.website || "",
+			industry: item.industry || "",
+			size: item.size || "",
+			location: item.location || "",
+			description: item.description || "",
 			linkedinUrl: item.linkedinUrl || "",
 			notes: item.notes || "",
 		});
 		setIsEditing(false);
 	};
 
-	// Get dates for connection
-	const date = readableDate(item.connectedDate);
-	const lastContactedDate = readableDate(item.lastEmailDate);
-	const initialContactDate = readableDate(item.firstEmailDate);
+	// Get dates for company
+	const date = readableDate(item.createdAt);
 
 	// Get title and description
 	const title = item.name;
-	const description = item.notes;
+	const description = item.description || item.notes;
 
+	// Remove /about from LinkedIn URL if present
+	const LinkedInPeopleSearchURL = item.linkedinUrl 
+		? item.linkedinUrl.replace(/\/*\/?$/, '/people/?keywords=software')
+		: '';
+
+	console.log(LinkedInPeopleSearchURL)
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -139,7 +134,7 @@ export default function ItemDetailsSheet({
 								<Input
 									value={formData.name}
 									onChange={(e) => handleInputChange("name", e.target.value)}
-									placeholder={item.name || "Name"}
+									placeholder={item.name || "Company Name"}
 									className="text-lg font-semibold"
 								/>
 							) : (
@@ -156,46 +151,98 @@ export default function ItemDetailsSheet({
 							<DeleteItemDialog id={item.id} type={type} />
 						</div>
 					</div>
-					<div className={styles.itemPosting}>
-						<Linkedin size={15} className={styles.icon} />
-						{isEditing ? (
-							<Input
-								value={formData.linkedinUrl}
-								onChange={(e) =>
-									handleInputChange("linkedinUrl", e.target.value)
-								}
-								placeholder={item.linkedinUrl || "LinkedIn URL"}
-								type="url"
-							/>
-						) : item.linkedinUrl ? (
-							<Link href={item.linkedinUrl} target="_blank">
-								View LinkedIn Profile
-							</Link>
-						) : null}
-					</div>
-					<div className={styles.company}>
-						<Building size={15} className={styles.icon} />
-						{isEditing ? (
-							<Input
-								value={formData.company}
-								onChange={(e) => handleInputChange("company", e.target.value)}
-								placeholder={item.company || "Company"}
-							/>
-						) : (
-							item.company
-						)}
-					</div>
-					<div className={styles.position}>
-						{isEditing ? (
-							<Input
-								value={formData.position}
-								onChange={(e) => handleInputChange("position", e.target.value)}
-								placeholder={item.position || "Position"}
-							/>
-						) : (
-							item.position
-						)}
-					</div>
+					{item.website && (
+						<div className={styles.itemPosting}>
+							<Globe size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.website}
+									onChange={(e) => handleInputChange("website", e.target.value)}
+									placeholder={item.website || "Website"}
+									type="url"
+								/>
+							) : item.website ? (
+								<Link href={item.website} target="_blank">
+									Visit Website
+								</Link>
+							) : null}
+						</div>
+					)}
+					{item.linkedinUrl && (
+						<>
+							<div className={styles.itemPosting}>
+								<Linkedin size={15} className={styles.icon} />
+								{isEditing ? (
+									<Input
+										value={formData.linkedinUrl}
+										onChange={(e) =>
+											handleInputChange("linkedinUrl", e.target.value)
+										}
+										placeholder={item.linkedinUrl || "LinkedIn URL"}
+										type="url"
+									/>
+								) : item.linkedinUrl ? (
+									<Link href={item.linkedinUrl} target="_blank">
+										View LinkedIn
+									</Link>
+								) : null}
+							</div>
+							{item.linkedinUrl && !isEditing && (
+								<div className={styles.itemPosting}>
+									<UserSearch size={15} className={styles.icon} />
+									<Link href={LinkedInPeopleSearchURL} target="_blank">
+										Find People that work at {item.name}
+									</Link>
+								</div>
+							)}
+						</>
+					)}
+					{item.industry && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.industry}
+									onChange={(e) =>
+										handleInputChange("industry", e.target.value)
+									}
+									placeholder={item.industry || "Industry"}
+								/>
+							) : (
+								item.industry
+							)}
+						</div>
+					)}
+					{item.size && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.size}
+									onChange={(e) => handleInputChange("size", e.target.value)}
+									placeholder={item.size || "Company Size"}
+								/>
+							) : (
+								item.size
+							)}
+						</div>
+					)}
+					{item.location && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.location}
+									onChange={(e) =>
+										handleInputChange("location", e.target.value)
+									}
+									placeholder={item.location || "Location"}
+								/>
+							) : (
+								item.location
+							)}
+						</div>
+					)}
 					<div className={styles.badge}>
 						<Badge className={styles.status}>
 							{item.status} on {date}
@@ -204,79 +251,28 @@ export default function ItemDetailsSheet({
 
 					<ItemStatusSelect id={item.id} status={status} update={update} />
 
-					<div className={styles.contactInfo}>
-						<div className={styles.contact}>
-							<Label htmlFor="contactName">Contact Name: </Label>
-							{isEditing ? (
-								<Input
-									id="contactName"
-									value={formData.name}
-									onChange={(e) => handleInputChange("name", e.target.value)}
-									placeholder={item.name || "Name"}
-								/>
-							) : (
-								<p id="contactName">{item.name || "Not Set"}</p>
-							)}
-						</div>
-						<div className={styles.contact}>
-							<Label htmlFor="contactEmail">Contact Email: </Label>
-							{isEditing ? (
-								<div className={styles.inputWrapper}>
-									<Input
-										id="contactEmail"
-										type="email"
-										value={formData.email}
-										onChange={(e) => handleInputChange("email", e.target.value)}
-										placeholder={item.email || "Email"}
-									/>
-									<p className={styles.contactWarning}>
-										Changing this will make a new contact date
-									</p>
-								</div>
-							) : (
-								<p id="contactEmail">{item.email || "Not Set"}</p>
-							)}
-						</div>
-						<div className={styles.contact}>
-							<Label htmlFor="firstEmailDate">First Email Date: </Label>
-							<p
-								id="firstEmailDate"
-								className={`${item.emailSent ? styles.sent : null}`}>
-								{item.firstEmailDate ? initialContactDate : "Not Set"}
-							</p>
-							{item.emailSent && (
-								<span className={styles.small}>Email sent</span>
-							)}
-						</div>
-						{item.lastEmailDate && (
-							<div className={styles.contact}>
-								<Label htmlFor="lastEmailDate">Last Email Date: </Label>
-								<p id="lastEmailDate">
-									{item.lastEmailDate ? lastContactedDate : "Not Set"}
-								</p>
-							</div>
-						)}
-						{item.responded && (
-							<div className={styles.contact}>
-								<Label htmlFor="responseDate">Response Date: </Label>
-								<p id="responseDate">
-									{item.responseDate
-										? readableDate(item.responseDate)
-										: "Not Set"}
-								</p>
-							</div>
-						)}
-					</div>
 					{isEditing ? (
 						<div className={styles.contact}>
-							<Label htmlFor="description">Notes: </Label>
+							<Label htmlFor="description">Description: </Label>
 							<Textarea
 								id="description"
-								value={formData.notes}
-								onChange={(e) => handleInputChange("notes", e.target.value)}
-								placeholder={item.notes || "Notes"}
+								value={formData.description}
+								onChange={(e) =>
+									handleInputChange("description", e.target.value)
+								}
+								placeholder={item.description || "Description"}
 								rows={6}
 							/>
+							<div className={styles.contact} style={{ marginTop: "1rem" }}>
+								<Label htmlFor="notes">Notes: </Label>
+								<Textarea
+									id="notes"
+									value={formData.notes}
+									onChange={(e) => handleInputChange("notes", e.target.value)}
+									placeholder={item.notes || "Notes"}
+									rows={3}
+								/>
+							</div>
 						</div>
 					) : (
 						description && (

@@ -55,9 +55,8 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Application: 'Application',
-  CompanyInfo: 'CompanyInfo',
-  Connection: 'Connection'
+  Connection: 'Connection',
+  Company: 'Company'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -134,56 +133,6 @@ export const VerificationTokenScalarFieldEnum = {
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
 
 
-export const ApplicationScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  jobTitle: 'jobTitle',
-  companyName: 'companyName',
-  jobUrl: 'jobUrl',
-  appliedDate: 'appliedDate',
-  status: 'status',
-  statusDate: 'statusDate',
-  archived: 'archived',
-  salary: 'salary',
-  location: 'location',
-  contactName: 'contactName',
-  contactEmail: 'contactEmail',
-  contactPosition: 'contactPosition',
-  initialContactDate: 'initialContactDate',
-  secondContactDate: 'secondContactDate',
-  lastContactedDate: 'lastContactedDate',
-  initialContactEmailSent: 'initialContactEmailSent',
-  secondContactEmailSent: 'secondContactEmailSent',
-  jobDescription: 'jobDescription',
-  skill1: 'skill1',
-  skill2: 'skill2',
-  interviewNotes: 'interviewNotes',
-  interviewDate: 'interviewDate',
-  offerDetails: 'offerDetails',
-  rejectionReason: 'rejectionReason',
-  dateArchived: 'dateArchived',
-  notes: 'notes',
-  heard_back: 'heard_back',
-  heard_back_date: 'heard_back_date',
-  companyInfoId: 'companyInfoId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
-
-
-export const CompanyInfoScalarFieldEnum = {
-  id: 'id',
-  industry: 'industry',
-  size: 'size',
-  website: 'website',
-  linkedin: 'linkedin'
-} as const
-
-export type CompanyInfoScalarFieldEnum = (typeof CompanyInfoScalarFieldEnum)[keyof typeof CompanyInfoScalarFieldEnum]
-
-
 export const ConnectionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -209,6 +158,28 @@ export const ConnectionScalarFieldEnum = {
 } as const
 
 export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
+export const CompanyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  website: 'website',
+  industry: 'industry',
+  size: 'size',
+  location: 'location',
+  description: 'description',
+  linkedinUrl: 'linkedinUrl',
+  status: 'status',
+  statusDate: 'statusDate',
+  notes: 'notes',
+  archived: 'archived',
+  archivedDate: 'archivedDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
 
 
 export const SortOrder = {

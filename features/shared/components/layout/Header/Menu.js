@@ -18,6 +18,9 @@ const Menu = () => {
 				<Button asChild variant="ghost">
 					<Link href="/dashboard">Dashboard</Link>
 				</Button>
+				<Button asChild variant="ghost">
+					<Link href="/companies">Companies</Link>
+				</Button>
 				<UserButton />
 			</nav>
 			<nav className="md:hidden">
@@ -29,6 +32,10 @@ const Menu = () => {
 						<SheetTitle>Menu</SheetTitle>
 						<Button asChild variant="ghost">
 							<Link href="/dashboard">Dashboard</Link>
+						</Button>
+	
+						<Button asChild variant="ghost">
+							<Link href="/companies">Companies</Link>
 						</Button>
 						<UserButton />
 					</SheetContent>

@@ -2,10 +2,10 @@ import CompaniesDashboard from "@/features/companies/components/Companies/Compan
 import React from "react";
 
 export const metadata = {
-	title: "Dashboard | Company Tracker",
-	description: "Manage your companies",
+	title: "Companies | Company Tracker",
+	description: "Track companies you're interested in",
 };
 
-export default function DashboardPage() {
+export default function CompaniesPage() {
 	return <CompaniesDashboard />;
 }

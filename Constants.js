@@ -1,9 +1,10 @@
 const jobStatus = ["Applied", "Interview", "Offer", "Rejected"];
-const connectionStatus = [
-	"Connected",
-	"Emailed",
-	"Responded",
-	"Meeting Scheduled",
+const companyStatus = [
+	"Researching",
+	"Interested",
+	"Applied",
+	"Interviewing",
+	"Rejected",
 	"Archived",
 ];
 const contactPosition = [
@@ -14,4 +15,5 @@ const contactPosition = [
 	"Other",
 ];
 
-export { jobStatus, connectionStatus, contactPosition };
+const LINKEDIN_COMPANY_MESSAGE = `Hey I would love to work at your company, and have experience in Javascript, React and NextJS. I was wondering if you could point me to the person I could reach out to.`
+export { jobStatus, companyStatus, contactPosition, LINKEDIN_COMPANY_MESSAGE };
