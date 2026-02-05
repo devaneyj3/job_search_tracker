@@ -81,7 +81,10 @@ export const CompanyProvider = ({ children }) => {
 			});
 
 			const data = await res.json();
-			if (!res.ok) throw new Error("Failed to save company to database");
+			console.log(data)
+			if (!res.ok) {
+				throw new Error(data.error || "Failed to save company to database");
+			}
 
 			let nextCompanies;
 			setCompanies((prev) => {

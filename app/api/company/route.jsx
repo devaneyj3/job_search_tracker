@@ -44,7 +44,16 @@ export async function POST(req) {
 			status,
 			notes,
 		} = await req.json();
-
+		console.log(	userId,
+			name,
+			website,
+			industry,
+			size,
+			location,
+			description,
+			linkedinUrl,
+			status,
+			notes)
 		const newCompany = await createNewCompany({
 			userId,
 			name,
@@ -62,7 +71,7 @@ export async function POST(req) {
 	} catch (error) {
 		console.error("Error creating Company:", error);
 		return NextResponse.json(
-			{ success: false, error: "Failed to create Company" },
+			{ success: false, error: error.message || "Failed to create Company" },
 			{ status: 500 }
 		);
 	}

@@ -34,6 +34,8 @@ export default function CompaniesList({
 		]
 	);
 
+	console.log(filteredCompanies)
+
 	return (
 		<ItemsListView
 			filteredItems={filteredCompanies}

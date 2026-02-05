@@ -116,14 +116,13 @@ export default function ItemDetailsSheet({
 
 	// Get title and description
 	const title = item.name;
-	const description = item.description || item.notes;
+	const description = item.description;
+	const notes = item.notes;
 
 	// Remove /about from LinkedIn URL if present
 	const LinkedInPeopleSearchURL = item.linkedinUrl 
 		? item.linkedinUrl.replace(/\/*\/?$/, '/people/?keywords=software')
 		: '';
-
-	console.log(LinkedInPeopleSearchURL)
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -275,11 +274,18 @@ export default function ItemDetailsSheet({
 							</div>
 						</div>
 					) : (
-						description && (
-							<SheetDescription className={styles.itemDescription}>
-								{description}
-							</SheetDescription>
-						)
+						<>
+							{notes && (
+								<SheetDescription className={styles.itemDescription}>
+									<strong>Notes:</strong> {notes}
+								</SheetDescription>
+							)}
+							{description && (
+								<SheetDescription className={styles.itemDescription}>
+									{description}
+								</SheetDescription>
+							)}
+						</>
 					)}
 				</SheetHeader>
 

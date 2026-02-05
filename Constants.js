@@ -1,4 +1,4 @@
-const jobStatus = ["Applied", "Interview", "Offer", "Rejected"];
+const jobStatus = ["Applied", "Interview", "Offer", "Rejected"," Contacted"];
 const companyStatus = [
 	"Researching",
 	"Interested",
@@ -6,6 +6,7 @@ const companyStatus = [
 	"Interviewing",
 	"Rejected",
 	"Archived",
+	"Contacted"
 ];
 const contactPosition = [
 	"Software Engineer",
