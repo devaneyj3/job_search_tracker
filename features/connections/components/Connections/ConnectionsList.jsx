@@ -1,0 +1,49 @@
+import React, { useMemo } from "react";
+import { useConnection } from "@/features/connections/context/connectionContext";
+import ItemsListView from "@/features/shared/components/ItemsListView";
+import { connectionStatus } from "@/Constants";
+import AddConnectionButton from "./AddConnectionButton";
+
+export default function ConnectionsList({
+	filteredConnections,
+	statuses,
+	setChosenStatus,
+}) {
+	const connectionContext = useConnection();
+
+	const context = useMemo(
+		() => ({
+			selectedItem: connectionContext.selectedConnection,
+			setSelectedItem: connectionContext.setSelectedConnection,
+			setModalOpen: connectionContext.setModalOpen,
+			items: connectionContext.connections,
+			noItemMsg: connectionContext.noConnectionMsg,
+			update: connectionContext.updateConnectionStatus,
+			updateConnectionFields: connectionContext.updateConnectionFields,
+			modalOpen: connectionContext.modalOpen,
+		}),
+		[
+			connectionContext.selectedConnection,
+			connectionContext.setSelectedConnection,
+			connectionContext.setModalOpen,
+			connectionContext.connections,
+			connectionContext.noConnectionMsg,
+			connectionContext.updateConnectionStatus,
+			connectionContext.updateConnectionFields,
+			connectionContext.modalOpen,
+		]
+	);
+
+	return (
+		<ItemsListView
+			filteredItems={filteredConnections}
+			statuses={statuses}
+			setChosenStatus={setChosenStatus}
+			type="connection"
+			context={context}
+			title="TOTAL CONNECTIONS"
+			status={connectionStatus}
+			AddButton={AddConnectionButton}
+		/>
+	);
+}

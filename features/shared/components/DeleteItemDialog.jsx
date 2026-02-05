@@ -14,19 +14,26 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import styles from "@/styles/DeleteItem.module.scss";
 import { useCompany } from "@/features/companies/context/companyContext";
+import { useConnection } from "@/features/connections/context/connectionContext";
 
 export default function DeleteItemDialog({ id, type = "company", companyInfoId }) {
 	const companyContext = useCompany();
+	const connectionContext = useConnection();
 	const { deleteCompany } = companyContext;
+	const { deleteConnection } = connectionContext;
 
 	const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false);
 
 	const handleDelete = () => {
-		deleteCompany(id);
+		if (type === "connection") {
+			deleteConnection(id);
+		} else {
+			deleteCompany(id);
+		}
 		setInvoiceDialogOpen(false);
 	};
 
-	const itemType = "company";
+	const itemType = type;
 
 	return (
 		<Dialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen}>

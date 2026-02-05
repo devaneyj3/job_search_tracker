@@ -13,7 +13,15 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import { Building, Linkedin, Pencil, Globe, UserSearch } from "lucide-react";
+import {
+	Building,
+	Linkedin,
+	Pencil,
+	Globe,
+	UserSearch,
+	Mail,
+	Briefcase,
+} from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
@@ -33,24 +41,24 @@ export default function ItemDetailsSheet({
 		setModalOpen,
 		update,
 		updateCompanyFields,
+		updateConnectionFields,
 	} = context;
 	const [isEditing, setIsEditing] = useState(false);
+	const isConnection = type === "connection";
+	const isCompany = type === "company";
 
-	// Form state for editing
-	const [formData, setFormData] = useState({
-		name: item.name || "",
-		website: item.website || "",
-		industry: item.industry || "",
-		size: item.size || "",
-		location: item.location || "",
-		description: item.description || "",
-		linkedinUrl: item.linkedinUrl || "",
-		notes: item.notes || "",
-	});
-
-	// Update form data when item changes
-	useEffect(() => {
-		setFormData({
+	const getInitialFormData = () => {
+		if (isConnection) {
+			return {
+				name: item.name || "",
+				email: item.email || "",
+				company: item.company || "",
+				position: item.position || "",
+				linkedinUrl: item.linkedinUrl || "",
+				notes: item.notes || "",
+			};
+		}
+		return {
 			name: item.name || "",
 			website: item.website || "",
 			industry: item.industry || "",
@@ -59,8 +67,16 @@ export default function ItemDetailsSheet({
 			description: item.description || "",
 			linkedinUrl: item.linkedinUrl || "",
 			notes: item.notes || "",
-		});
-	}, [item]);
+		};
+	};
+
+	// Form state for editing
+	const [formData, setFormData] = useState(getInitialFormData());
+
+	// Update form data when item changes
+	useEffect(() => {
+		setFormData(getInitialFormData());
+	}, [item, type]);
 
 	const handleInputChange = (field, value) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
@@ -68,27 +84,41 @@ export default function ItemDetailsSheet({
 
 	const handleSave = async () => {
 		try {
-			if (!updateCompanyFields) {
+			const updateFields = isConnection
+				? updateConnectionFields
+				: updateCompanyFields;
+
+			if (!updateFields) {
 				toast.error("Update function not available");
 				return;
 			}
 
 			const id = item.id;
 
-			// Prepare data for company
-			const dataToUpdate = {
-				name: formData.name,
-				website: formData.website,
-				industry: formData.industry,
-				size: formData.size,
-				location: formData.location,
-				description: formData.description,
-				linkedinUrl: formData.linkedinUrl,
-				notes: formData.notes,
-			};
+			const dataToUpdate = isConnection
+				? {
+						name: formData.name,
+						email: formData.email,
+						company: formData.company,
+						position: formData.position,
+						linkedinUrl: formData.linkedinUrl,
+						notes: formData.notes,
+					}
+				: {
+						name: formData.name,
+						website: formData.website,
+						industry: formData.industry,
+						size: formData.size,
+						location: formData.location,
+						description: formData.description,
+						linkedinUrl: formData.linkedinUrl,
+						notes: formData.notes,
+					};
 
-			await updateCompanyFields(id, dataToUpdate);
-			toast.success("Company updated successfully");
+			await updateFields(id, dataToUpdate);
+			toast.success(
+				isConnection ? "Connection updated successfully" : "Company updated successfully"
+			);
 			setIsEditing(false);
 		} catch (error) {
 			console.error("Error updating:", error);
@@ -98,16 +128,7 @@ export default function ItemDetailsSheet({
 
 	const handleCancel = () => {
 		// Reset form data to original item values
-		setFormData({
-			name: item.name || "",
-			website: item.website || "",
-			industry: item.industry || "",
-			size: item.size || "",
-			location: item.location || "",
-			description: item.description || "",
-			linkedinUrl: item.linkedinUrl || "",
-			notes: item.notes || "",
-		});
+		setFormData(getInitialFormData());
 		setIsEditing(false);
 	};
 
@@ -119,10 +140,11 @@ export default function ItemDetailsSheet({
 	const description = item.description;
 	const notes = item.notes;
 
-	// Remove /about from LinkedIn URL if present
-	const LinkedInPeopleSearchURL = item.linkedinUrl 
-		? item.linkedinUrl.replace(/\/*\/?$/, '/people/?keywords=software')
-		: '';
+	// Remove trailing slashes and add people search for company pages
+	const LinkedInPeopleSearchURL =
+		isCompany && item.linkedinUrl
+			? item.linkedinUrl.replace(/\/*\/?$/, "/people/?keywords=software")
+			: "";
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -150,7 +172,7 @@ export default function ItemDetailsSheet({
 							<DeleteItemDialog id={item.id} type={type} />
 						</div>
 					</div>
-					{item.website && (
+					{isCompany && (isEditing || item.website) && (
 						<div className={styles.itemPosting}>
 							<Globe size={15} className={styles.icon} />
 							{isEditing ? (
@@ -167,7 +189,22 @@ export default function ItemDetailsSheet({
 							) : null}
 						</div>
 					)}
-					{item.linkedinUrl && (
+					{isConnection && (isEditing || item.email) && (
+						<div className={styles.itemPosting}>
+							<Mail size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.email}
+									onChange={(e) => handleInputChange("email", e.target.value)}
+									placeholder={item.email || "Email"}
+									type="email"
+								/>
+							) : (
+								item.email
+							)}
+						</div>
+					)}
+					{(isCompany || isConnection) && (isEditing || item.linkedinUrl) && (
 						<>
 							<div className={styles.itemPosting}>
 								<Linkedin size={15} className={styles.icon} />
@@ -186,7 +223,7 @@ export default function ItemDetailsSheet({
 									</Link>
 								) : null}
 							</div>
-							{item.linkedinUrl && !isEditing && (
+							{isCompany && item.linkedinUrl && !isEditing && (
 								<div className={styles.itemPosting}>
 									<UserSearch size={15} className={styles.icon} />
 									<Link href={LinkedInPeopleSearchURL} target="_blank">
@@ -196,7 +233,7 @@ export default function ItemDetailsSheet({
 							)}
 						</>
 					)}
-					{item.industry && (
+					{isCompany && (isEditing || item.industry) && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
@@ -212,7 +249,7 @@ export default function ItemDetailsSheet({
 							)}
 						</div>
 					)}
-					{item.size && (
+					{isCompany && (isEditing || item.size) && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
@@ -301,9 +338,6 @@ export default function ItemDetailsSheet({
 						</>
 					) : (
 						<>
-							<Button type="submit" onClick={() => setModalOpen(false)}>
-								Close
-							</Button>
 							<SheetClose asChild>
 								<Button variant="outline">Close</Button>
 							</SheetClose>

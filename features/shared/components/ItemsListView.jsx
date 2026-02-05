@@ -13,21 +13,23 @@ const ItemsListView = memo(function ItemsListView({
 	context,
 	title,
 	status,
+	AddButton,
 }) {
 	const { selectedItem, items, noItemMsg, update } = context;
 	const displayTitle = title || "TOTAL COMPANIES";
+	const AddButtonComponent = AddButton || AddCompanyButton;
 	return (
 		<main className={styles.container}>
 			<section className={styles.btn_container}>
-				<AddCompanyButton />
+				<AddButtonComponent />
 			</section>
 			<h1 className={styles.title}>
 				{filteredItems.length} {displayTitle}
 			</h1>
 			{statuses && statuses.length > 0 && (
 				<div className={styles.filter_container}>
-					{statuses.map((status) => (
-						<div key={status}>
+					{statuses.map((status, index) => (
+						<div key={index}>
 							<Button
 								onClick={() => setChosenStatus(status)}
 								className={styles.filter_btn}

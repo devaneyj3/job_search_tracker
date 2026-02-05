@@ -1,6 +1,6 @@
 "use client";
 import { memo } from "react";
-import { Building } from "lucide-react";
+import { Building, Mail, Briefcase } from "lucide-react";
 import styles from "@/styles/ItemBox.module.scss";
 
 import { Badge } from "@/features/shared/ui/badge";
@@ -12,6 +12,7 @@ const ItemCard = memo(
 		if (!context) return null;
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
+		const isConnection = type === "connection";
 
 		// Get date field for company
 		const date = readableDate(item.createdAt);
@@ -35,23 +36,48 @@ const ItemCard = memo(
 						</Badge>
 					</div>
 					<div className={styles.itemTitle}>{title}</div>
-					{item.industry && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.industry}
-						</div>
-					)}
-					{item.location && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.location}
-						</div>
-					)}
-					{item.size && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.size} />
-							{item.size}
-						</div>
+					{isConnection ? (
+						<>
+							{item.company && (
+								<div className={styles.company}>
+									<Building size={15} className={styles.icon} />
+									{item.company}
+								</div>
+							)}
+							{item.position && (
+								<div className={styles.company}>
+									<Briefcase size={15} className={styles.icon} />
+									{item.position}
+								</div>
+							)}
+							{item.email && (
+								<div className={styles.company}>
+									<Mail size={15} className={styles.icon} />
+									{item.email}
+								</div>
+							)}
+						</>
+					) : (
+						<>
+							{item.industry && (
+								<div className={styles.company}>
+									<Building size={15} className={styles.icon} />
+									{item.industry}
+								</div>
+							)}
+							{item.location && (
+								<div className={styles.company}>
+									<Building size={15} className={styles.icon} />
+									{item.location}
+								</div>
+							)}
+							{item.size && (
+								<div className={styles.company}>
+									<Building size={15} className={styles.size} />
+									{item.size}
+								</div>
+							)}
+						</>
 					)}
 				</div>
 				<ItemStatusSelect id={item.id} update={update} status={status} />
@@ -64,6 +90,9 @@ const ItemCard = memo(
 			prevProps.item.id === nextProps.item.id &&
 			prevProps.item.status === nextProps.item.status &&
 			prevProps.item.name === nextProps.item.name &&
+			prevProps.item.company === nextProps.item.company &&
+			prevProps.item.position === nextProps.item.position &&
+			prevProps.item.email === nextProps.item.email &&
 			prevProps.item.industry === nextProps.item.industry &&
 			prevProps.item.location === nextProps.item.location &&
 			prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
