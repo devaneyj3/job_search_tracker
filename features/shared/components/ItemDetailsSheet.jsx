@@ -29,6 +29,7 @@ import DeleteItemDialog from "./DeleteItemDialog";
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "./ItemStatusSelect";
 import { toast } from "sonner";
+import JobOtreachTemplate from "@/features/email/templates/JobOtreachTemplate";
 
 export default function ItemDetailsSheet({
 	item,
@@ -325,6 +326,7 @@ export default function ItemDetailsSheet({
 						</>
 					)}
 				</SheetHeader>
+				{isConnection && <JobOtreachTemplate contactName={item.name} companyName={item.company} />}
 
 				<SheetFooter>
 					{isEditing ? (

@@ -1,0 +1,27 @@
+.container {
+	max-width: 640px;
+	margin: 0 auto;
+	padding: 1.5rem;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #0f172a;
+	background: #ffffff;
+}
+
+.paragraph {
+	margin: 0 0 1rem;
+}
+
+.list {
+	margin: 0 0 1rem 1.25rem;
+	padding: 0;
+}
+
+.list li {
+	margin-bottom: 0.5rem;
+	list-style:square
+}
+
+.signature {
+	margin: 0.5rem 0 0;
+}
