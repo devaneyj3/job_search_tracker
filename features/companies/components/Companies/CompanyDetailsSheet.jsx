@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/features/shared/ui/button";
 import { Label } from "@/features/shared/ui/label";
 import { Input } from "@/features/shared/ui/input";
@@ -13,71 +13,35 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import {
-	Building,
-	Linkedin,
-	Pencil,
-	Globe,
-	UserSearch,
-	Mail,
-	Briefcase,
-} from "lucide-react";
+import { Building, Linkedin, Pencil, Globe, UserSearch } from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
-import DeleteItemDialog from "./DeleteItemDialog";
+import DeleteItemDialog from "@/features/shared/components/DeleteItemDialog";
 import { Badge } from "@/features/shared/ui/badge";
-import { ItemStatusSelect } from "./ItemStatusSelect";
+import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
-import JobOtreachTemplate from "@/features/email/templates/JobOtreachTemplate";
 
-export default function ItemDetailsSheet({
-	item,
-	type = "company",
-	context,
-	status,
-}) {
-	const {
-		modalOpen,
-		setModalOpen,
-		update,
-		updateCompanyFields,
-		updateConnectionFields,
-	} = context;
+export default function CompanyDetailsSheet({ item, context, status }) {
+	const { modalOpen, setModalOpen, update, updateCompanyFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
-	const isConnection = type === "connection";
-	const isCompany = type === "company";
 
-	const getInitialFormData = () => {
-		if (isConnection) {
-			return {
-				name: item.name || "",
-				email: item.email || "",
-				company: item.company || "",
-				position: item.position || "",
-				linkedinUrl: item.linkedinUrl || "",
-				notes: item.notes || "",
-			};
-		}
-		return {
-			name: item.name || "",
-			website: item.website || "",
-			industry: item.industry || "",
-			size: item.size || "",
-			location: item.location || "",
-			description: item.description || "",
-			linkedinUrl: item.linkedinUrl || "",
-			notes: item.notes || "",
-		};
-	};
+	const getInitialFormData = () => ({
+		name: item.name || "",
+		website: item.website || "",
+		industry: item.industry || "",
+		size: item.size || "",
+		location: item.location || "",
+		description: item.description || "",
+		linkedinUrl: item.linkedinUrl || "",
+		notes: item.notes || "",
+	});
 
-	// Form state for editing
 	const [formData, setFormData] = useState(getInitialFormData());
 
-	// Update form data when item changes
 	useEffect(() => {
 		setFormData(getInitialFormData());
-	}, [item, type]);
+	}, [item]);
 
 	const handleInputChange = (field, value) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
@@ -85,67 +49,41 @@ export default function ItemDetailsSheet({
 
 	const handleSave = async () => {
 		try {
-			const updateFields = isConnection
-				? updateConnectionFields
-				: updateCompanyFields;
-
-			if (!updateFields) {
+			if (!updateCompanyFields) {
 				toast.error("Update function not available");
 				return;
 			}
 
-			const id = item.id;
+			const dataToUpdate = {
+				name: formData.name,
+				website: formData.website,
+				industry: formData.industry,
+				size: formData.size,
+				location: formData.location,
+				description: formData.description,
+				linkedinUrl: formData.linkedinUrl,
+				notes: formData.notes,
+			};
 
-			const dataToUpdate = isConnection
-				? {
-						name: formData.name,
-						email: formData.email,
-						company: formData.company,
-						position: formData.position,
-						linkedinUrl: formData.linkedinUrl,
-						notes: formData.notes,
-					}
-				: {
-						name: formData.name,
-						website: formData.website,
-						industry: formData.industry,
-						size: formData.size,
-						location: formData.location,
-						description: formData.description,
-						linkedinUrl: formData.linkedinUrl,
-						notes: formData.notes,
-					};
-
-			await updateFields(id, dataToUpdate);
-			toast.success(
-				isConnection ? "Connection updated successfully" : "Company updated successfully"
-			);
+			await updateCompanyFields(item.id, dataToUpdate);
+			toast.success("Company updated successfully");
 			setIsEditing(false);
 		} catch (error) {
-			console.error("Error updating:", error);
+			console.error("Error updating company:", error);
 			toast.error("Failed to update. Please try again.");
 		}
 	};
 
 	const handleCancel = () => {
-		// Reset form data to original item values
 		setFormData(getInitialFormData());
 		setIsEditing(false);
 	};
 
-	// Get dates for company
 	const date = readableDate(item.createdAt);
+	const LinkedInPeopleSearchURL = item.linkedinUrl
+		? item.linkedinUrl.replace(/\/*\/?$/, "/people/?keywords=software")
+		: "";
 
-	// Get title and description
-	const title = item.name;
-	const description = item.description;
-	const notes = item.notes;
-
-	// Remove trailing slashes and add people search for company pages
-	const LinkedInPeopleSearchURL =
-		isCompany && item.linkedinUrl
-			? item.linkedinUrl.replace(/\/*\/?$/, "/people/?keywords=software")
-			: "";
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -160,7 +98,7 @@ export default function ItemDetailsSheet({
 									className="text-lg font-semibold"
 								/>
 							) : (
-								title
+								item.name
 							)}
 						</SheetTitle>
 						<div style={{ display: "flex", gap: "8px" }}>
@@ -170,10 +108,10 @@ export default function ItemDetailsSheet({
 								onClick={() => setIsEditing(!isEditing)}>
 								<Pencil size={16} />
 							</Button>
-							<DeleteItemDialog id={item.id} type={type} />
+							<DeleteItemDialog id={item.id} type="company" />
 						</div>
 					</div>
-					{isCompany && (isEditing || item.website) && (
+					{(isEditing || item.website) && (
 						<div className={styles.itemPosting}>
 							<Globe size={15} className={styles.icon} />
 							{isEditing ? (
@@ -190,22 +128,7 @@ export default function ItemDetailsSheet({
 							) : null}
 						</div>
 					)}
-					{isConnection && (isEditing || item.email) && (
-						<div className={styles.itemPosting}>
-							<Mail size={15} className={styles.icon} />
-							{isEditing ? (
-								<Input
-									value={formData.email}
-									onChange={(e) => handleInputChange("email", e.target.value)}
-									placeholder={item.email || "Email"}
-									type="email"
-								/>
-							) : (
-								item.email
-							)}
-						</div>
-					)}
-					{(isCompany || isConnection) && (isEditing || item.linkedinUrl) && (
+					{(isEditing || item.linkedinUrl) && (
 						<>
 							<div className={styles.itemPosting}>
 								<Linkedin size={15} className={styles.icon} />
@@ -224,7 +147,7 @@ export default function ItemDetailsSheet({
 									</Link>
 								) : null}
 							</div>
-							{isCompany && item.linkedinUrl && !isEditing && (
+							{item.linkedinUrl && !isEditing && (
 								<div className={styles.itemPosting}>
 									<UserSearch size={15} className={styles.icon} />
 									<Link href={LinkedInPeopleSearchURL} target="_blank">
@@ -234,15 +157,13 @@ export default function ItemDetailsSheet({
 							)}
 						</>
 					)}
-					{isCompany && (isEditing || item.industry) && (
+					{(isEditing || item.industry) && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
 								<Input
 									value={formData.industry}
-									onChange={(e) =>
-										handleInputChange("industry", e.target.value)
-									}
+									onChange={(e) => handleInputChange("industry", e.target.value)}
 									placeholder={item.industry || "Industry"}
 								/>
 							) : (
@@ -250,7 +171,7 @@ export default function ItemDetailsSheet({
 							)}
 						</div>
 					)}
-					{isCompany && (isEditing || item.size) && (
+					{(isEditing || item.size) && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
@@ -264,15 +185,13 @@ export default function ItemDetailsSheet({
 							)}
 						</div>
 					)}
-					{item.location && (
+					{(isEditing || item.location) && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
 								<Input
 									value={formData.location}
-									onChange={(e) =>
-										handleInputChange("location", e.target.value)
-									}
+									onChange={(e) => handleInputChange("location", e.target.value)}
 									placeholder={item.location || "Location"}
 								/>
 							) : (
@@ -294,9 +213,7 @@ export default function ItemDetailsSheet({
 							<Textarea
 								id="description"
 								value={formData.description}
-								onChange={(e) =>
-									handleInputChange("description", e.target.value)
-								}
+								onChange={(e) => handleInputChange("description", e.target.value)}
 								placeholder={item.description || "Description"}
 								rows={6}
 							/>
@@ -313,20 +230,19 @@ export default function ItemDetailsSheet({
 						</div>
 					) : (
 						<>
-							{notes && (
+							{item.notes && (
 								<SheetDescription className={styles.itemDescription}>
-									<strong>Notes:</strong> {notes}
+									<strong>Notes:</strong> {item.notes}
 								</SheetDescription>
 							)}
-							{description && (
+							{item.description && (
 								<SheetDescription className={styles.itemDescription}>
-									{description}
+									{item.description}
 								</SheetDescription>
 							)}
 						</>
 					)}
 				</SheetHeader>
-				{isConnection && <JobOtreachTemplate contactName={item.name} companyName={item.company} />}
 
 				<SheetFooter>
 					{isEditing ? (
@@ -339,11 +255,9 @@ export default function ItemDetailsSheet({
 							</Button>
 						</>
 					) : (
-						<>
-							<SheetClose asChild>
-								<Button variant="outline">Close</Button>
-							</SheetClose>
-						</>
+						<SheetClose asChild>
+							<Button variant="outline">Close</Button>
+						</SheetClose>
 					)}
 				</SheetFooter>
 			</SheetContent>

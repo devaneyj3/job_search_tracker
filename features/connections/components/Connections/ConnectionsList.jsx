@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import { useConnection } from "@/features/connections/context/connectionContext";
-import ItemsListView from "@/features/shared/components/ItemsListView";
 import { connectionStatus } from "@/Constants";
 import AddConnectionButton from "./AddConnectionButton";
+import styles from "@/styles/ItemList.module.scss";
+import { Button } from "@/features/shared/ui/button";
+import ConnectionCard from "./ConnectionCard";
+import ConnectionDetailsSheet from "./ConnectionDetailsSheet";
 
 export default function ConnectionsList({
 	filteredConnections,
@@ -34,16 +37,49 @@ export default function ConnectionsList({
 		]
 	);
 
+	const { selectedItem, items, noItemMsg } = context;
+
 	return (
-		<ItemsListView
-			filteredItems={filteredConnections}
-			statuses={statuses}
-			setChosenStatus={setChosenStatus}
-			type="connection"
-			context={context}
-			title="TOTAL CONNECTIONS"
-			status={connectionStatus}
-			AddButton={AddConnectionButton}
-		/>
+		<main className={styles.container}>
+			<section className={styles.btn_container}>
+				<AddConnectionButton />
+			</section>
+			<h1 className={styles.title}>
+				{filteredConnections.length} TOTAL CONNECTIONS
+			</h1>
+			{statuses && statuses.length > 0 && (
+				<div className={styles.filter_container}>
+					{statuses.map((status, index) => (
+						<div key={index}>
+							<Button
+								onClick={() => setChosenStatus(status)}
+								className={styles.filter_btn}
+								variant="outline">
+								{status}
+							</Button>
+						</div>
+					))}
+				</div>
+			)}
+			{!noItemMsg && items.length > 0 ? (
+				filteredConnections.map((item) => (
+					<ConnectionCard
+						key={item.id}
+						item={item}
+						context={context}
+						status={connectionStatus}
+					/>
+				))
+			) : (
+				<div>{noItemMsg}</div>
+			)}
+			{selectedItem && (
+				<ConnectionDetailsSheet
+					item={selectedItem}
+					context={context}
+					status={connectionStatus}
+				/>
+			)}
+		</main>
 	);
 }
