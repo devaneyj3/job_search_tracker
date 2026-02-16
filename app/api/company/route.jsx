@@ -44,16 +44,6 @@ export async function POST(req) {
 			status,
 			notes,
 		} = await req.json();
-		console.log(	userId,
-			name,
-			website,
-			industry,
-			size,
-			location,
-			description,
-			linkedinUrl,
-			status,
-			notes)
 		const newCompany = await createNewCompany({
 			userId,
 			name,

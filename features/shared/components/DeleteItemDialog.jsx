@@ -12,17 +12,16 @@ import {
 import { Button } from "@/features/shared/ui/button";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import styles from "@/styles/DeleteItem.module.scss";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { useConnection } from "@/features/connections/context/connectionContext";
 
-export default function DeleteItemDialog({ id, type = "company", companyInfoId }) {
+export default function DeleteItemDialog({ id, type = "company" }) {
 	const companyContext = useCompany();
 	const connectionContext = useConnection();
 	const { deleteCompany } = companyContext;
 	const { deleteConnection } = connectionContext;
 
-	const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false);
+	const [open, setOpen] = useState(false);
 
 	const handleDelete = () => {
 		if (type === "connection") {
@@ -30,13 +29,13 @@ export default function DeleteItemDialog({ id, type = "company", companyInfoId }
 		} else {
 			deleteCompany(id);
 		}
-		setInvoiceDialogOpen(false);
+		setOpen(false);
 	};
 
 	const itemType = type;
 
 	return (
-		<Dialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen}>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button variant="destructive">
 					<Trash2 />
