@@ -136,9 +136,9 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 export const ConnectionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  companyId: 'companyId',
   name: 'name',
   email: 'email',
-  company: 'company',
   position: 'position',
   linkedinUrl: 'linkedinUrl',
   connectedDate: 'connectedDate',

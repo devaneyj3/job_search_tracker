@@ -60,9 +60,9 @@ CREATE TABLE "VerificationToken" (
 CREATE TABLE "Connection" (
     "id" SERIAL NOT NULL,
     "userId" UUID NOT NULL,
+    "companyId" INTEGER,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "company" TEXT NOT NULL,
     "position" TEXT NOT NULL,
     "linkedinUrl" TEXT NOT NULL,
     "connectedDate" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
@@ -124,7 +124,7 @@ CREATE INDEX "Connection_emailSent_idx" ON "Connection"("emailSent");
 CREATE INDEX "Connection_connectedDate_idx" ON "Connection"("connectedDate");
 
 -- CreateIndex
-CREATE INDEX "Connection_company_idx" ON "Connection"("company");
+CREATE INDEX "Connection_companyId_idx" ON "Connection"("companyId");
 
 -- CreateIndex
 CREATE INDEX "Connection_status_idx" ON "Connection"("status");
@@ -149,6 +149,9 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Connection" ADD CONSTRAINT "Connection_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Connection" ADD CONSTRAINT "Connection_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Company" ADD CONSTRAINT "Company_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

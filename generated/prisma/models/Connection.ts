@@ -28,20 +28,22 @@ export type AggregateConnection = {
 
 export type ConnectionAvgAggregateOutputType = {
   id: number | null
+  companyId: number | null
   emailCount: number | null
 }
 
 export type ConnectionSumAggregateOutputType = {
   id: number | null
+  companyId: number | null
   emailCount: number | null
 }
 
 export type ConnectionMinAggregateOutputType = {
   id: number | null
   userId: string | null
+  companyId: number | null
   name: string | null
   email: string | null
-  company: string | null
   position: string | null
   linkedinUrl: string | null
   connectedDate: Date | null
@@ -63,9 +65,9 @@ export type ConnectionMinAggregateOutputType = {
 export type ConnectionMaxAggregateOutputType = {
   id: number | null
   userId: string | null
+  companyId: number | null
   name: string | null
   email: string | null
-  company: string | null
   position: string | null
   linkedinUrl: string | null
   connectedDate: Date | null
@@ -87,9 +89,9 @@ export type ConnectionMaxAggregateOutputType = {
 export type ConnectionCountAggregateOutputType = {
   id: number
   userId: number
+  companyId: number
   name: number
   email: number
-  company: number
   position: number
   linkedinUrl: number
   connectedDate: number
@@ -112,20 +114,22 @@ export type ConnectionCountAggregateOutputType = {
 
 export type ConnectionAvgAggregateInputType = {
   id?: true
+  companyId?: true
   emailCount?: true
 }
 
 export type ConnectionSumAggregateInputType = {
   id?: true
+  companyId?: true
   emailCount?: true
 }
 
 export type ConnectionMinAggregateInputType = {
   id?: true
   userId?: true
+  companyId?: true
   name?: true
   email?: true
-  company?: true
   position?: true
   linkedinUrl?: true
   connectedDate?: true
@@ -147,9 +151,9 @@ export type ConnectionMinAggregateInputType = {
 export type ConnectionMaxAggregateInputType = {
   id?: true
   userId?: true
+  companyId?: true
   name?: true
   email?: true
-  company?: true
   position?: true
   linkedinUrl?: true
   connectedDate?: true
@@ -171,9 +175,9 @@ export type ConnectionMaxAggregateInputType = {
 export type ConnectionCountAggregateInputType = {
   id?: true
   userId?: true
+  companyId?: true
   name?: true
   email?: true
-  company?: true
   position?: true
   linkedinUrl?: true
   connectedDate?: true
@@ -282,9 +286,9 @@ export type ConnectionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type ConnectionGroupByOutputType = {
   id: number
   userId: string
+  companyId: number | null
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate: Date | null
@@ -329,9 +333,9 @@ export type ConnectionWhereInput = {
   NOT?: Prisma.ConnectionWhereInput | Prisma.ConnectionWhereInput[]
   id?: Prisma.IntFilter<"Connection"> | number
   userId?: Prisma.UuidFilter<"Connection"> | string
+  companyId?: Prisma.IntNullableFilter<"Connection"> | number | null
   name?: Prisma.StringFilter<"Connection"> | string
   email?: Prisma.StringFilter<"Connection"> | string
-  company?: Prisma.StringFilter<"Connection"> | string
   position?: Prisma.StringFilter<"Connection"> | string
   linkedinUrl?: Prisma.StringFilter<"Connection"> | string
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -349,14 +353,15 @@ export type ConnectionWhereInput = {
   createdAt?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
 }
 
 export type ConnectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  company?: Prisma.SortOrder
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -374,6 +379,7 @@ export type ConnectionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  company?: Prisma.CompanyOrderByWithRelationInput
 }
 
 export type ConnectionWhereUniqueInput = Prisma.AtLeast<{
@@ -382,9 +388,9 @@ export type ConnectionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ConnectionWhereInput[]
   NOT?: Prisma.ConnectionWhereInput | Prisma.ConnectionWhereInput[]
   userId?: Prisma.UuidFilter<"Connection"> | string
+  companyId?: Prisma.IntNullableFilter<"Connection"> | number | null
   name?: Prisma.StringFilter<"Connection"> | string
   email?: Prisma.StringFilter<"Connection"> | string
-  company?: Prisma.StringFilter<"Connection"> | string
   position?: Prisma.StringFilter<"Connection"> | string
   linkedinUrl?: Prisma.StringFilter<"Connection"> | string
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -402,14 +408,15 @@ export type ConnectionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
 }, "id">
 
 export type ConnectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  company?: Prisma.SortOrder
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -439,9 +446,9 @@ export type ConnectionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ConnectionScalarWhereWithAggregatesInput | Prisma.ConnectionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Connection"> | number
   userId?: Prisma.UuidWithAggregatesFilter<"Connection"> | string
+  companyId?: Prisma.IntNullableWithAggregatesFilter<"Connection"> | number | null
   name?: Prisma.StringWithAggregatesFilter<"Connection"> | string
   email?: Prisma.StringWithAggregatesFilter<"Connection"> | string
-  company?: Prisma.StringWithAggregatesFilter<"Connection"> | string
   position?: Prisma.StringWithAggregatesFilter<"Connection"> | string
   linkedinUrl?: Prisma.StringWithAggregatesFilter<"Connection"> | string
   connectedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Connection"> | Date | string | null
@@ -463,7 +470,6 @@ export type ConnectionScalarWhereWithAggregatesInput = {
 export type ConnectionCreateInput = {
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -481,14 +487,15 @@ export type ConnectionCreateInput = {
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutConnectionsInput
+  company?: Prisma.CompanyCreateNestedOneWithoutConnectionsInput
 }
 
 export type ConnectionUncheckedCreateInput = {
   id?: number
   userId: string
+  companyId?: number | null
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -510,7 +517,6 @@ export type ConnectionUncheckedCreateInput = {
 export type ConnectionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -528,14 +534,15 @@ export type ConnectionUpdateInput = {
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutConnectionsNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutConnectionsNestedInput
 }
 
 export type ConnectionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -557,9 +564,9 @@ export type ConnectionUncheckedUpdateInput = {
 export type ConnectionCreateManyInput = {
   id?: number
   userId: string
+  companyId?: number | null
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -581,7 +588,6 @@ export type ConnectionCreateManyInput = {
 export type ConnectionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -603,9 +609,9 @@ export type ConnectionUpdateManyMutationInput = {
 export type ConnectionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -637,9 +643,9 @@ export type ConnectionOrderByRelationAggregateInput = {
 export type ConnectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  company?: Prisma.SortOrder
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
@@ -660,15 +666,16 @@ export type ConnectionCountOrderByAggregateInput = {
 
 export type ConnectionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   emailCount?: Prisma.SortOrder
 }
 
 export type ConnectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  company?: Prisma.SortOrder
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
@@ -690,9 +697,9 @@ export type ConnectionMaxOrderByAggregateInput = {
 export type ConnectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  company?: Prisma.SortOrder
   position?: Prisma.SortOrder
   linkedinUrl?: Prisma.SortOrder
   connectedDate?: Prisma.SortOrder
@@ -713,6 +720,7 @@ export type ConnectionMinOrderByAggregateInput = {
 
 export type ConnectionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   emailCount?: Prisma.SortOrder
 }
 
@@ -770,10 +778,51 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ConnectionCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput> | Prisma.ConnectionCreateWithoutCompanyInput[] | Prisma.ConnectionUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.ConnectionCreateOrConnectWithoutCompanyInput | Prisma.ConnectionCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.ConnectionCreateManyCompanyInputEnvelope
+  connect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+}
+
+export type ConnectionUncheckedCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput> | Prisma.ConnectionCreateWithoutCompanyInput[] | Prisma.ConnectionUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.ConnectionCreateOrConnectWithoutCompanyInput | Prisma.ConnectionCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.ConnectionCreateManyCompanyInputEnvelope
+  connect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+}
+
+export type ConnectionUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput> | Prisma.ConnectionCreateWithoutCompanyInput[] | Prisma.ConnectionUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.ConnectionCreateOrConnectWithoutCompanyInput | Prisma.ConnectionCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.ConnectionUpsertWithWhereUniqueWithoutCompanyInput | Prisma.ConnectionUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.ConnectionCreateManyCompanyInputEnvelope
+  set?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  disconnect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  delete?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  connect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  update?: Prisma.ConnectionUpdateWithWhereUniqueWithoutCompanyInput | Prisma.ConnectionUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.ConnectionUpdateManyWithWhereWithoutCompanyInput | Prisma.ConnectionUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.ConnectionScalarWhereInput | Prisma.ConnectionScalarWhereInput[]
+}
+
+export type ConnectionUncheckedUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput> | Prisma.ConnectionCreateWithoutCompanyInput[] | Prisma.ConnectionUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.ConnectionCreateOrConnectWithoutCompanyInput | Prisma.ConnectionCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.ConnectionUpsertWithWhereUniqueWithoutCompanyInput | Prisma.ConnectionUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.ConnectionCreateManyCompanyInputEnvelope
+  set?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  disconnect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  delete?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  connect?: Prisma.ConnectionWhereUniqueInput | Prisma.ConnectionWhereUniqueInput[]
+  update?: Prisma.ConnectionUpdateWithWhereUniqueWithoutCompanyInput | Prisma.ConnectionUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.ConnectionUpdateManyWithWhereWithoutCompanyInput | Prisma.ConnectionUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.ConnectionScalarWhereInput | Prisma.ConnectionScalarWhereInput[]
+}
+
 export type ConnectionCreateWithoutUserInput = {
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -790,13 +839,14 @@ export type ConnectionCreateWithoutUserInput = {
   archivedDate?: Date | string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
+  company?: Prisma.CompanyCreateNestedOneWithoutConnectionsInput
 }
 
 export type ConnectionUncheckedCreateWithoutUserInput = {
   id?: number
+  companyId?: number | null
   name: string
   email: string
-  company: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -847,9 +897,9 @@ export type ConnectionScalarWhereInput = {
   NOT?: Prisma.ConnectionScalarWhereInput | Prisma.ConnectionScalarWhereInput[]
   id?: Prisma.IntFilter<"Connection"> | number
   userId?: Prisma.UuidFilter<"Connection"> | string
+  companyId?: Prisma.IntNullableFilter<"Connection"> | number | null
   name?: Prisma.StringFilter<"Connection"> | string
   email?: Prisma.StringFilter<"Connection"> | string
-  company?: Prisma.StringFilter<"Connection"> | string
   position?: Prisma.StringFilter<"Connection"> | string
   linkedinUrl?: Prisma.StringFilter<"Connection"> | string
   connectedDate?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
@@ -868,11 +918,82 @@ export type ConnectionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"Connection"> | Date | string | null
 }
 
-export type ConnectionCreateManyUserInput = {
-  id?: number
+export type ConnectionCreateWithoutCompanyInput = {
   name: string
   email: string
-  company: string
+  position: string
+  linkedinUrl: string
+  connectedDate?: Date | string | null
+  status: string
+  statusDate?: Date | string | null
+  emailSent?: boolean | null
+  firstEmailDate?: Date | string | null
+  lastEmailDate?: Date | string | null
+  emailCount?: number | null
+  responded?: boolean | null
+  responseDate?: Date | string | null
+  notes?: string | null
+  archived?: boolean | null
+  archivedDate?: Date | string | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  user: Prisma.UserCreateNestedOneWithoutConnectionsInput
+}
+
+export type ConnectionUncheckedCreateWithoutCompanyInput = {
+  id?: number
+  userId: string
+  name: string
+  email: string
+  position: string
+  linkedinUrl: string
+  connectedDate?: Date | string | null
+  status: string
+  statusDate?: Date | string | null
+  emailSent?: boolean | null
+  firstEmailDate?: Date | string | null
+  lastEmailDate?: Date | string | null
+  emailCount?: number | null
+  responded?: boolean | null
+  responseDate?: Date | string | null
+  notes?: string | null
+  archived?: boolean | null
+  archivedDate?: Date | string | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+}
+
+export type ConnectionCreateOrConnectWithoutCompanyInput = {
+  where: Prisma.ConnectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput>
+}
+
+export type ConnectionCreateManyCompanyInputEnvelope = {
+  data: Prisma.ConnectionCreateManyCompanyInput | Prisma.ConnectionCreateManyCompanyInput[]
+  skipDuplicates?: boolean
+}
+
+export type ConnectionUpsertWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.ConnectionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ConnectionUpdateWithoutCompanyInput, Prisma.ConnectionUncheckedUpdateWithoutCompanyInput>
+  create: Prisma.XOR<Prisma.ConnectionCreateWithoutCompanyInput, Prisma.ConnectionUncheckedCreateWithoutCompanyInput>
+}
+
+export type ConnectionUpdateWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.ConnectionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ConnectionUpdateWithoutCompanyInput, Prisma.ConnectionUncheckedUpdateWithoutCompanyInput>
+}
+
+export type ConnectionUpdateManyWithWhereWithoutCompanyInput = {
+  where: Prisma.ConnectionScalarWhereInput
+  data: Prisma.XOR<Prisma.ConnectionUpdateManyMutationInput, Prisma.ConnectionUncheckedUpdateManyWithoutCompanyInput>
+}
+
+export type ConnectionCreateManyUserInput = {
+  id?: number
+  companyId?: number | null
+  name: string
+  email: string
   position: string
   linkedinUrl: string
   connectedDate?: Date | string | null
@@ -894,7 +1015,6 @@ export type ConnectionCreateManyUserInput = {
 export type ConnectionUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -911,13 +1031,14 @@ export type ConnectionUpdateWithoutUserInput = {
   archivedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  company?: Prisma.CompanyUpdateOneWithoutConnectionsNestedInput
 }
 
 export type ConnectionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  companyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -938,9 +1059,100 @@ export type ConnectionUncheckedUpdateWithoutUserInput = {
 
 export type ConnectionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  companyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  company?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  responded?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  responseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archived?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  archivedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ConnectionCreateManyCompanyInput = {
+  id?: number
+  userId: string
+  name: string
+  email: string
+  position: string
+  linkedinUrl: string
+  connectedDate?: Date | string | null
+  status: string
+  statusDate?: Date | string | null
+  emailSent?: boolean | null
+  firstEmailDate?: Date | string | null
+  lastEmailDate?: Date | string | null
+  emailCount?: number | null
+  responded?: boolean | null
+  responseDate?: Date | string | null
+  notes?: string | null
+  archived?: boolean | null
+  archivedDate?: Date | string | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+}
+
+export type ConnectionUpdateWithoutCompanyInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  responded?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  responseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archived?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  archivedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutConnectionsNestedInput
+}
+
+export type ConnectionUncheckedUpdateWithoutCompanyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.StringFieldUpdateOperationsInput | string
+  linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  firstEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastEmailDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  responded?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  responseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archived?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  archivedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ConnectionUncheckedUpdateManyWithoutCompanyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   linkedinUrl?: Prisma.StringFieldUpdateOperationsInput | string
   connectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -964,9 +1176,9 @@ export type ConnectionUncheckedUpdateManyWithoutUserInput = {
 export type ConnectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  companyId?: boolean
   name?: boolean
   email?: boolean
-  company?: boolean
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
@@ -984,14 +1196,15 @@ export type ConnectionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }, ExtArgs["result"]["connection"]>
 
 export type ConnectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  companyId?: boolean
   name?: boolean
   email?: boolean
-  company?: boolean
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
@@ -1009,14 +1222,15 @@ export type ConnectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }, ExtArgs["result"]["connection"]>
 
 export type ConnectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  companyId?: boolean
   name?: boolean
   email?: boolean
-  company?: boolean
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
@@ -1034,14 +1248,15 @@ export type ConnectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }, ExtArgs["result"]["connection"]>
 
 export type ConnectionSelectScalar = {
   id?: boolean
   userId?: boolean
+  companyId?: boolean
   name?: boolean
   email?: boolean
-  company?: boolean
   position?: boolean
   linkedinUrl?: boolean
   connectedDate?: boolean
@@ -1060,28 +1275,32 @@ export type ConnectionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "company" | "position" | "linkedinUrl" | "connectedDate" | "status" | "statusDate" | "emailSent" | "firstEmailDate" | "lastEmailDate" | "emailCount" | "responded" | "responseDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["connection"]>
+export type ConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyId" | "name" | "email" | "position" | "linkedinUrl" | "connectedDate" | "status" | "statusDate" | "emailSent" | "firstEmailDate" | "lastEmailDate" | "emailCount" | "responded" | "responseDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["connection"]>
 export type ConnectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }
 export type ConnectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }
 export type ConnectionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  company?: boolean | Prisma.Connection$companyArgs<ExtArgs>
 }
 
 export type $ConnectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Connection"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    company: Prisma.$CompanyPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: string
+    companyId: number | null
     name: string
     email: string
-    company: string
     position: string
     linkedinUrl: string
     connectedDate: Date | null
@@ -1493,6 +1712,7 @@ readonly fields: ConnectionFieldRefs;
 export interface Prisma__ConnectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  company<T extends Prisma.Connection$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Connection$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1524,9 +1744,9 @@ export interface Prisma__ConnectionClient<T, Null = never, ExtArgs extends runti
 export interface ConnectionFieldRefs {
   readonly id: Prisma.FieldRef<"Connection", 'Int'>
   readonly userId: Prisma.FieldRef<"Connection", 'String'>
+  readonly companyId: Prisma.FieldRef<"Connection", 'Int'>
   readonly name: Prisma.FieldRef<"Connection", 'String'>
   readonly email: Prisma.FieldRef<"Connection", 'String'>
-  readonly company: Prisma.FieldRef<"Connection", 'String'>
   readonly position: Prisma.FieldRef<"Connection", 'String'>
   readonly linkedinUrl: Prisma.FieldRef<"Connection", 'String'>
   readonly connectedDate: Prisma.FieldRef<"Connection", 'DateTime'>
@@ -1936,6 +2156,25 @@ export type ConnectionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Connections to delete.
    */
   limit?: number
+}
+
+/**
+ * Connection.company
+ */
+export type Connection$companyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Company
+   */
+  select?: Prisma.CompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Company
+   */
+  omit?: Prisma.CompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyInclude<ExtArgs> | null
+  where?: Prisma.CompanyWhereInput
 }
 
 /**
