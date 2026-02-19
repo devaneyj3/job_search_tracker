@@ -8,12 +8,11 @@ import {
 	Sheet,
 	SheetClose,
 	SheetContent,
-	SheetDescription,
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import { Building, Linkedin, Pencil, Globe, UserSearch } from "lucide-react";
+import { Building, Pencil, Globe, UserSearch } from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
@@ -21,10 +20,27 @@ import DeleteItemDialog from "@/features/shared/components/DeleteItemDialog";
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
+import CompanySheetTextDropdown from "./CompanySheetTextDropdown";
 
 export default function CompanyDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateCompanyFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
+
+	//toggle text dropdown
+
+	const [activeSection, setActiveSection] = useState(null);
+
+	const toggleSection = (section) => {
+		setActiveSection(activeSection === section ? null : section);
+	};
+
+	useEffect(() => {
+		const hash = window.location.hash.substring(1);
+		if (hash) {
+			setActiveSection(hash);
+		}
+	}, []);
+
 
 	const getInitialFormData = () => ({
 		name: item.name || "",
@@ -131,7 +147,7 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 					{(isEditing || item.linkedinUrl) && (
 						<>
 							<div className={styles.itemPosting}>
-								<Linkedin size={15} className={styles.icon} />
+
 								{isEditing ? (
 									<Input
 										value={formData.linkedinUrl}
@@ -230,16 +246,10 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 						</div>
 					) : (
 						<>
-							{item.notes && (
-								<SheetDescription className={styles.itemDescription}>
-									<strong>Notes:</strong> {item.notes}
-								</SheetDescription>
-							)}
-							{item.description && (
-								<SheetDescription className={styles.itemDescription}>
-									{item.description}
-								</SheetDescription>
-							)}
+							<CompanySheetTextDropdown item={item} label="Notes" field='notes' activeSection={activeSection}
+								toggleSection={toggleSection} index={0} />
+							<CompanySheetTextDropdown item={item} label="Description" field='description' activeSection={activeSection}
+								toggleSection={toggleSection} index={1} />
 						</>
 					)}
 				</SheetHeader>

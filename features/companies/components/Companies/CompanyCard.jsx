@@ -13,6 +13,7 @@ const CompanyCard = memo(
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 		const date = readableDate(item.createdAt);
+		console.log(selectedItem.name)
 
 		return (
 			<div
