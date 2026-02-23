@@ -22,7 +22,7 @@ export async function createNewConnection({
 	userId,
 	name,
 	email,
-	company,
+	companyId,
 	position,
 	linkedinUrl,
 	status,
@@ -37,8 +37,8 @@ export async function createNewConnection({
 	if (!email) {
 		throw new Error("Email is required");
 	}
-	if (!company) {
-		throw new Error("Company is required");
+	if (!companyId) {
+		throw new Error("Company Id is required");
 	}
 	if (!position) {
 		throw new Error("Position is required");
@@ -53,7 +53,7 @@ export async function createNewConnection({
 				userId,
 				name,
 				email,
-				company,
+				companyId,
 				position,
 				linkedinUrl,
 				status: status || "Prospecting",

@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { connectionFormSchema } from "@/features/connections/lib/schema";
 import { connectionKeys } from "@/features/connections/lib/keys";
 import { useConnection } from "@/features/connections/context/connectionContext";
+import { useCompany } from "@/features/companies/context/companyContext";
 
 function getCfg(name) {
 	const cfg = connectionKeys.find((f) => f.name === name);
@@ -36,12 +37,13 @@ function getCfg(name) {
 
 export default function ConnectionForm({ setDialogOpen }) {
 	const { createConnection } = useConnection();
+	const { companies } = useCompany();
 	const form = useForm({
 		resolver: zodResolver(connectionFormSchema),
 		defaultValues: {
 			name: "",
 			email: "",
-			company: "",
+			companyId: "",
 			position: "",
 			linkedinUrl: "",
 			status: "Prospecting",
@@ -52,7 +54,10 @@ export default function ConnectionForm({ setDialogOpen }) {
 
 	async function onSubmit(values) {
 		try {
-			await createConnection(values);
+			await createConnection({
+				...values,
+				companyId: Number(values.companyId),
+			});
 			toast("Connection has been created", {
 				action: { label: "Close", onClick: () => {} },
 			});
@@ -92,7 +97,22 @@ export default function ConnectionForm({ setDialogOpen }) {
 									))}
 								</SelectContent>
 							</Select>
-						) : name === "notes" ? (
+						) : name === "companyId" ? (
+							<Select onValueChange={field.onChange} value={field.value || ""}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder={placeholder} />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{companies.map((company) => (
+										<SelectItem key={company.id} value={String(company.id)}>
+											{company.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						): name === "notes" ? (
 							<FormControl>
 								<Textarea placeholder={placeholder} {...field} rows={3} />
 							</FormControl>
@@ -121,7 +141,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 					<RenderField name="email" />
 				</div>
 				<div className={styles.twoCol}>
-					<RenderField name="company" />
+					<RenderField name="companyId" />
 					<RenderField name="position" />
 				</div>
 				<div className={styles.twoCol}>

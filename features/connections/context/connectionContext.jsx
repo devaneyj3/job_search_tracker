@@ -9,11 +9,13 @@ import {
 	useCallback,
 } from "react";
 import { useSession } from "next-auth/react";
+import { useCompany } from "@/features/companies/context/companyContext";
 
 export const ConnectionContext = createContext({});
 
 export const ConnectionProvider = ({ children }) => {
 	const { data: session, status } = useSession();
+	const { companies, setCompanies, setSelectedCompany } = useCompany();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [connections, setConnections] = useState([]);
 	const [error, setError] = useState(null);
@@ -93,13 +95,40 @@ export const ConnectionProvider = ({ children }) => {
 				nextConnections = [...prev, data.connection];
 				return nextConnections;
 			});
+
+			// Keep company context in sync so new connection appears immediately in company UI.
+			setCompanies((prevCompanies) =>
+				prevCompanies.map((company) => {
+					if (company.id !== data.connection.companyId) return company;
+					const currentConnections = company.connections ?? [];
+					const alreadyExists = currentConnections.some(
+						(connection) => connection.id === data.connection.id
+					);
+					return alreadyExists
+						? company
+						: { ...company, connections: [data.connection, ...currentConnections] };
+				})
+			);
+			setSelectedCompany((prevCompany) => {
+				if (!prevCompany || prevCompany.id !== data.connection.companyId) {
+					return prevCompany;
+				}
+				const currentConnections = prevCompany.connections ?? [];
+				const alreadyExists = currentConnections.some(
+					(connection) => connection.id === data.connection.id
+				);
+				return alreadyExists
+					? prevCompany
+					: { ...prevCompany, connections: [data.connection, ...currentConnections] };
+			});
+
 			setModalOpen(false);
 			setSelectedConnection(data.connection);
 			setNoConnectionMsg("");
 
 			return data.connection;
 		},
-		[session?.user?.id]
+		[session?.user?.id, setCompanies, setSelectedCompany]
 	);
 
 	const deleteConnection = useCallback(
@@ -129,10 +158,30 @@ export const ConnectionProvider = ({ children }) => {
 				return next;
 			});
 
+			// Remove deleted connection from all company.connection arrays.
+			setCompanies((prevCompanies) =>
+				prevCompanies.map((company) => ({
+					...company,
+					connections: (company.connections ?? []).filter(
+						(connection) => connection.id !== deletedConnectionId.id
+					),
+				}))
+			);
+			setSelectedCompany((prevCompany) =>
+				prevCompany
+					? {
+							...prevCompany,
+							connections: (prevCompany.connections ?? []).filter(
+								(connection) => connection.id !== deletedConnectionId.id
+							),
+					  }
+					: prevCompany
+			);
+
 			setModalOpen(false);
 			return deletedConnectionId;
 		},
-		[selectedConnection]
+		[selectedConnection, setCompanies, setSelectedCompany]
 	);
 
 	const updateConnectionStatus = useCallback(async (connectionId, statusValue) => {
@@ -157,7 +206,31 @@ export const ConnectionProvider = ({ children }) => {
 		setSelectedConnection((prev) =>
 			prev ? { ...prev, status: statusValue } : prev
 		);
-	}, []);
+
+		// Mirror status update into company.connection arrays.
+		setCompanies((prevCompanies) =>
+			prevCompanies.map((company) => ({
+				...company,
+				connections: (company.connections ?? []).map((connection) =>
+					connection.id === connectionId
+						? { ...connection, status: statusValue }
+						: connection
+				),
+			}))
+		);
+		setSelectedCompany((prevCompany) =>
+			prevCompany
+				? {
+						...prevCompany,
+						connections: (prevCompany.connections ?? []).map((connection) =>
+							connection.id === connectionId
+								? { ...connection, status: statusValue }
+								: connection
+						),
+				  }
+				: prevCompany
+		);
+	}, [setCompanies, setSelectedCompany]);
 
 	const updateConnectionFields = useCallback(async (connectionId, data) => {
 		const response = await fetch("/api/connection", {
@@ -183,8 +256,49 @@ export const ConnectionProvider = ({ children }) => {
 			prev && prev.id === connectionId ? updatedConnection : prev
 		);
 
+		// Remove from all companies, then add to updatedConnection.companyId.
+		setCompanies((prevCompanies) =>
+			prevCompanies.map((company) => {
+				const withoutConnection = (company.connections ?? []).filter(
+					(connection) => connection.id !== connectionId
+				);
+				if (company.id !== updatedConnection.companyId) {
+					return { ...company, connections: withoutConnection };
+				}
+				return {
+					...company,
+					connections: [updatedConnection, ...withoutConnection],
+				};
+			})
+		);
+		setSelectedCompany((prevCompany) => {
+			if (!prevCompany) return prevCompany;
+			const withoutConnection = (prevCompany.connections ?? []).filter(
+				(connection) => connection.id !== connectionId
+			);
+			if (prevCompany.id !== updatedConnection.companyId) {
+				return { ...prevCompany, connections: withoutConnection };
+			}
+			return {
+				...prevCompany,
+				connections: [updatedConnection, ...withoutConnection],
+			};
+		});
+
 		return updatedConnection;
-	}, []);
+	}, [setCompanies, setSelectedCompany]);
+
+	useEffect(() => {
+		if (!connections.length) return;
+		if (!Array.isArray(companies)) return;
+		const companyIds = new Set(companies.map((company) => company.id));
+		setConnections((prevConnections) =>
+			prevConnections.filter(
+				(connection) =>
+					connection.companyId == null || companyIds.has(connection.companyId)
+			)
+		);
+	}, [companies, connections.length]);
 
 	const values = useMemo(
 		() => ({

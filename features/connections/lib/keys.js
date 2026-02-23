@@ -13,10 +13,10 @@ export const connectionKeys = [
 		inputType: "email",
 	},
 	{
-		name: "company",
+		name: "companyId",
 		label: "Company",
-		placeholder: "Acme Inc.",
-		inputType: "text",
+		placeholder: "Select company",
+		inputType: "select",
 	},
 	{
 		name: "position",

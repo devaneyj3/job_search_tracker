@@ -4,7 +4,7 @@ export const companyKeys = [
 		name: "name",
 		label: "Company Name",
 		placeholder: "Acme Inc.",
-		inputType: "text",
+		inputType: "select",
 	},
 	{
 		name: "website",
