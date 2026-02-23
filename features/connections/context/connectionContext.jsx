@@ -15,7 +15,12 @@ export const ConnectionContext = createContext({});
 
 export const ConnectionProvider = ({ children }) => {
 	const { data: session, status } = useSession();
-	const { companies, setCompanies, setSelectedCompany } = useCompany();
+	const {
+		companies,
+		isLoading: isCompaniesLoading,
+		setCompanies,
+		setSelectedCompany,
+	} = useCompany();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [connections, setConnections] = useState([]);
 	const [error, setError] = useState(null);
@@ -290,15 +295,18 @@ export const ConnectionProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (!connections.length) return;
+		if (isCompaniesLoading) return;
 		if (!Array.isArray(companies)) return;
-		const companyIds = new Set(companies.map((company) => company.id));
+		if (companies.length === 0) return;
+		const companyIds = new Set(companies.map((company) => Number(company.id)));
 		setConnections((prevConnections) =>
 			prevConnections.filter(
 				(connection) =>
-					connection.companyId == null || companyIds.has(connection.companyId)
+					connection.companyId == null ||
+					companyIds.has(Number(connection.companyId))
 			)
 		);
-	}, [companies, connections.length]);
+	}, [companies, connections.length, isCompaniesLoading]);
 
 	const values = useMemo(
 		() => ({

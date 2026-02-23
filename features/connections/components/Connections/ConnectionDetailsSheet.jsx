@@ -26,11 +26,12 @@ import JobOtreachTemplate from "@/features/email/templates/JobOtreachTemplate";
 export default function ConnectionDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateConnectionFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
+	const companyName =
+		typeof item.company === "string" ? item.company : item.company?.name || "";
 
 	const getInitialFormData = () => ({
 		name: item.name || "",
 		email: item.email || "",
-		company: item.company || "",
 		position: item.position || "",
 		linkedinUrl: item.linkedinUrl || "",
 		notes: item.notes || "",
@@ -56,7 +57,6 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 			const dataToUpdate = {
 				name: formData.name,
 				email: formData.email,
-				company: formData.company,
 				position: formData.position,
 				linkedinUrl: formData.linkedinUrl,
 				notes: formData.notes,
@@ -139,18 +139,10 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 							) : null}
 						</div>
 					)}
-					{(isEditing || item.company) && (
+					{companyName && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
-							{isEditing ? (
-								<Input
-									value={formData.company}
-									onChange={(e) => handleInputChange("company", e.target.value)}
-									placeholder={item.company || "Company"}
-								/>
-							) : (
-								item.company
-							)}
+							{companyName}
 						</div>
 					)}
 					{(isEditing || item.position) && (
@@ -195,7 +187,7 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 					)}
 				</SheetHeader>
 
-				<JobOtreachTemplate contactName={item.name} companyName={item.company} />
+				<JobOtreachTemplate contactName={item.name} companyName={companyName} />
 
 				<SheetFooter>
 					{isEditing ? (

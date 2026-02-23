@@ -9,6 +9,9 @@ export async function getConnectionsByUserId(userId) {
 		const connections = await prisma.connection.findMany({
 			where: { userId },
 			orderBy: { createdAt: "desc" },
+			include: {
+				company: true
+			},
 		});
 
 		return connections;

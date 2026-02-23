@@ -13,6 +13,8 @@ const ConnectionCard = memo(
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 		const date = readableDate(item.createdAt);
+		const companyName =
+			typeof item.company === "string" ? item.company : item.company?.name;
 
 		return (
 			<div
@@ -30,10 +32,10 @@ const ConnectionCard = memo(
 						</Badge>
 					</div>
 					<div className={styles.itemTitle}>{item.name}</div>
-					{item.company && (
+					{companyName && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
-							{item.company}
+							{companyName}
 						</div>
 					)}
 					{item.position && (
@@ -57,7 +59,9 @@ const ConnectionCard = memo(
 		prevProps.item.id === nextProps.item.id &&
 		prevProps.item.status === nextProps.item.status &&
 		prevProps.item.name === nextProps.item.name &&
-		prevProps.item.company === nextProps.item.company &&
+		prevProps.item.companyId === nextProps.item.companyId &&
+		(prevProps.item.company?.name ?? prevProps.item.company) ===
+			(nextProps.item.company?.name ?? nextProps.item.company) &&
 		prevProps.item.position === nextProps.item.position &&
 		prevProps.item.email === nextProps.item.email &&
 		prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
