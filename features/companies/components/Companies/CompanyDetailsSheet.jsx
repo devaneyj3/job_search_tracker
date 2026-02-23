@@ -21,15 +21,12 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
 import CompanySheetTextDropdown from "./CompanySheetTextDropdown";
-import { useConnection } from "@/features/connections/context/connectionContext";
-import { findMatching } from "../../lib/matchingConnections";
+
 
 export default function CompanyDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateCompanyFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
 
-	const [companyConnections, setCompanyConnections] = useState([]);
-	const { connections } = useConnection();
 
 	//toggle text dropdown
 
@@ -46,10 +43,7 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 		}
 	}, []);
 	
-	useEffect(() => {
-		const matchingConnection = findMatching(item.id, connections);
-		setCompanyConnections(matchingConnection);
-	}, [connections, item.id]);
+
 	
 
 
@@ -110,6 +104,7 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 	const LinkedInPeopleSearchURL = item.linkedinUrl
 		? item.linkedinUrl.replace(/\/*\/?$/, "/people/?keywords=software")
 		: "";
+	const connections = item.connections ?? [];
 
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
@@ -264,18 +259,18 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 						</>
 					)}
 				</SheetHeader>
-				{companyConnections.length > 0 && (
+				{connections.length > 0 ? (
 					<div className={styles.contact}>
-						<Label>Connections ({companyConnections.length})</Label>
+						<Label>Connections ({connections.length})</Label>
 						<div>
-							{companyConnections.map((connection) => (
+							{connections.map((connection) => (
 								<p key={connection.id}>
 									{connection.name} - {connection.position}
 								</p>
 							))}
 						</div>
 					</div>
-				)}
+				) : <div className={styles.contact}>No Connections</div>}
 
 				<SheetFooter>
 					{isEditing ? (

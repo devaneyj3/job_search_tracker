@@ -32,7 +32,6 @@ export default function CompaniesList({ filteredCompanies, statuses, setChosenSt
 			companyContext.modalOpen,
 		]
 	);
-
 	const { selectedItem, items, noItemMsg } = context;
 
 	return (
@@ -64,16 +63,16 @@ export default function CompaniesList({ filteredCompanies, statuses, setChosenSt
 						item={item}
 						context={context}
 						status={companyStatus}
-					/>
-				))
-			) : (
-				<div>{noItemMsg}</div>
-			)}
+						/>
+					))
+				) : (
+					<div>{noItemMsg}</div>
+				)}
 			{selectedItem && (
 				<CompanyDetailsSheet
-					item={selectedItem}
-					context={context}
-					status={companyStatus}
+				item={selectedItem}
+				context={context}
+				status={companyStatus}
 				/>
 			)}
 		</main>

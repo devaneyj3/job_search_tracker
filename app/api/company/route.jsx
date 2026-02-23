@@ -14,7 +14,7 @@ export async function GET(request) {
 
 		if (!userId) {
 			return NextResponse.json(
-				{ error: "User ID is required" },
+				{ error: "userId, companyId, or companyIds is required" },
 				{ status: 400 }
 			);
 		}

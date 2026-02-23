@@ -9,6 +9,11 @@ export async function getCompaniesByUserId(userId) {
 		const companies = await prisma.company.findMany({
 			where: { userId },
 			orderBy: { createdAt: "desc" },
+			include: {
+				connections: {
+					orderBy: { createdAt: "desc" },
+				},
+			},
 		});
 
 		return companies;
