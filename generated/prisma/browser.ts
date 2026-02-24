@@ -47,3 +47,8 @@ export type Connection = Prisma.ConnectionModel
  * 
  */
 export type Company = Prisma.CompanyModel
+/**
+ * Model Application
+ * 
+ */
+export type Application = Prisma.ApplicationModel

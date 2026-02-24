@@ -1,0 +1,36 @@
+
+.dropdown {
+  margin: 1rem;
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  button {
+    width: 25%;
+    background: linear-gradient(135deg, #ff6347, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: #ff3300;
+      transform: translateY(-3px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+}
+.itemDescription {
+  margin-top: 20px;
+  font-size: 20px;
+  max-width: 500px;
+  line-height: 2;
+}

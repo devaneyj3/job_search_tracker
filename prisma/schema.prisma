@@ -25,6 +25,7 @@ model User {
   sessions        Session[]
   connections     Connection[]
   companies       Company[]
+  applications    Application[]
 }
 
 model Account {
@@ -118,9 +119,31 @@ model Company {
   updatedAt         DateTime?     @default(now()) @db.Timestamp(6)
   user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   connections       Connection[]
+  applications      Application[]
 
   @@index([userId])
   @@index([status])
   @@index([name])
   @@index([industry])
+}
+
+model Application {
+  id                Int        @id @default(autoincrement())
+  userId            String     @db.Uuid
+  companyId         Int
+  position          String
+  jobDescription    String
+  status            String
+  statusDate        DateTime?
+  notes             String?
+  archived          Boolean?   @default(false)
+  archivedDate      DateTime?  @db.Timestamp(6)
+  createdAt         DateTime?  @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime?  @default(now()) @db.Timestamp(6)
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company           Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([companyId])
+  @@index([status])
 }

@@ -22,6 +22,9 @@ const Menu = () => {
 					<Link href="/companies">Companies</Link>
 				</Button>
 				<Button asChild variant="ghost">
+					<Link href="/applications">Applications</Link>
+				</Button>
+				<Button asChild variant="ghost">
 					<Link href="/connections">Connections</Link>
 				</Button>
 				<UserButton />
@@ -39,6 +42,9 @@ const Menu = () => {
 	
 						<Button asChild variant="ghost">
 							<Link href="/companies">Companies</Link>
+						</Button>
+						<Button asChild variant="ghost">
+							<Link href="/applications">Applications</Link>
 						</Button>
 						<Button asChild variant="ghost">
 							<Link href="/connections">Connections</Link>

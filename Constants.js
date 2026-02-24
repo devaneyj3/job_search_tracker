@@ -7,6 +7,7 @@ const companyStatus = [
 	"Rejected",
 	"Contacted"
 ];
+const applicationStatus = [...companyStatus];
 const contactPosition = [
 	"Software Engineer",
 	"Recruiter",
@@ -15,7 +16,8 @@ const contactPosition = [
 	"Other",
 ];
 
-const LINKEDIN_COMPANY_MESSAGE = `Hey I would love to work at your company, and have experience in Javascript, React and NextJS. I was wondering if you could point me to the person I could reach out to.`
+const LINKEDIN_COMPANY_MESSAGE = `Hey I would love to work at your company, and have experience in Javascript, React and NextJS. I was wondering if you could point me to the person I could reach out to.`;
+const LINKEDIN_APPLICATION_MESSAGE = `Hey I am excited about this role, and have experience in Javascript, React and NextJS. I would love to learn more about next steps for this application.`;
 const connectionStatus = [
 	"Prospecting",
 	"Contacted",
@@ -24,9 +26,10 @@ const connectionStatus = [
 	"Meeting",
 ];
 export {
-	jobStatus,
 	companyStatus,
+	applicationStatus,
 	contactPosition,
 	LINKEDIN_COMPANY_MESSAGE,
+	LINKEDIN_APPLICATION_MESSAGE,
 	connectionStatus,
 };

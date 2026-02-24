@@ -3,9 +3,10 @@ import styles from "@/styles/JobOutreachTemplate.module.scss";
 import Link from "next/link";
 
 export default function JobOtreachTemplate({ contactName, companyName }) {
+  let firstName = contactName.split(" ")[0]
   return (
     <div className={styles.container}>
-      <p className={styles.paragraph}>Hi {contactName},</p>
+      <p className={styles.paragraph}>Hi {firstName},</p>
       <p>
         I wanted to read out to inquire about any job openings you have at{" "}
         {companyName}. I&#39;m a software engineer, but I tend to focus more on

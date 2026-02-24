@@ -1,7 +1,7 @@
 # Job Tracker
 
-Track target companies and professional connections during a job search.  
-The app provides dashboards for company pipeline management and outreach tracking.
+Track target companies, submitted applications, and professional connections during a job search.  
+The app provides dashboards for company pipeline management, application tracking, and outreach tracking.
 
 ## Technologies Used
 
@@ -23,11 +23,13 @@ job-tracker/
     (dashboard)/
       dashboard/page.jsx
       companies/page.jsx
+      applications/page.jsx
       connections/page.jsx
       layout.jsx
     api/
       auth/[...nextauth]/route.js
       company/route.jsx
+      application/route.jsx
       connection/route.jsx
     layout.jsx
     page.jsx
@@ -35,6 +37,10 @@ job-tracker/
     companies/
       components/
       context/companyContext.jsx
+      lib/
+    applications/
+      components/
+      context/applicationContext.jsx
       lib/
     connections/
       components/
@@ -62,14 +68,16 @@ job-tracker/
 
 1. User lands on `/` and sees the welcome/sign-in screen.
 2. User signs in with Google (`next-auth`).
-3. Providers initialize app state (`SessionProvider`, auth, company, and connection contexts).
+3. Providers initialize app state (`SessionProvider`, auth, company, application, and connection contexts).
 4. User enters dashboard pages:
    - `/dashboard` and `/companies` render the companies dashboard.
+   - `/applications` renders the applications dashboard.
    - `/connections` renders the connections dashboard.
 5. User can create, edit, filter, update status, and delete:
    - Companies (company pipeline)
+   - Applications (application pipeline)
    - Connections (outreach pipeline)
-6. UI actions call API routes (`/api/company`, `/api/connection`), which persist changes to PostgreSQL through Prisma.
+6. UI actions call API routes (`/api/company`, `/api/application`, `/api/connection`), which persist changes to PostgreSQL through Prisma.
 7. Changes are reflected in context state and rendered in list/detail components.
 
 ## Local Setup
@@ -123,5 +131,5 @@ Open `http://localhost:3000`.
 ## Notes
 
 - Prisma client is generated into `generated/prisma`.
-- API handlers for auth, companies, and connections live under `app/api`.
+- API handlers for auth, companies, applications, and connections live under `app/api`.
 - Feature logic is grouped by domain under `features/` to keep concerns localized.
