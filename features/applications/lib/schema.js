@@ -2,6 +2,9 @@ import { z } from "zod";
 import { applicationStatus } from "@/Constants";
 
 export const applicationFormSchema = z.object({
+	applicationLink: z.string().url({
+		message: "A valid application link is required",
+	}),
 	position: z
 		.string()
 		.min(2, {

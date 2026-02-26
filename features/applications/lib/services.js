@@ -24,6 +24,7 @@ export async function getApplicationsByUserId(userId) {
 export async function createNewApplication({
 	userId,
 	companyId,
+	applicationLink,
 	position,
 	jobDescription,
 	status,
@@ -34,6 +35,9 @@ export async function createNewApplication({
 	}
 	if (!companyId) {
 		throw new Error("Associated company is required");
+	}
+	if (!applicationLink?.trim()) {
+		throw new Error("Application link is required");
 	}
 	if (!position?.trim()) {
 		throw new Error("Position is required");
@@ -47,6 +51,7 @@ export async function createNewApplication({
 			data: {
 				userId,
 				companyId,
+				applicationLink: applicationLink.trim(),
 				position: position.trim(),
 				jobDescription: jobDescription.trim(),
 				status: status || "Researching",
@@ -152,6 +157,9 @@ export async function updateApplicationStatus(applicationId, status) {
 export async function updateApplicationFields(applicationId, data) {
 	if (!applicationId) {
 		throw new Error("Application ID is required");
+	}
+	if ("applicationLink" in data && !String(data.applicationLink ?? "").trim()) {
+		throw new Error("Application link is required");
 	}
 	if ("position" in data && !String(data.position ?? "").trim()) {
 		throw new Error("Position is required");

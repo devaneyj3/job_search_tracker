@@ -1,6 +1,12 @@
 //array for application form inputs
 export const applicationKeys = [
 	{
+		name: "applicationLink",
+		label: "Application Link",
+		placeholder: "https://company.com/jobs/role",
+		inputType: "url",
+	},
+	{
 		name: "position",
 		label: "Position",
 		placeholder: "Software Engineer",

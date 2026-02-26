@@ -132,6 +132,7 @@ model Application {
   userId            String     @db.Uuid
   companyId         Int
   position          String
+  applicationLink   String
   jobDescription    String
   status            String
   statusDate        DateTime?

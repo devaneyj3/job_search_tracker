@@ -188,6 +188,7 @@ export const ApplicationScalarFieldEnum = {
   userId: 'userId',
   companyId: 'companyId',
   position: 'position',
+  applicationLink: 'applicationLink',
   jobDescription: 'jobDescription',
   status: 'status',
   statusDate: 'statusDate',

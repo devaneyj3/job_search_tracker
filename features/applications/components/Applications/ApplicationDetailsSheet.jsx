@@ -12,7 +12,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import { Building, Pencil } from "lucide-react";
+import { Building, Link as LinkIcon, Pencil } from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import DeleteItemDialog from "@/features/shared/components/DeleteItemDialog";
@@ -20,6 +20,7 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
 import ApplicationSheetTextDropdown from "./ApplicationSheetTextDropdown";
+import Link from "next/link";
 export default function ApplicationDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateApplicationFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
@@ -38,6 +39,7 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 	}, []);
 	
 	const getInitialFormData = () => ({
+		applicationLink: item.applicationLink || "",
 		position: item.position || "",
 		jobDescription: item.jobDescription || "",
 		notes: item.notes || "",
@@ -59,6 +61,10 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 				toast.error("Update function not available");
 				return;
 			}
+			if (!formData.applicationLink?.trim()) {
+				toast.error("Application link is required");
+				return;
+			}
 			if (!formData.position?.trim()) {
 				toast.error("Position is required");
 				return;
@@ -69,6 +75,7 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 			}
 
 			const dataToUpdate = {
+				applicationLink: formData.applicationLink.trim(),
 				position: formData.position.trim(),
 				jobDescription: formData.jobDescription.trim(),
 				notes: formData.notes,
@@ -110,6 +117,24 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{item.company.name}
+						</div>
+					)}
+					{(isEditing || item.applicationLink) && (
+						<div className={styles.company}>
+							<LinkIcon size={15} className={styles.icon} />
+							{isEditing ? (
+								<Input
+									value={formData.applicationLink}
+									onChange={(e) =>
+										handleInputChange("applicationLink", e.target.value)
+									}
+									placeholder={item.applicationLink || "Application Link"}
+								/>
+							) : (
+								<Link href={item.applicationLink} target="_blank">
+									Application Link
+								</Link>
+							)}
 						</div>
 					)}
 					{(isEditing || item.position) && (

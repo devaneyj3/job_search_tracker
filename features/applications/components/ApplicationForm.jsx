@@ -42,6 +42,7 @@ export default function CreateApplication({ setDialogOpen }) {
 	const form = useForm({
 		resolver: zodResolver(applicationFormSchema),
 		defaultValues: {
+			applicationLink: "",
 			position: "",
 			jobDescription: "",
 			status: "Researching",
@@ -55,6 +56,7 @@ export default function CreateApplication({ setDialogOpen }) {
 		try {
 			await createApplication({
 				companyId: Number(values.companyId),
+				applicationLink: values.applicationLink,
 				position: values.position,
 				jobDescription: values.jobDescription,
 				status: values.status,
@@ -124,10 +126,10 @@ export default function CreateApplication({ setDialogOpen }) {
 									rows={name === "jobDescription" ? 5 : 3}
 								/>
 							</FormControl>
-						) : name === "position" ? (
+						) : name === "position" || name === "applicationLink" ? (
 							<FormControl>
 								<Input
-									type="text"
+									type={name === "applicationLink" ? "url" : "text"}
 									placeholder={placeholder}
 									{...field}
 								/>
@@ -146,8 +148,9 @@ export default function CreateApplication({ setDialogOpen }) {
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
 				<div className={styles.twoCol}>
 					<RenderField name="companyId" />
-					<RenderField name="position" />
+					<RenderField name="applicationLink" />
 				</div>
+				<RenderField name="position" />
 				<RenderField name="status" />
 				<RenderField name="jobDescription" />
 				<RenderField name="notes" />

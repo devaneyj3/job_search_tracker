@@ -41,6 +41,7 @@ export type ApplicationMinAggregateOutputType = {
   userId: string | null
   companyId: number | null
   position: string | null
+  applicationLink: string | null
   jobDescription: string | null
   status: string | null
   statusDate: Date | null
@@ -56,6 +57,7 @@ export type ApplicationMaxAggregateOutputType = {
   userId: string | null
   companyId: number | null
   position: string | null
+  applicationLink: string | null
   jobDescription: string | null
   status: string | null
   statusDate: Date | null
@@ -71,6 +73,7 @@ export type ApplicationCountAggregateOutputType = {
   userId: number
   companyId: number
   position: number
+  applicationLink: number
   jobDescription: number
   status: number
   statusDate: number
@@ -98,6 +101,7 @@ export type ApplicationMinAggregateInputType = {
   userId?: true
   companyId?: true
   position?: true
+  applicationLink?: true
   jobDescription?: true
   status?: true
   statusDate?: true
@@ -113,6 +117,7 @@ export type ApplicationMaxAggregateInputType = {
   userId?: true
   companyId?: true
   position?: true
+  applicationLink?: true
   jobDescription?: true
   status?: true
   statusDate?: true
@@ -128,6 +133,7 @@ export type ApplicationCountAggregateInputType = {
   userId?: true
   companyId?: true
   position?: true
+  applicationLink?: true
   jobDescription?: true
   status?: true
   statusDate?: true
@@ -230,6 +236,7 @@ export type ApplicationGroupByOutputType = {
   userId: string
   companyId: number
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate: Date | null
@@ -268,6 +275,7 @@ export type ApplicationWhereInput = {
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
   position?: Prisma.StringFilter<"Application"> | string
+  applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.StringFilter<"Application"> | string
   statusDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -285,6 +293,7 @@ export type ApplicationOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -305,6 +314,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
   position?: Prisma.StringFilter<"Application"> | string
+  applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.StringFilter<"Application"> | string
   statusDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -322,6 +332,7 @@ export type ApplicationOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -345,6 +356,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   userId?: Prisma.UuidWithAggregatesFilter<"Application"> | string
   companyId?: Prisma.IntWithAggregatesFilter<"Application"> | number
   position?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  applicationLink?: Prisma.StringWithAggregatesFilter<"Application"> | string
   jobDescription?: Prisma.StringWithAggregatesFilter<"Application"> | string
   status?: Prisma.StringWithAggregatesFilter<"Application"> | string
   statusDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
@@ -357,6 +369,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
 
 export type ApplicationCreateInput = {
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -374,6 +387,7 @@ export type ApplicationUncheckedCreateInput = {
   userId: string
   companyId: number
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -386,6 +400,7 @@ export type ApplicationUncheckedCreateInput = {
 
 export type ApplicationUpdateInput = {
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -403,6 +418,7 @@ export type ApplicationUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -418,6 +434,7 @@ export type ApplicationCreateManyInput = {
   userId: string
   companyId: number
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -430,6 +447,7 @@ export type ApplicationCreateManyInput = {
 
 export type ApplicationUpdateManyMutationInput = {
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -445,6 +463,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -470,6 +489,7 @@ export type ApplicationCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusDate?: Prisma.SortOrder
@@ -490,6 +510,7 @@ export type ApplicationMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusDate?: Prisma.SortOrder
@@ -505,6 +526,7 @@ export type ApplicationMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusDate?: Prisma.SortOrder
@@ -606,6 +628,7 @@ export type ApplicationUncheckedUpdateManyWithoutCompanyNestedInput = {
 
 export type ApplicationCreateWithoutUserInput = {
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -621,6 +644,7 @@ export type ApplicationUncheckedCreateWithoutUserInput = {
   id?: number
   companyId: number
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -665,6 +689,7 @@ export type ApplicationScalarWhereInput = {
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
   position?: Prisma.StringFilter<"Application"> | string
+  applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.StringFilter<"Application"> | string
   statusDate?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -677,6 +702,7 @@ export type ApplicationScalarWhereInput = {
 
 export type ApplicationCreateWithoutCompanyInput = {
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -692,6 +718,7 @@ export type ApplicationUncheckedCreateWithoutCompanyInput = {
   id?: number
   userId: string
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -732,6 +759,7 @@ export type ApplicationCreateManyUserInput = {
   id?: number
   companyId: number
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -744,6 +772,7 @@ export type ApplicationCreateManyUserInput = {
 
 export type ApplicationUpdateWithoutUserInput = {
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -759,6 +788,7 @@ export type ApplicationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -773,6 +803,7 @@ export type ApplicationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -787,6 +818,7 @@ export type ApplicationCreateManyCompanyInput = {
   id?: number
   userId: string
   position: string
+  applicationLink: string
   jobDescription: string
   status: string
   statusDate?: Date | string | null
@@ -799,6 +831,7 @@ export type ApplicationCreateManyCompanyInput = {
 
 export type ApplicationUpdateWithoutCompanyInput = {
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -814,6 +847,7 @@ export type ApplicationUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -828,6 +862,7 @@ export type ApplicationUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   statusDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -845,6 +880,7 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   userId?: boolean
   companyId?: boolean
   position?: boolean
+  applicationLink?: boolean
   jobDescription?: boolean
   status?: boolean
   statusDate?: boolean
@@ -862,6 +898,7 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   companyId?: boolean
   position?: boolean
+  applicationLink?: boolean
   jobDescription?: boolean
   status?: boolean
   statusDate?: boolean
@@ -879,6 +916,7 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   companyId?: boolean
   position?: boolean
+  applicationLink?: boolean
   jobDescription?: boolean
   status?: boolean
   statusDate?: boolean
@@ -896,6 +934,7 @@ export type ApplicationSelectScalar = {
   userId?: boolean
   companyId?: boolean
   position?: boolean
+  applicationLink?: boolean
   jobDescription?: boolean
   status?: boolean
   statusDate?: boolean
@@ -906,7 +945,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyId" | "position" | "jobDescription" | "status" | "statusDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyId" | "position" | "applicationLink" | "jobDescription" | "status" | "statusDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -931,6 +970,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     userId: string
     companyId: number
     position: string
+    applicationLink: string
     jobDescription: string
     status: string
     statusDate: Date | null
@@ -1368,6 +1408,7 @@ export interface ApplicationFieldRefs {
   readonly userId: Prisma.FieldRef<"Application", 'String'>
   readonly companyId: Prisma.FieldRef<"Application", 'Int'>
   readonly position: Prisma.FieldRef<"Application", 'String'>
+  readonly applicationLink: Prisma.FieldRef<"Application", 'String'>
   readonly jobDescription: Prisma.FieldRef<"Application", 'String'>
   readonly status: Prisma.FieldRef<"Application", 'String'>
   readonly statusDate: Prisma.FieldRef<"Application", 'DateTime'>
