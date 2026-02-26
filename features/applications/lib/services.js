@@ -24,6 +24,8 @@ export async function getApplicationsByUserId(userId) {
 export async function createNewApplication({
 	userId,
 	companyId,
+	jobType,
+	location,
 	applicationLink,
 	position,
 	jobDescription,
@@ -35,6 +37,12 @@ export async function createNewApplication({
 	}
 	if (!companyId) {
 		throw new Error("Associated company is required");
+	}
+	if (!jobType?.trim()) {
+		throw new Error("Job type is required");
+	}
+	if (!location?.trim()) {
+		throw new Error("Location is required");
 	}
 	if (!applicationLink?.trim()) {
 		throw new Error("Application link is required");
@@ -51,6 +59,8 @@ export async function createNewApplication({
 			data: {
 				userId,
 				companyId,
+				jobType: jobType.trim(),
+				location: location.trim(),
 				applicationLink: applicationLink.trim(),
 				position: position.trim(),
 				jobDescription: jobDescription.trim(),
@@ -160,6 +170,12 @@ export async function updateApplicationFields(applicationId, data) {
 	}
 	if ("applicationLink" in data && !String(data.applicationLink ?? "").trim()) {
 		throw new Error("Application link is required");
+	}
+	if ("jobType" in data && !String(data.jobType ?? "").trim()) {
+		throw new Error("Job type is required");
+	}
+	if ("location" in data && !String(data.location ?? "").trim()) {
+		throw new Error("Location is required");
 	}
 	if ("position" in data && !String(data.position ?? "").trim()) {
 		throw new Error("Position is required");

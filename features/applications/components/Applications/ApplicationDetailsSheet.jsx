@@ -21,6 +21,14 @@ import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect"
 import { toast } from "sonner";
 import ApplicationSheetTextDropdown from "./ApplicationSheetTextDropdown";
 import Link from "next/link";
+import { jobLocationOptions, jobTypeOptions } from "@/Constants";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/features/shared/ui/select";
 export default function ApplicationDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateApplicationFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
@@ -39,6 +47,8 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 	}, []);
 	
 	const getInitialFormData = () => ({
+		jobType: item.jobType || "",
+		location: item.location || "",
 		applicationLink: item.applicationLink || "",
 		position: item.position || "",
 		jobDescription: item.jobDescription || "",
@@ -65,6 +75,14 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 				toast.error("Application link is required");
 				return;
 			}
+			if (!formData.jobType?.trim()) {
+				toast.error("Job type is required");
+				return;
+			}
+			if (!formData.location?.trim()) {
+				toast.error("Location is required");
+				return;
+			}
 			if (!formData.position?.trim()) {
 				toast.error("Position is required");
 				return;
@@ -75,6 +93,8 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 			}
 
 			const dataToUpdate = {
+				jobType: formData.jobType.trim(),
+				location: formData.location.trim(),
 				applicationLink: formData.applicationLink.trim(),
 				position: formData.position.trim(),
 				jobDescription: formData.jobDescription.trim(),
@@ -148,6 +168,52 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 								/>
 							) : (
 								item.position
+							)}
+						</div>
+					)}
+					{(isEditing || item.jobType) && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{isEditing ? (
+								<Select
+									onValueChange={(value) => handleInputChange("jobType", value)}
+									value={formData.jobType || ""}>
+									<SelectTrigger>
+										<SelectValue placeholder="Select job type" />
+									</SelectTrigger>
+									<SelectContent>
+										{jobTypeOptions.map((option) => (
+											<SelectItem key={option} value={option}>
+												{option}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							) : (
+								item.jobType
+							)}
+						</div>
+					)}
+					{(isEditing || item.location) && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{isEditing ? (
+								<Select
+									onValueChange={(value) => handleInputChange("location", value)}
+									value={formData.location || ""}>
+									<SelectTrigger>
+										<SelectValue placeholder="Select location type" />
+									</SelectTrigger>
+									<SelectContent>
+										{jobLocationOptions.map((option) => (
+											<SelectItem key={option} value={option}>
+												{option}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							) : (
+								item.location
 							)}
 						</div>
 					)}

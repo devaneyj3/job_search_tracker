@@ -131,6 +131,8 @@ model Application {
   id                Int        @id @default(autoincrement())
   userId            String     @db.Uuid
   companyId         Int
+  jobType           String
+  location          String
   position          String
   applicationLink   String
   jobDescription    String

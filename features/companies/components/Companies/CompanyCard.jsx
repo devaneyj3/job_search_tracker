@@ -48,7 +48,7 @@ const CompanyCard = memo(
 						</div>
 					)}
 				</div>
-					{item.connections.length > 0 ? (
+					{item.conne  && item.connections.length > 0 ? (
 						<div className={styles.contact}>
 							<Label>Connections ({item.connections.length})</Label>
 							<div>

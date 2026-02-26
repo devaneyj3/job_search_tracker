@@ -21,7 +21,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
-import { applicationStatus } from "@/Constants";
+import { applicationStatus, jobLocationOptions, jobTypeOptions } from "@/Constants";
 import { toast } from "sonner";
 import { applicationFormSchema } from "@/features/applications/lib/schema";
 import { applicationKeys } from "@/features/applications/lib/keys";
@@ -42,6 +42,8 @@ export default function CreateApplication({ setDialogOpen }) {
 	const form = useForm({
 		resolver: zodResolver(applicationFormSchema),
 		defaultValues: {
+			jobType: "",
+			location: "",
 			applicationLink: "",
 			position: "",
 			jobDescription: "",
@@ -56,6 +58,8 @@ export default function CreateApplication({ setDialogOpen }) {
 		try {
 			await createApplication({
 				companyId: Number(values.companyId),
+				jobType: values.jobType,
+				location: values.location,
 				applicationLink: values.applicationLink,
 				position: values.position,
 				jobDescription: values.jobDescription,
@@ -97,6 +101,36 @@ export default function CreateApplication({ setDialogOpen }) {
 									{applicationStatus.map((stat) => (
 										<SelectItem key={stat} value={stat}>
 											{stat}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						) : name === "jobType" ? (
+							<Select onValueChange={field.onChange} value={field.value || ""}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder={placeholder} />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{jobTypeOptions.map((option) => (
+										<SelectItem key={option} value={option}>
+											{option}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						) : name === "location" ? (
+							<Select onValueChange={field.onChange} value={field.value || ""}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder={placeholder} />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{jobLocationOptions.map((option) => (
+										<SelectItem key={option} value={option}>
+											{option}
 										</SelectItem>
 									))}
 								</SelectContent>
@@ -149,6 +183,10 @@ export default function CreateApplication({ setDialogOpen }) {
 				<div className={styles.twoCol}>
 					<RenderField name="companyId" />
 					<RenderField name="applicationLink" />
+				</div>
+				<div className={styles.twoCol}>
+					<RenderField name="jobType" />
+					<RenderField name="location" />
 				</div>
 				<RenderField name="position" />
 				<RenderField name="status" />

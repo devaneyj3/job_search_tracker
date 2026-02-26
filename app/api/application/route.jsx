@@ -32,6 +32,8 @@ export async function POST(req) {
 		const {
 			userId,
 			companyId,
+			jobType,
+			location,
 			applicationLink,
 			position,
 			jobDescription,
@@ -41,6 +43,8 @@ export async function POST(req) {
 		const newApplication = await createNewApplication({
 			userId,
 			companyId,
+			jobType,
+			location,
 			applicationLink,
 			position,
 			jobDescription,

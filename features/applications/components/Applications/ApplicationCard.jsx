@@ -42,6 +42,18 @@ const ApplicationCard = memo(
 							{item.position}
 						</div>
 					)}
+					{item.jobType && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{item.jobType}
+						</div>
+					)}
+					{item.location && (
+						<div className={styles.company}>
+							<Building size={15} className={styles.icon} />
+							{item.location}
+						</div>
+					)}
 					{item.applicationLink && (
 						<div className={styles.company}>
 							<LinkIcon size={15} className={styles.icon} />
@@ -60,6 +72,8 @@ const ApplicationCard = memo(
 		prevProps.item.status === nextProps.item.status &&
 		prevProps.item.company?.name === nextProps.item.company?.name &&
 		prevProps.item.position === nextProps.item.position &&
+		prevProps.item.jobType === nextProps.item.jobType &&
+		prevProps.item.location === nextProps.item.location &&
 		prevProps.item.applicationLink === nextProps.item.applicationLink &&
 		prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
 		prevProps.status === nextProps.status

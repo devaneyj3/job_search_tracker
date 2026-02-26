@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { applicationStatus } from "@/Constants";
+import { applicationStatus, jobLocationOptions, jobTypeOptions } from "@/Constants";
 
 export const applicationFormSchema = z.object({
+	jobType: z.enum(jobTypeOptions),
+	location: z.enum(jobLocationOptions),
 	applicationLink: z.string().url({
 		message: "A valid application link is required",
 	}),

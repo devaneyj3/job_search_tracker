@@ -40,6 +40,8 @@ export type ApplicationMinAggregateOutputType = {
   id: number | null
   userId: string | null
   companyId: number | null
+  jobType: string | null
+  location: string | null
   position: string | null
   applicationLink: string | null
   jobDescription: string | null
@@ -56,6 +58,8 @@ export type ApplicationMaxAggregateOutputType = {
   id: number | null
   userId: string | null
   companyId: number | null
+  jobType: string | null
+  location: string | null
   position: string | null
   applicationLink: string | null
   jobDescription: string | null
@@ -72,6 +76,8 @@ export type ApplicationCountAggregateOutputType = {
   id: number
   userId: number
   companyId: number
+  jobType: number
+  location: number
   position: number
   applicationLink: number
   jobDescription: number
@@ -100,6 +106,8 @@ export type ApplicationMinAggregateInputType = {
   id?: true
   userId?: true
   companyId?: true
+  jobType?: true
+  location?: true
   position?: true
   applicationLink?: true
   jobDescription?: true
@@ -116,6 +124,8 @@ export type ApplicationMaxAggregateInputType = {
   id?: true
   userId?: true
   companyId?: true
+  jobType?: true
+  location?: true
   position?: true
   applicationLink?: true
   jobDescription?: true
@@ -132,6 +142,8 @@ export type ApplicationCountAggregateInputType = {
   id?: true
   userId?: true
   companyId?: true
+  jobType?: true
+  location?: true
   position?: true
   applicationLink?: true
   jobDescription?: true
@@ -235,6 +247,8 @@ export type ApplicationGroupByOutputType = {
   id: number
   userId: string
   companyId: number
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -274,6 +288,8 @@ export type ApplicationWhereInput = {
   id?: Prisma.IntFilter<"Application"> | number
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
+  jobType?: Prisma.StringFilter<"Application"> | string
+  location?: Prisma.StringFilter<"Application"> | string
   position?: Prisma.StringFilter<"Application"> | string
   applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
@@ -292,6 +308,8 @@ export type ApplicationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  jobType?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   position?: Prisma.SortOrder
   applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
@@ -313,6 +331,8 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ApplicationWhereInput | Prisma.ApplicationWhereInput[]
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
+  jobType?: Prisma.StringFilter<"Application"> | string
+  location?: Prisma.StringFilter<"Application"> | string
   position?: Prisma.StringFilter<"Application"> | string
   applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
@@ -331,6 +351,8 @@ export type ApplicationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  jobType?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   position?: Prisma.SortOrder
   applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
@@ -355,6 +377,8 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Application"> | number
   userId?: Prisma.UuidWithAggregatesFilter<"Application"> | string
   companyId?: Prisma.IntWithAggregatesFilter<"Application"> | number
+  jobType?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  location?: Prisma.StringWithAggregatesFilter<"Application"> | string
   position?: Prisma.StringWithAggregatesFilter<"Application"> | string
   applicationLink?: Prisma.StringWithAggregatesFilter<"Application"> | string
   jobDescription?: Prisma.StringWithAggregatesFilter<"Application"> | string
@@ -368,6 +392,8 @@ export type ApplicationScalarWhereWithAggregatesInput = {
 }
 
 export type ApplicationCreateInput = {
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -386,6 +412,8 @@ export type ApplicationUncheckedCreateInput = {
   id?: number
   userId: string
   companyId: number
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -399,6 +427,8 @@ export type ApplicationUncheckedCreateInput = {
 }
 
 export type ApplicationUpdateInput = {
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -417,6 +447,8 @@ export type ApplicationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -433,6 +465,8 @@ export type ApplicationCreateManyInput = {
   id?: number
   userId: string
   companyId: number
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -446,6 +480,8 @@ export type ApplicationCreateManyInput = {
 }
 
 export type ApplicationUpdateManyMutationInput = {
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -462,6 +498,8 @@ export type ApplicationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -488,6 +526,8 @@ export type ApplicationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  jobType?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   position?: Prisma.SortOrder
   applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
@@ -509,6 +549,8 @@ export type ApplicationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  jobType?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   position?: Prisma.SortOrder
   applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
@@ -525,6 +567,8 @@ export type ApplicationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  jobType?: Prisma.SortOrder
+  location?: Prisma.SortOrder
   position?: Prisma.SortOrder
   applicationLink?: Prisma.SortOrder
   jobDescription?: Prisma.SortOrder
@@ -627,6 +671,8 @@ export type ApplicationUncheckedUpdateManyWithoutCompanyNestedInput = {
 }
 
 export type ApplicationCreateWithoutUserInput = {
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -643,6 +689,8 @@ export type ApplicationCreateWithoutUserInput = {
 export type ApplicationUncheckedCreateWithoutUserInput = {
   id?: number
   companyId: number
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -688,6 +736,8 @@ export type ApplicationScalarWhereInput = {
   id?: Prisma.IntFilter<"Application"> | number
   userId?: Prisma.UuidFilter<"Application"> | string
   companyId?: Prisma.IntFilter<"Application"> | number
+  jobType?: Prisma.StringFilter<"Application"> | string
+  location?: Prisma.StringFilter<"Application"> | string
   position?: Prisma.StringFilter<"Application"> | string
   applicationLink?: Prisma.StringFilter<"Application"> | string
   jobDescription?: Prisma.StringFilter<"Application"> | string
@@ -701,6 +751,8 @@ export type ApplicationScalarWhereInput = {
 }
 
 export type ApplicationCreateWithoutCompanyInput = {
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -717,6 +769,8 @@ export type ApplicationCreateWithoutCompanyInput = {
 export type ApplicationUncheckedCreateWithoutCompanyInput = {
   id?: number
   userId: string
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -758,6 +812,8 @@ export type ApplicationUpdateManyWithWhereWithoutCompanyInput = {
 export type ApplicationCreateManyUserInput = {
   id?: number
   companyId: number
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -771,6 +827,8 @@ export type ApplicationCreateManyUserInput = {
 }
 
 export type ApplicationUpdateWithoutUserInput = {
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -787,6 +845,8 @@ export type ApplicationUpdateWithoutUserInput = {
 export type ApplicationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -802,6 +862,8 @@ export type ApplicationUncheckedUpdateWithoutUserInput = {
 export type ApplicationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyId?: Prisma.IntFieldUpdateOperationsInput | number
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -817,6 +879,8 @@ export type ApplicationUncheckedUpdateManyWithoutUserInput = {
 export type ApplicationCreateManyCompanyInput = {
   id?: number
   userId: string
+  jobType: string
+  location: string
   position: string
   applicationLink: string
   jobDescription: string
@@ -830,6 +894,8 @@ export type ApplicationCreateManyCompanyInput = {
 }
 
 export type ApplicationUpdateWithoutCompanyInput = {
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -846,6 +912,8 @@ export type ApplicationUpdateWithoutCompanyInput = {
 export type ApplicationUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -861,6 +929,8 @@ export type ApplicationUncheckedUpdateWithoutCompanyInput = {
 export type ApplicationUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  jobType?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.StringFieldUpdateOperationsInput | string
   applicationLink?: Prisma.StringFieldUpdateOperationsInput | string
   jobDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -879,6 +949,8 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   userId?: boolean
   companyId?: boolean
+  jobType?: boolean
+  location?: boolean
   position?: boolean
   applicationLink?: boolean
   jobDescription?: boolean
@@ -897,6 +969,8 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   companyId?: boolean
+  jobType?: boolean
+  location?: boolean
   position?: boolean
   applicationLink?: boolean
   jobDescription?: boolean
@@ -915,6 +989,8 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   companyId?: boolean
+  jobType?: boolean
+  location?: boolean
   position?: boolean
   applicationLink?: boolean
   jobDescription?: boolean
@@ -933,6 +1009,8 @@ export type ApplicationSelectScalar = {
   id?: boolean
   userId?: boolean
   companyId?: boolean
+  jobType?: boolean
+  location?: boolean
   position?: boolean
   applicationLink?: boolean
   jobDescription?: boolean
@@ -945,7 +1023,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyId" | "position" | "applicationLink" | "jobDescription" | "status" | "statusDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyId" | "jobType" | "location" | "position" | "applicationLink" | "jobDescription" | "status" | "statusDate" | "notes" | "archived" | "archivedDate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -969,6 +1047,8 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: number
     userId: string
     companyId: number
+    jobType: string
+    location: string
     position: string
     applicationLink: string
     jobDescription: string
@@ -1407,6 +1487,8 @@ export interface ApplicationFieldRefs {
   readonly id: Prisma.FieldRef<"Application", 'Int'>
   readonly userId: Prisma.FieldRef<"Application", 'String'>
   readonly companyId: Prisma.FieldRef<"Application", 'Int'>
+  readonly jobType: Prisma.FieldRef<"Application", 'String'>
+  readonly location: Prisma.FieldRef<"Application", 'String'>
   readonly position: Prisma.FieldRef<"Application", 'String'>
   readonly applicationLink: Prisma.FieldRef<"Application", 'String'>
   readonly jobDescription: Prisma.FieldRef<"Application", 'String'>
