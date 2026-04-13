@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@/styles/CreateForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,7 @@ import { applicationFormSchema } from "@/features/applications/lib/schema";
 import { applicationKeys } from "@/features/applications/lib/keys";
 import { useApplication } from "@/features/applications/context/applicationContext";
 import { useCompany } from "@/features/companies/context/companyContext";
+import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
 
 // helper: fetch field config by name from applicationKeys
 function getCfg(name) {
@@ -39,6 +40,12 @@ function getCfg(name) {
 export default function CreateApplication({ setDialogOpen }) {
 	const { createApplication } = useApplication();
 	const { companies } = useCompany();
+
+	const sortedCompanies = useMemo(
+		() => sortCompaniesByName(companies),
+		[companies],
+	);
+
 	const form = useForm({
 		resolver: zodResolver(applicationFormSchema),
 		defaultValues: {
@@ -145,15 +152,7 @@ export default function CreateApplication({ setDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{[...companies]
-										.sort((a, b) =>
-											String(a.name ?? "").localeCompare(
-												String(b.name ?? ""),
-												undefined,
-												{ sensitivity: "base" },
-											),
-										)
-										.map((company) => (
+									{sortedCompanies.map((company) => (
 										<SelectItem key={company.id} value={String(company.id)}>
 											{company.name}
 										</SelectItem>
