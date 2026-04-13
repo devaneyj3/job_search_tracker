@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "@/styles/CreateForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,17 +27,84 @@ import { connectionFormSchema } from "@/features/connections/lib/schema";
 import { connectionKeys } from "@/features/connections/lib/keys";
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { useCompany } from "@/features/companies/context/companyContext";
+import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
 
-function getCfg(name) {
-	const cfg = connectionKeys.find((f) => f.name === name);
-	if (!cfg)
-		throw new Error(`Missing field config for "${name}" in connectionKeys`);
-	return cfg;
+function RhfSelect({ field, placeholder, children }) {
+	return (
+		<Select onValueChange={field.onChange} value={field.value || ""}>
+			<FormControl>
+				<SelectTrigger>
+					<SelectValue placeholder={placeholder} />
+				</SelectTrigger>
+			</FormControl>
+			<SelectContent>{children}</SelectContent>
+		</Select>
+	);
+}
+
+function renderFieldControl(field, cfg, sortedCompanies) {
+	switch (cfg.field) {
+		case "status":
+			return (
+				<RhfSelect field={field} placeholder={cfg.placeholder}>
+					{connectionStatus.map((stat) => (
+						<SelectItem key={stat} value={stat}>
+							{stat}
+						</SelectItem>
+					))}
+				</RhfSelect>
+			);
+		case "company":
+			return (
+				<RhfSelect field={field} placeholder={cfg.placeholder}>
+					{sortedCompanies.map((company) => (
+						<SelectItem key={company.id} value={String(company.id)}>
+							{company.name}
+						</SelectItem>
+					))}
+				</RhfSelect>
+			);
+		case "textarea":
+			return (
+				<FormControl>
+					<Textarea placeholder={cfg.placeholder} {...field} rows={3} />
+				</FormControl>
+			);
+		case "email":
+			return (
+				<FormControl>
+					<Input type="email" placeholder={cfg.placeholder} {...field} />
+				</FormControl>
+			);
+		case "text":
+			return (
+				<FormControl>
+					<Input
+						type={cfg.inputType ?? "text"}
+						placeholder={cfg.placeholder}
+						{...field}
+					/>
+				</FormControl>
+			);
+		default:
+			return null;
+	}
 }
 
 export default function ConnectionForm({ setDialogOpen }) {
 	const { createConnection } = useConnection();
 	const { companies } = useCompany();
+
+	const fieldByName = useMemo(
+		() => Object.fromEntries(connectionKeys.map((c) => [c.name, c])),
+		[],
+	);
+
+	const sortedCompanies = useMemo(
+		() => sortCompaniesByName(companies),
+		[companies],
+	);
+
 	const form = useForm({
 		resolver: zodResolver(connectionFormSchema),
 		defaultValues: {
@@ -71,7 +138,9 @@ export default function ConnectionForm({ setDialogOpen }) {
 	}
 
 	const RenderField = ({ name }) => {
-		const { label, placeholder, inputType } = getCfg(name);
+		const cfg = fieldByName[name];
+		if (!cfg)
+			throw new Error(`Missing field config for "${name}" in connectionKeys`);
 
 		return (
 			<FormField
@@ -80,60 +149,8 @@ export default function ConnectionForm({ setDialogOpen }) {
 				name={name}
 				render={({ field }) => (
 					<FormItem className={styles.formItem}>
-						<FormLabel>{label}</FormLabel>
-
-						{name === "status" ? (
-							<Select onValueChange={field.onChange} value={field.value || ""}>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder={placeholder} />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{connectionStatus.map((stat) => (
-										<SelectItem key={stat} value={stat}>
-											{stat}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						) : name === "companyId" ? (
-							<Select onValueChange={field.onChange} value={field.value || ""}>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder={placeholder} />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{[...companies]
-										.sort((a, b) =>
-											String(a.name ?? "").localeCompare(
-												String(b.name ?? ""),
-												undefined,
-												{ sensitivity: "base" },
-											),
-										)
-										.map((company) => (
-											<SelectItem key={company.id} value={String(company.id)}>
-												{company.name}
-											</SelectItem>
-										))}
-								</SelectContent>
-							</Select>
-						) : name === "notes" ? (
-							<FormControl>
-								<Textarea placeholder={placeholder} {...field} rows={3} />
-							</FormControl>
-						) : (
-							<FormControl>
-								<Input
-									type={inputType ?? "text"}
-									placeholder={placeholder}
-									{...field}
-								/>
-							</FormControl>
-						)}
-
+						<FormLabel>{cfg.label}</FormLabel>
+						{renderFieldControl(field, cfg, sortedCompanies)}
 						<FormMessage />
 					</FormItem>
 				)}
