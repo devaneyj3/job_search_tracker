@@ -39,7 +39,7 @@ export const CompanyProvider = ({ children }) => {
 
 				if (data.length > 0) {
 					const sortedCompanies = data.sort(
-						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+						(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
 					);
 					setCompanies(sortedCompanies);
 					setSelectedCompany(sortedCompanies[0]);
@@ -96,7 +96,7 @@ export const CompanyProvider = ({ children }) => {
 
 			return data.company;
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const deleteCompany = useCallback(
@@ -112,7 +112,7 @@ export const CompanyProvider = ({ children }) => {
 
 			setCompanies((prev) => {
 				const next = prev.filter(
-					(company) => company.id !== deletedCompanyId.id
+					(company) => company.id !== deletedCompanyId.id,
 				);
 				if (next.length === 0) {
 					setNoCompanyMsg("You haven't added any companies yet");
@@ -129,7 +129,7 @@ export const CompanyProvider = ({ children }) => {
 			setModalOpen(false);
 			return deletedCompanyId;
 		},
-		[selectedCompany]
+		[selectedCompany],
 	);
 
 	const updateCompanyStatus = useCallback(
@@ -146,13 +146,13 @@ export const CompanyProvider = ({ children }) => {
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
 			setCompanies((prevCompanies) =>
 				prevCompanies.map((company) =>
-					company.id === companyId ? { ...company, status } : company
-				)
+					company.id === companyId ? { ...company, status } : company,
+				),
 			);
 
 			setSelectedCompany((prev) => (prev ? { ...prev, status } : prev));
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const updateCompanyFields = useCallback(
@@ -172,17 +172,17 @@ export const CompanyProvider = ({ children }) => {
 
 			setCompanies((prevCompanies) =>
 				prevCompanies.map((company) =>
-					company.id === companyId ? updatedCompany : company
-				)
+					company.id === companyId ? updatedCompany : company,
+				),
 			);
 
 			setSelectedCompany((prev) =>
-				prev && prev.id === companyId ? updatedCompany : prev
+				prev && prev.id === companyId ? updatedCompany : prev,
 			);
 
 			return updatedCompany;
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const values = useMemo(
@@ -212,12 +212,10 @@ export const CompanyProvider = ({ children }) => {
 			isLoading,
 			updateCompanyStatus,
 			updateCompanyFields,
-		]
+		],
 	);
 	return (
-		<CompanyContext.Provider value={values}>
-			{children}
-		</CompanyContext.Provider>
+		<CompanyContext.Provider value={values}>{children}</CompanyContext.Provider>
 	);
 };
 

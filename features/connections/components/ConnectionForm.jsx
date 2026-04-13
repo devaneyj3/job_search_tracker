@@ -105,14 +105,22 @@ export default function ConnectionForm({ setDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{companies.map((company) => (
-										<SelectItem key={company.id} value={String(company.id)}>
-											{company.name}
-										</SelectItem>
-									))}
+									{[...companies]
+										.sort((a, b) =>
+											String(a.name ?? "").localeCompare(
+												String(b.name ?? ""),
+												undefined,
+												{ sensitivity: "base" },
+											),
+										)
+										.map((company) => (
+											<SelectItem key={company.id} value={String(company.id)}>
+												{company.name}
+											</SelectItem>
+										))}
 								</SelectContent>
 							</Select>
-						): name === "notes" ? (
+						) : name === "notes" ? (
 							<FormControl>
 								<Textarea placeholder={placeholder} {...field} rows={3} />
 							</FormControl>

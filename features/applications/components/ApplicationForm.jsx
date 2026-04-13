@@ -145,7 +145,15 @@ export default function CreateApplication({ setDialogOpen }) {
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{companies.map((company) => (
+									{[...companies]
+										.sort((a, b) =>
+											String(a.name ?? "").localeCompare(
+												String(b.name ?? ""),
+												undefined,
+												{ sensitivity: "base" },
+											),
+										)
+										.map((company) => (
 										<SelectItem key={company.id} value={String(company.id)}>
 											{company.name}
 										</SelectItem>
