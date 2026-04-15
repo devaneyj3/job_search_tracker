@@ -1,11 +1,11 @@
 "use client";
 import { memo } from "react";
-import { Building, Mail, Briefcase } from "lucide-react";
-import styles from "@/styles/ItemBox.module.scss";
+import styles from "@/styles/ItemList.module.scss";
 
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { readableDate } from "@/features/shared/lib/utils";
+import { TableCell, TableRow } from "@/features/shared/ui/table";
 
 const ConnectionCard = memo(
 	function ConnectionCard({ item, context, status }) {
@@ -15,44 +15,32 @@ const ConnectionCard = memo(
 		const date = readableDate(item.createdAt);
 		const companyName =
 			typeof item.company === "string" ? item.company : item.company?.name;
+		const isActive = item.id === selectedItem?.id;
 
 		return (
-			<div
-				className={`${styles.item} ${
-					item.id === selectedItem?.id && styles.active
-				}`}
+			<TableRow
+				className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 				onClick={() => {
 					setSelectedItem(item);
 					setModalOpen(true);
 				}}>
-				<div>
-					<div>
-						<Badge className={styles.status}>
-							{item.status} on {date}
-						</Badge>
+				<TableCell className={styles.tableCell}>
+					<div className={styles.companyName}>{item.name || "N/A"}</div>
+				</TableCell>
+				<TableCell className={styles.tableCell}>{companyName || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.position || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.email || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>
+					<Badge className={styles.tableStatus}>
+						{item.status} on {date}
+					</Badge>
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					<div onClick={(event) => event.stopPropagation()}>
+						<ItemStatusSelect id={item.id} update={update} status={status} />
 					</div>
-					<div className={styles.itemTitle}>{item.name}</div>
-					{companyName && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{companyName}
-						</div>
-					)}
-					{item.position && (
-						<div className={styles.company}>
-							<Briefcase size={15} className={styles.icon} />
-							{item.position}
-						</div>
-					)}
-					{item.email && (
-						<div className={styles.company}>
-							<Mail size={15} className={styles.icon} />
-							{item.email}
-						</div>
-					)}
-				</div>
-				<ItemStatusSelect id={item.id} update={update} status={status} />
-			</div>
+				</TableCell>
+			</TableRow>
 		);
 	},
 	(prevProps, nextProps) =>

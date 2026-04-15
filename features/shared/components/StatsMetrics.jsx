@@ -11,8 +11,6 @@ export default function StatsMetrics({ items, title, noItemMsg }) {
 	}
 	return (
 		<main className={styles.container}>
-			<h1 className={styles.title}>{title}</h1>
-
 			<div className={styles.grid}>
 				{items.length > 0 &&
 					items.map((m) => (

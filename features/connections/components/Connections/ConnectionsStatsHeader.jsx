@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import styles from "@/styles/OutreachHeader.module.scss";
 import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { itemLength } from "@/features/shared/lib/utils";
@@ -26,12 +25,6 @@ export default function ConnectionsStatsHeader() {
 
 	return (
 		<>
-			<div className={styles.container}>
-				<h1 className={styles.title}>Connection Tracker</h1>
-				<p className={styles.subtitle}>
-					Track the people you reach out to and their status
-				</p>
-			</div>
 			<StatsMetrics items={metrics} noItemMsg={noConnectionMsg} title="Connections" />
 		</>
 	);

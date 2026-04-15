@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
-import styles from "@/styles/OutreachHeader.module.scss";
 import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { itemLength } from "@/features/shared/lib/utils";
-import { LINKEDIN_COMPANY_MESSAGE } from "@/Constants";
 
 export default function CompaniesStatsHeader() {
 	const { companies, noCompanyMsg } = useCompany();
@@ -29,13 +27,6 @@ export default function CompaniesStatsHeader() {
 
 	return (
 		<>
-			<div className={styles.container}>
-				<h1 className={styles.title}>Company Tracker</h1>
-				<p className={styles.subtitle}>
-					Track companies you're interested in or have applied to
-				</p>
-				<p className={styles.message}>{LINKEDIN_COMPANY_MESSAGE}</p>
-			</div>
 			<StatsMetrics
 				items={metrics}
 				noItemMsg={noCompanyMsg}

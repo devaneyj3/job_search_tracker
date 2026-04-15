@@ -6,8 +6,19 @@ import ApplicationCard from "@/features/applications/components/Applications/App
 import AddApplicationButton from "@/features/applications/components/Applications/AddApplicationButton";
 import ApplicationDetailsSheet from "@/features/applications/components/Applications/ApplicationDetailsSheet";
 import { Button } from "@/features/shared/ui/button";
+import {
+	Table,
+	TableBody,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/features/shared/ui/table";
 
-export default function ApplicationsList({ filteredApplications, statuses, setChosenStatus }) {
+export default function ApplicationsList({
+	filteredApplications,
+	statuses,
+	setChosenStatus,
+}) {
 	const applicationContext = useApplication();
 
 	const context = useMemo(
@@ -30,15 +41,12 @@ export default function ApplicationsList({ filteredApplications, statuses, setCh
 			applicationContext.updateApplicationStatus,
 			applicationContext.updateApplicationFields,
 			applicationContext.modalOpen,
-		]
+		],
 	);
 	const { selectedItem, items, noItemMsg } = context;
 
 	return (
 		<main className={styles.container}>
-			<section className={styles.btn_container}>
-				<AddApplicationButton />
-			</section>
 			<h1 className={styles.title}>
 				{filteredApplications.length} TOTAL APPLICATIONS
 			</h1>
@@ -56,23 +64,43 @@ export default function ApplicationsList({ filteredApplications, statuses, setCh
 					))}
 				</div>
 			)}
+			<section className={styles.btn_container}>
+				<AddApplicationButton />
+			</section>
 			{!noItemMsg && items.length > 0 ? (
-				filteredApplications.map((item) => (
-					<ApplicationCard
-						key={item.id}
-						item={item}
-						context={context}
-						status={applicationStatus}
-						/>
-					))
-				) : (
-					<div>{noItemMsg}</div>
-				)}
+				<div className={styles.tableWrapper}>
+					<Table className={styles.table}>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Company</TableHead>
+								<TableHead>Position</TableHead>
+								<TableHead>Job Type</TableHead>
+								<TableHead>Location</TableHead>
+								<TableHead>Link</TableHead>
+								<TableHead>Status</TableHead>
+								<TableHead>Update Status</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{filteredApplications.map((item) => (
+								<ApplicationCard
+									key={item.id}
+									item={item}
+									context={context}
+									status={applicationStatus}
+								/>
+							))}
+						</TableBody>
+					</Table>
+				</div>
+			) : (
+				<div>{noItemMsg}</div>
+			)}
 			{selectedItem && (
 				<ApplicationDetailsSheet
-				item={selectedItem}
-				context={context}
-				status={applicationStatus}
+					item={selectedItem}
+					context={context}
+					status={applicationStatus}
 				/>
 			)}
 		</main>

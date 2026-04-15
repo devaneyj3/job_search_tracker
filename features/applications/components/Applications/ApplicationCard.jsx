@@ -1,12 +1,12 @@
 "use client";
 import { memo } from "react";
-import { Building, Link as LinkIcon } from "lucide-react";
-import styles from "@/styles/ItemBox.module.scss";
+import styles from "@/styles/ItemList.module.scss";
 import Link from "next/link";
 
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { readableDate } from "@/features/shared/lib/utils";
+import { TableCell, TableRow } from "@/features/shared/ui/table";
 const ApplicationCard = memo(
 	function ApplicationCard({ item, context, status }) {
 		if (!context) return null;
@@ -14,57 +14,41 @@ const ApplicationCard = memo(
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 		const date = readableDate(item.createdAt);
 		const displayName = item.company?.name || "Unknown Company";
+		const isActive = item.id === selectedItem?.id;
 
 		return (
-			<div
-				className={`${styles.item} ${item.id === selectedItem?.id && styles.active
-					}`}
+			<TableRow
+				className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 				onClick={() => {
 					setSelectedItem(item);
 					setModalOpen(true);
 				}}>
-				<div>
-					<div>
-						<Badge className={styles.status}>
-							{item.status} on {date}
-						</Badge>
+				<TableCell className={styles.tableCell}>
+					<div className={styles.companyName}>{displayName}</div>
+				</TableCell>
+				<TableCell className={styles.tableCell}>{item.position || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.jobType || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.location || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.applicationLink ? (
+						<Link href={item.applicationLink} target="_blank" onClick={(event) => event.stopPropagation()}>
+							Application Link
+						</Link>
+					) : (
+						"N/A"
+					)}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					<Badge className={styles.tableStatus}>
+						{item.status} on {date}
+					</Badge>
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					<div onClick={(event) => event.stopPropagation()}>
+						<ItemStatusSelect id={item.id} update={update} status={status} />
 					</div>
-					<div className={styles.itemTitle}>{displayName}</div>
-					{item.company?.name && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.company.name}
-						</div>
-					)}
-					{item.position && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.position}
-						</div>
-					)}
-					{item.jobType && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.jobType}
-						</div>
-					)}
-					{item.location && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.location}
-						</div>
-					)}
-					{item.applicationLink && (
-						<div className={styles.company}>
-							<LinkIcon size={15} className={styles.icon} />
-							<Link href={item.applicationLink} target="_blank" onClick={(event) => event.stopPropagation()}>
-								Application Link
-							</Link>
-						</div>
-					)}
-				</div>
-				<ItemStatusSelect id={item.id} update={update} status={status} />
-			</div>
+				</TableCell>
+			</TableRow>
 		);
 	},
 	(prevProps, nextProps) =>
