@@ -1,10 +1,6 @@
-import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { styles } from "@/styles/LoadingSpinner.module.scss";
 
 function LoadingIndicator() {
-	let [color] = useState("silver");
-
 	const override = {
 		display: "block",
 		margin: "0 auto",
@@ -13,7 +9,7 @@ function LoadingIndicator() {
 	return (
 		<div className="sweet-loading">
 			<ClipLoader
-				color={color}
+				color="silver"
 				size={55}
 				aria-label="Loading Spinner"
 				data-testid="loader"

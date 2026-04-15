@@ -1,67 +1,47 @@
 "use client";
 import { memo } from "react";
-import { Building } from "lucide-react";
-import styles from "@/styles/ItemBox.module.scss";
+import styles from "@/styles/ItemList.module.scss";
 
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { readableDate } from "@/features/shared/lib/utils";
-import { Label } from "@/features/shared/ui/label";
+import { TableCell, TableRow } from "@/features/shared/ui/table";
 const CompanyCard = memo(
 	function CompanyCard({ item, context, status }) {
 		if (!context) return null;
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 		const date = readableDate(item.createdAt);
+		const isActive = item.id === selectedItem?.id;
+		const connectionCount = item.connections?.length ?? 0;
 
 		return (
-			<div
-				className={`${styles.item} ${item.id === selectedItem?.id && styles.active
-					}`}
+			<TableRow
+				className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 				onClick={() => {
 					setSelectedItem(item);
 					setModalOpen(true);
 				}}>
-				<div>
-					<div>
-						<Badge className={styles.status}>
-							{item.status} on {date}
-						</Badge>
+				<TableCell className={styles.tableCell}>
+					<div className={styles.companyName}>{item.name || "N/A"}</div>
+				</TableCell>
+				<TableCell className={styles.tableCell}>{item.industry || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.location || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.size || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>
+					<Badge className={styles.tableStatus}>
+						{item.status} on {date}
+					</Badge>
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{connectionCount > 0 ? `${connectionCount} connection(s)` : "No connections"}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					<div onClick={(event) => event.stopPropagation()}>
+						<ItemStatusSelect id={item.id} update={update} status={status} />
 					</div>
-					<div className={styles.itemTitle}>{item.name}</div>
-					{item.industry && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.industry}
-						</div>
-					)}
-					{item.location && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{item.location}
-						</div>
-					)}
-					{item.size && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.size} />
-							{item.size}
-						</div>
-					)}
-				</div>
-					{item.connections  && item.connections.length > 0 ? (
-						<div className={styles.contact}>
-							<Label>Connections ({item.connections.length})</Label>
-							<div>
-								{item.connections.map((connection) => (
-									<p key={connection.id}>
-										{connection.name} - {connection.position}
-									</p>
-								))}
-							</div>
-						</div>
-					): <>No Connections</>}
-				<ItemStatusSelect id={item.id} update={update} status={status} />
-			</div>
+				</TableCell>
+			</TableRow>
 		);
 	},
 	(prevProps, nextProps) =>

@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
-import styles from "@/styles/OutreachHeader.module.scss";
 import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import { useApplication } from "@/features/applications/context/applicationContext";
 import { itemLength } from "@/features/shared/lib/utils";
-import { LINKEDIN_APPLICATION_MESSAGE } from "@/Constants";
 
 export default function ApplicationsStatsHeader() {
 	const { applications, noApplicationMsg } = useApplication();
@@ -29,13 +27,6 @@ export default function ApplicationsStatsHeader() {
 
 	return (
 		<>
-			<div className={styles.container}>
-				<h1 className={styles.title}>Application Tracker</h1>
-				<p className={styles.subtitle}>
-					Track applications you're interested in or have applied to
-				</p>
-				<p className={styles.message}>{LINKEDIN_APPLICATION_MESSAGE}</p>
-			</div>
 			<StatsMetrics
 				items={metrics}
 				noItemMsg={noApplicationMsg}
