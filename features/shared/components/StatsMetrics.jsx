@@ -14,13 +14,16 @@ export default function StatsMetrics({ items, noItemMsg, setFilter }) {
 			<div className={styles.grid}>
 				{items.length > 0 &&
 					items.map((m) => (
-						<div
+						<button
 							key={m.id}
 							className={styles.card}
 							onClick={() => setFilter(m.label)}>
-							<div className={styles.value}>{m.value}</div>
+							<div
+								className={
+									styles.value
+								}>{`${m.value > "0" ? m.value : "--"}`}</div>
 							<div className={styles.label}>{m.label}</div>
-						</div>
+						</button>
 					))}
 			</div>
 		</main>
