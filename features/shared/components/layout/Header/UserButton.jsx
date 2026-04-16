@@ -12,79 +12,78 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 } from "@/features/shared/ui/dropdown-menu";
+import styles from "@/styles/Header.module.scss";
 
 const UserButton = () => {
 	const { data: session, status } = useSession();
 
 	if (status === "loading") {
 		return (
-			<Button variant="ghost" disabled>
-				<UserIcon />
-			</Button>
+			<div
+				className={`${styles.avatar} animate-pulse opacity-70`}
+				aria-hidden
+			/>
 		);
 	}
 
 	if (!session) {
 		return (
-			<Button asChild variant="ghost">
-				<Link href="/sign-in">
-					<UserIcon />
-					Sign In
-				</Link>
-			</Button>
+			<Link href="/" className={styles.signInLink}>
+				<UserIcon size={18} strokeWidth={2} aria-hidden />
+				Sign in
+			</Link>
 		);
 	}
 
-	const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "";
+	const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "?";
 
 	const handleSignOut = async () => {
 		await signOut({ callbackUrl: "/" });
 	};
 
 	return (
-		<div className="flex gap-2 items-center">
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button
-						variant="ghost"
-						className="relative h-8 w-8 rounded-full ml-2 flex items-center justify-center bg-gray-200">
-						{firstInitial}
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent className="w-56" align="end" forceMount>
-					<DropdownMenuLabel className="font-normal">
-						<div className="flex flex-col space-y-1">
-							<div className="text-sm font-medium leading-none">
-								{session.user?.name}
-							</div>
-							<div className="text-sm text-muted-foreground leading-none">
-								{session.user?.email}
-							</div>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<button
+					type="button"
+					className={styles.avatar}
+					aria-label={`Account menu for ${session.user?.name ?? "user"}`}>
+					{firstInitial}
+				</button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className="w-56" align="end" forceMount>
+				<DropdownMenuLabel className="font-normal">
+					<div className="flex flex-col space-y-1">
+						<div className="text-sm font-medium leading-none">
+							{session.user?.name}
 						</div>
-					</DropdownMenuLabel>
-					<DropdownMenuItem className="p-0 mb-1">
-						<Button
-							className="w-full py-4 px-2 h-2 justify-start"
-							variant="ghost"
-							asChild>
-							<Link href="/profile">
-								<UserIcon />
-								Profile
-							</Link>
-						</Button>
-					</DropdownMenuItem>
-					<DropdownMenuItem className="p-0 mb-1">
-						<Button
-							className="w-full py-4 px-2 h-2 justify-start"
-							variant="ghost"
-							onClick={handleSignOut}>
-							<LogOut />
-							Sign Out
-						</Button>
-					</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
-		</div>
+						<div className="text-sm text-muted-foreground leading-none">
+							{session.user?.email}
+						</div>
+					</div>
+				</DropdownMenuLabel>
+				<DropdownMenuItem className="p-0 mb-1">
+					<Button
+						className="w-full py-4 px-2 h-2 justify-start"
+						variant="ghost"
+						asChild>
+						<Link href="/profile">
+							<UserIcon />
+							Profile
+						</Link>
+					</Button>
+				</DropdownMenuItem>
+				<DropdownMenuItem className="p-0 mb-1">
+					<Button
+						className="w-full py-4 px-2 h-2 justify-start"
+						variant="ghost"
+						onClick={handleSignOut}>
+						<LogOut />
+						Sign out
+					</Button>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 };
 

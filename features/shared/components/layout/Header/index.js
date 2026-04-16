@@ -6,19 +6,18 @@ import styles from "@/styles/Header.module.scss";
 const Header = () => {
 	return (
 		<header className={styles.header}>
-			<div className="wrapper flex-between">
-				<div className="flex-start">
-					<Link href="/conpanies" className="flex-start">
-						<Image
-							src="/images/logo.png"
-							width={100}
-							height={100}
-							alt="logo"
-							priority
-							className={styles.image}
-						/>
-					</Link>
-				</div>
+			<div className={`wrapper flex-between ${styles.inner}`}>
+				<Link href="/companies" className={styles.brand}>
+					<Image
+						src="/images/logo.png"
+						width={160}
+						height={48}
+						alt="Company Tracker"
+						priority
+						className={styles.logo}
+					/>
+					<span className={styles.brandText}>Company Tracker</span>
+				</Link>
 				<Menu />
 			</div>
 		</header>

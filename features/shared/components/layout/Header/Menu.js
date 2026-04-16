@@ -1,60 +1,78 @@
 "use client";
 
-import { Button } from "@/features/shared/ui/button";
 import Link from "next/link";
-import { EllipsisVertical } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
+import { cn } from "@/features/shared/lib/utils";
 import {
 	Sheet,
 	SheetContent,
+	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
 } from "@/features/shared/ui/sheet";
 import UserButton from "./UserButton";
+import styles from "@/styles/Header.module.scss";
 
-const Menu = () => {
+const NAV_LINKS = [
+	{ href: "/dashboard", label: "Dashboard" },
+	{ href: "/companies", label: "Companies" },
+	{ href: "/applications", label: "Applications" },
+	{ href: "/connections", label: "Connections" },
+];
+
+export default function NavMenu() {
+	const pathname = usePathname();
+
 	return (
-		<div className="flex justify-end gap-3">
-			<nav className="md:flex hidden w-full max-w-xs gap-1">
-				<Button asChild variant="ghost">
-					<Link href="/dashboard">Dashboard</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/companies">Companies</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/applications">Applications</Link>
-				</Button>
-				<Button asChild variant="ghost">
-					<Link href="/connections">Connections</Link>
-				</Button>
-				<UserButton />
+		<div className={styles.navEnd}>
+			<nav className={styles.navDesktop} aria-label="Main navigation">
+				{NAV_LINKS.map(({ href, label }) => (
+					<Link
+						key={href}
+						href={href}
+						className={cn(
+							styles.navLink,
+							pathname === href && styles.navLinkActive,
+						)}>
+						{label}
+					</Link>
+				))}
+				<div className={styles.userCluster}>
+					<UserButton />
+				</div>
 			</nav>
-			<nav className="md:hidden">
+
+			<div className={styles.mobileOnly}>
 				<Sheet>
-					<SheetTrigger className="align-middle">
-						<EllipsisVertical />
+					<SheetTrigger
+						className={styles.menuTrigger}
+						aria-label="Open menu">
+						<Menu size={22} strokeWidth={2} />
 					</SheetTrigger>
-					<SheetContent className="flex flex-col items-start">
-						<SheetTitle>Menu</SheetTitle>
-						<Button asChild variant="ghost">
-							<Link href="/dashboard">Dashboard</Link>
-						</Button>
-	
-						<Button asChild variant="ghost">
-							<Link href="/companies">Companies</Link>
-						</Button>
-						<Button asChild variant="ghost">
-							<Link href="/applications">Applications</Link>
-						</Button>
-						<Button asChild variant="ghost">
-							<Link href="/connections">Connections</Link>
-						</Button>
-						<UserButton />
+					<SheetContent side="right" className="flex flex-col">
+						<SheetHeader className="text-left space-y-1">
+							<SheetTitle className={styles.sheetTitle}>Navigate</SheetTitle>
+						</SheetHeader>
+						<nav className={styles.sheetNav} aria-label="Mobile navigation">
+							{NAV_LINKS.map(({ href, label }) => (
+								<Link
+									key={href}
+									href={href}
+									className={cn(
+										styles.sheetLink,
+										pathname === href && styles.sheetLinkActive,
+									)}>
+									{label}
+								</Link>
+							))}
+						</nav>
+						<div className={styles.sheetUser}>
+							<UserButton />
+						</div>
 					</SheetContent>
 				</Sheet>
-			</nav>
+			</div>
 		</div>
 	);
-};
-
-export default Menu;
+}
