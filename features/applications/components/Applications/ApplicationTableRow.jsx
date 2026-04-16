@@ -1,20 +1,20 @@
 "use client";
 import { memo } from "react";
 import styles from "@/styles/ItemList.module.scss";
+import Link from "next/link";
 
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { readableDate } from "@/features/shared/lib/utils";
 import { TableCell, TableRow } from "@/features/shared/ui/table";
 
-const ConnectionCard = memo(
-	function ConnectionCard({ item, context, status }) {
+const ApplicationTableRow = memo(
+	function ApplicationTableRow({ item, context, status }) {
 		if (!context) return null;
 
 		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
 		const date = readableDate(item.createdAt);
-		const companyName =
-			typeof item.company === "string" ? item.company : item.company?.name;
+		const displayName = item.company?.name || "Unknown Company";
 		const isActive = item.id === selectedItem?.id;
 
 		return (
@@ -25,11 +25,20 @@ const ConnectionCard = memo(
 					setModalOpen(true);
 				}}>
 				<TableCell className={styles.tableCell}>
-					<div className={styles.companyName}>{item.name || "N/A"}</div>
+					<div className={styles.companyName}>{displayName}</div>
 				</TableCell>
-				<TableCell className={styles.tableCell}>{companyName || "N/A"}</TableCell>
 				<TableCell className={styles.tableCell}>{item.position || "N/A"}</TableCell>
-				<TableCell className={styles.tableCell}>{item.email || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.jobType || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>{item.location || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.applicationLink ? (
+						<Link href={item.applicationLink} target="_blank" onClick={(event) => event.stopPropagation()}>
+							Application Link
+						</Link>
+					) : (
+						"N/A"
+					)}
+				</TableCell>
 				<TableCell className={styles.tableCell}>
 					<Badge className={styles.tableStatus}>
 						{item.status} on {date}
@@ -46,14 +55,13 @@ const ConnectionCard = memo(
 	(prevProps, nextProps) =>
 		prevProps.item.id === nextProps.item.id &&
 		prevProps.item.status === nextProps.item.status &&
-		prevProps.item.name === nextProps.item.name &&
-		prevProps.item.companyId === nextProps.item.companyId &&
-		(prevProps.item.company?.name ?? prevProps.item.company) ===
-			(nextProps.item.company?.name ?? nextProps.item.company) &&
+		prevProps.item.company?.name === nextProps.item.company?.name &&
 		prevProps.item.position === nextProps.item.position &&
-		prevProps.item.email === nextProps.item.email &&
+		prevProps.item.jobType === nextProps.item.jobType &&
+		prevProps.item.location === nextProps.item.location &&
+		prevProps.item.applicationLink === nextProps.item.applicationLink &&
 		prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
 		prevProps.status === nextProps.status
 );
 
-export default ConnectionCard;
+export default ApplicationTableRow;

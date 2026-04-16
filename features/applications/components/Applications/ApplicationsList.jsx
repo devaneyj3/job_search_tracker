@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useApplication } from "@/features/applications/context/applicationContext";
 import { applicationStatus } from "@/Constants";
 import styles from "@/styles/ItemList.module.scss";
-import ApplicationCard from "@/features/applications/components/Applications/ApplicationCard";
+import ApplicationTableRow from "@/features/applications/components/Applications/ApplicationTableRow";
 import AddApplicationButton from "@/features/applications/components/Applications/AddApplicationButton";
 import ApplicationDetailsSheet from "@/features/applications/components/Applications/ApplicationDetailsSheet";
 import { Button } from "@/features/shared/ui/button";
@@ -83,7 +83,7 @@ export default function ApplicationsList({
 						</TableHeader>
 						<TableBody>
 							{filteredApplications.map((item) => (
-								<ApplicationCard
+								<ApplicationTableRow
 									key={item.id}
 									item={item}
 									context={context}

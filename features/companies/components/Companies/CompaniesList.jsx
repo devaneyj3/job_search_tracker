@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { companyStatus } from "@/Constants";
 import styles from "@/styles/ItemList.module.scss";
-import CompanyCard from "@/features/companies/components/Companies/CompanyCard";
+import CompanyTableRow from "@/features/companies/components/Companies/CompanyTableRow";
 import AddCompanyButton from "@/features/companies/components/Companies/AddCompanyButton";
 import CompanyDetailsSheet from "@/features/companies/components/Companies/CompanyDetailsSheet";
 import { Button } from "@/features/shared/ui/button";
@@ -83,7 +83,7 @@ export default function CompaniesList({
 						</TableHeader>
 						<TableBody>
 							{filteredCompanies.map((item) => (
-								<CompanyCard
+								<CompanyTableRow
 									key={item.id}
 									item={item}
 									context={context}

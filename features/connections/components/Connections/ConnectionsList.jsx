@@ -4,7 +4,7 @@ import { connectionStatus } from "@/Constants";
 import AddConnectionButton from "./AddConnectionButton";
 import styles from "@/styles/ItemList.module.scss";
 import { Button } from "@/features/shared/ui/button";
-import ConnectionCard from "./ConnectionCard";
+import ConnectionTableRow from "./ConnectionTableRow";
 import ConnectionDetailsSheet from "./ConnectionDetailsSheet";
 import {
 	Table,
@@ -85,7 +85,7 @@ export default function ConnectionsList({
 						</TableHeader>
 						<TableBody>
 							{filteredConnections.map((item) => (
-								<ConnectionCard
+								<ConnectionTableRow
 									key={item.id}
 									item={item}
 									context={context}
