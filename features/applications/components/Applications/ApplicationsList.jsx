@@ -42,10 +42,12 @@ export default function ApplicationsList({ filteredApplications }) {
 
 	return (
 		<main className={styles.container}>
-			<h1 className={styles.title}>
-				{filteredApplications.length} TOTAL APPLICATIONS
-			</h1>
-			<AddApplicationButton />
+			<div className={styles.row}>
+				<h1 className={styles.title}>
+					{filteredApplications.length} TOTAL APPLICATIONS
+				</h1>
+				<AddApplicationButton />
+			</div>
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>

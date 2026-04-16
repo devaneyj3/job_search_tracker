@@ -29,6 +29,11 @@
     font-size: 0.9rem;
   }
 }
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
 
 .tableRow {
   cursor: pointer;

@@ -43,10 +43,12 @@ export default function ConnectionsList({ filteredConnections }) {
 
 	return (
 		<main className={styles.container}>
-			<h1 className={styles.title}>
-				{filteredConnections.length} TOTAL CONNECTIONS
-			</h1>
-			<AddConnectionButton />
+			<div className={styles.row}>
+				<h1 className={styles.title}>
+					{filteredConnections.length} TOTAL CONNECTIONS
+				</h1>
+				<AddConnectionButton />
+			</div>
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>

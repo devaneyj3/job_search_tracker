@@ -42,10 +42,12 @@ export default function CompaniesList({ filteredCompanies }) {
 
 	return (
 		<main className={styles.container}>
-			<h1 className={styles.title}>
-				{filteredCompanies.length} TOTAL COMPANIES
-			</h1>
-			<AddCompanyButton />
+			<div className={styles.row}>
+				<h1 className={styles.title}>
+					{filteredCompanies.length} TOTAL COMPANIES
+				</h1>
+				<AddCompanyButton />
+			</div>
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>
