@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { companyStatus } from "@/Constants";
+import { companySizeOptions, companyStatus } from "@/Constants";
 
 export const companyFormSchema = z.object({
 	name: z
@@ -25,8 +25,10 @@ export const companyFormSchema = z.object({
 		.or(z.literal("")),
 	size: z
 		.string()
-		.optional()
-		.or(z.literal("")),
+		.refine(
+			(val) => val === "" || companySizeOptions.includes(val),
+			{ message: "Select a valid company size" },
+		),
 	location: z
 		.string()
 		.optional()

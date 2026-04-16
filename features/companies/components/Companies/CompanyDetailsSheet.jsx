@@ -21,7 +21,14 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
 import CompanySheetTextDropdown from "./CompanySheetTextDropdown";
-
+import { companySizeOptions } from "@/Constants";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/features/shared/ui/select";
 
 export default function CompanyDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateCompanyFields } = context;
@@ -197,11 +204,38 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
-								<Input
-									value={formData.size}
-									onChange={(e) => handleInputChange("size", e.target.value)}
-									placeholder={item.size || "Company Size"}
-								/>
+								formData.size &&
+								!companySizeOptions.includes(formData.size) ? (
+									<Input
+										value={formData.size}
+										onChange={(e) =>
+											handleInputChange("size", e.target.value)
+										}
+										placeholder="Company size"
+									/>
+								) : (
+									<Select
+										onValueChange={(value) =>
+											handleInputChange("size", value === "_none_" ? "" : value)
+										}
+										value={
+											companySizeOptions.includes(formData.size)
+												? formData.size
+												: "_none_"
+										}>
+										<SelectTrigger className="w-full max-w-md">
+											<SelectValue placeholder="Select company size" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="_none_">Not specified</SelectItem>
+											{companySizeOptions.map((option) => (
+												<SelectItem key={option} value={option}>
+													{option} employees
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								)
 							) : (
 								item.size
 							)}

@@ -10,6 +10,14 @@ const companyStatus = [
 const applicationStatus = [...companyStatus];
 const jobTypeOptions = ["Full Time", "Part Time"];
 const jobLocationOptions = ["On-site", "Hybrid", "Remote"];
+const companySizeOptions = [
+	"1-10",
+	"11-50",
+	"51-200",
+	"201-500",
+	"501-1000",
+	"1000+",
+];
 const contactPosition = [
 	"Software Engineer",
 	"Recruiter",
@@ -32,6 +40,7 @@ export {
 	applicationStatus,
 	jobTypeOptions,
 	jobLocationOptions,
+	companySizeOptions,
 	contactPosition,
 	LINKEDIN_COMPANY_MESSAGE,
 	LINKEDIN_APPLICATION_MESSAGE,

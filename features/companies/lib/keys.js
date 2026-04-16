@@ -21,8 +21,8 @@ export const companyKeys = [
 	{
 		name: "size",
 		label: "Company Size",
-		placeholder: "1-10, 11-50, 51-200, 201-500, 501-1000, 1000+",
-		inputType: "text",
+		placeholder: "Select company size",
+		inputType: "select",
 	},
 	{
 		name: "location",

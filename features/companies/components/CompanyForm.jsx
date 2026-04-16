@@ -21,7 +21,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
-import { companyStatus } from "@/Constants";
+import { companySizeOptions, companyStatus } from "@/Constants";
 import { toast } from "sonner";
 import { companyFormSchema } from "@/features/companies/lib/schema";
 import { companyKeys } from "@/features/companies/lib/keys";
@@ -91,6 +91,30 @@ export default function CreateCompany({ setDialogOpen }) {
 									{companyStatus.map((stat) => (
 										<SelectItem key={stat} value={stat}>
 											{stat}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						) : name === "size" ? (
+							<Select
+								onValueChange={(value) =>
+									field.onChange(value === "_none_" ? "" : value)
+								}
+								value={
+									field.value && companySizeOptions.includes(field.value)
+										? field.value
+										: "_none_"
+								}>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder={placeholder} />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									<SelectItem value="_none_">Not specified</SelectItem>
+									{companySizeOptions.map((option) => (
+										<SelectItem key={option} value={option}>
+											{option} employees
 										</SelectItem>
 									))}
 								</SelectContent>

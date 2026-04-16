@@ -68,10 +68,10 @@ export default function ConnectionsList({
 				</div>
 			)}
 			<section className={styles.btn_container}>
-				<AddConnectionButton />
 			</section>
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
+					<AddConnectionButton />
 					<Table className={styles.table}>
 						<TableHeader>
 							<TableRow>
