@@ -20,6 +20,7 @@ export const CompanyProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedCompany, setSelectedCompany] = useState(null);
 	const [noCompanyMsg, setNoCompanyMsg] = useState("");
+	const [companyFilter, setCompanyFilter] = useState("All");
 
 	useEffect(() => {
 		const getCompanies = async () => {
@@ -200,6 +201,8 @@ export const CompanyProvider = ({ children }) => {
 			isLoading,
 			updateCompanyStatus,
 			updateCompanyFields,
+			companyFilter,
+			setCompanyFilter,
 		}),
 		[
 			companies,
@@ -212,6 +215,8 @@ export const CompanyProvider = ({ children }) => {
 			isLoading,
 			updateCompanyStatus,
 			updateCompanyFields,
+			companyFilter,
+			setCompanyFilter,
 		],
 	);
 	return (

@@ -5,7 +5,6 @@ import styles from "@/styles/ItemList.module.scss";
 import CompanyTableRow from "@/features/companies/components/Companies/CompanyTableRow";
 import AddCompanyButton from "@/features/companies/components/Companies/AddCompanyButton";
 import CompanyDetailsSheet from "@/features/companies/components/Companies/CompanyDetailsSheet";
-import { Button } from "@/features/shared/ui/button";
 import {
 	Table,
 	TableBody,
@@ -14,11 +13,7 @@ import {
 	TableRow,
 } from "@/features/shared/ui/table";
 
-export default function CompaniesList({
-	filteredCompanies,
-	statuses,
-	setChosenStatus,
-}) {
+export default function CompaniesList({ filteredCompanies }) {
 	const companyContext = useCompany();
 
 	const context = useMemo(
@@ -50,23 +45,7 @@ export default function CompaniesList({
 			<h1 className={styles.title}>
 				{filteredCompanies.length} TOTAL COMPANIES
 			</h1>
-			{statuses && statuses.length > 0 && (
-				<div className={styles.filter_container}>
-					{statuses.map((status, index) => (
-						<div key={index}>
-							<Button
-								onClick={() => setChosenStatus(status)}
-								className={styles.filter_btn}
-								variant="outline">
-								{status}
-							</Button>
-						</div>
-					))}
-				</div>
-			)}
-			<section className={styles.btn_container}>
-				<AddCompanyButton />
-			</section>
+			<AddCompanyButton />
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>

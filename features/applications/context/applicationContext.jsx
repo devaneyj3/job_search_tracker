@@ -20,6 +20,7 @@ export const ApplicationProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedApplication, setSelectedApplication] = useState(null);
 	const [noApplicationMsg, setNoApplicationMsg] = useState("");
+	const [applicationFilter, setApplicationFilter] = useState("All");
 
 	useEffect(() => {
 		const getApplications = async () => {
@@ -39,7 +40,7 @@ export const ApplicationProvider = ({ children }) => {
 
 				if (data.length > 0) {
 					const sortedApplications = data.sort(
-						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+						(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
 					);
 					setApplications(sortedApplications);
 					setSelectedApplication(sortedApplications[0]);
@@ -96,7 +97,7 @@ export const ApplicationProvider = ({ children }) => {
 
 			return data.application;
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const deleteApplication = useCallback(
@@ -112,7 +113,7 @@ export const ApplicationProvider = ({ children }) => {
 
 			setApplications((prev) => {
 				const next = prev.filter(
-					(application) => application.id !== deletedApplicationId.id
+					(application) => application.id !== deletedApplicationId.id,
 				);
 				if (next.length === 0) {
 					setNoApplicationMsg("You haven't added any applications yet");
@@ -129,7 +130,7 @@ export const ApplicationProvider = ({ children }) => {
 			setModalOpen(false);
 			return deletedApplicationId;
 		},
-		[selectedApplication]
+		[selectedApplication],
 	);
 
 	const updateApplicationStatus = useCallback(
@@ -146,13 +147,15 @@ export const ApplicationProvider = ({ children }) => {
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
 			setApplications((prevApplications) =>
 				prevApplications.map((application) =>
-					application.id === applicationId ? { ...application, status } : application
-				)
+					application.id === applicationId
+						? { ...application, status }
+						: application,
+				),
 			);
 
 			setSelectedApplication((prev) => (prev ? { ...prev, status } : prev));
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const updateApplicationFields = useCallback(
@@ -172,17 +175,17 @@ export const ApplicationProvider = ({ children }) => {
 
 			setApplications((prevApplications) =>
 				prevApplications.map((application) =>
-					application.id === applicationId ? updatedApplication : application
-				)
+					application.id === applicationId ? updatedApplication : application,
+				),
 			);
 
 			setSelectedApplication((prev) =>
-				prev && prev.id === applicationId ? updatedApplication : prev
+				prev && prev.id === applicationId ? updatedApplication : prev,
 			);
 
 			return updatedApplication;
 		},
-		[session?.user?.id]
+		[session?.user?.id],
 	);
 
 	const values = useMemo(
@@ -200,6 +203,8 @@ export const ApplicationProvider = ({ children }) => {
 			isLoading,
 			updateApplicationStatus,
 			updateApplicationFields,
+			applicationFilter,
+			setApplicationFilter,
 		}),
 		[
 			applications,
@@ -212,7 +217,9 @@ export const ApplicationProvider = ({ children }) => {
 			isLoading,
 			updateApplicationStatus,
 			updateApplicationFields,
-		]
+			applicationFilter,
+			setApplicationFilter,
+		],
 	);
 	return (
 		<ApplicationContext.Provider value={values}>

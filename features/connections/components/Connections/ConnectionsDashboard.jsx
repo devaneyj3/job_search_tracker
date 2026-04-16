@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
 import styles from "@/styles/OutreachDashboard.module.scss";
 import { useConnection } from "@/features/connections/context/connectionContext";
@@ -7,19 +7,13 @@ import ConnectionsStatsHeader from "./ConnectionsStatsHeader";
 import ConnectionsList from "./ConnectionsList";
 
 export default function ConnectionsDashboard() {
-	const { connections, noConnectionMsg } = useConnection();
-	const [chosenStatus, setChosenStatus] = useState("All");
+	const { connections, connectionFilter, noConnectionMsg } = useConnection();
 
-	const statuses = [
-		"All",
-		...new Set(connections.map((connection) => connection.status)),
-		"Archived",
-	];
 
 	const filteredConnections = connections.filter((connection) => {
-		if (chosenStatus === "All") return connection;
-		if (chosenStatus === "Archived") return connection.archived;
-		return connection.status === chosenStatus && connection.archived !== true;
+		if (connectionFilter === "All") return connection;
+		if (connectionFilter === "Archived") return connection.archived;
+		return connection.status === connectionFilter && connection.archived !== true;
 	});
 
 	if (connections.length < 1 && !noConnectionMsg) {
@@ -35,8 +29,6 @@ export default function ConnectionsDashboard() {
 			<ConnectionsStatsHeader />
 			<ConnectionsList
 				filteredConnections={filteredConnections}
-				statuses={statuses}
-				setChosenStatus={setChosenStatus}
 			/>
 		</>
 	);

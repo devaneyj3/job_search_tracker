@@ -4,30 +4,9 @@
   flex-direction: column;
   align-items: center;
 }
-.btn_container {
-  width: 80%;
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px;
-  cursor: pointer;
-
-}
-.filter_container {
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  &:hover {
-    cursor: pointer;
-  }
-}
 .title {
   margin-bottom: 1rem;
   font-size: 1.5rem;
-}
-
-.filter_btn {
-  margin: 0.5rem;
 }
 
 .tableWrapper {

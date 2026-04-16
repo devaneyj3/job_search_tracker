@@ -7,20 +7,13 @@ import CompaniesStatsHeader from "./CompaniesStatsHeader";
 import CompaniesList from "./CompaniesList";
 
 export default function CompaniesDashboard() {
-	const { companies, noCompanyMsg } = useCompany();
-	const [chosenStatus, setChosenStatus] = useState("All");
+	const { companies, companyFilter, noCompanyMsg } = useCompany();
 
-	// add array for filtering with not duplicates
-	const statuses = [
-		"All",
-		...new Set(companies.map((company) => company.status)),
-		"Archived",
-	];
 
 	const filteredCompanies = companies.filter((company) => {
-		if (chosenStatus === "All") return company;
-		if (chosenStatus === "Archived") return company.archived;
-		return company.status === chosenStatus && company.archived !== true;
+		if (companyFilter === "All") return company;
+		if (companyFilter === "Archived") return company.archived;
+		return company.status === companyFilter && company.archived !== true;
 	});
 
 	if (companies.length < 1 && !noCompanyMsg) {
@@ -37,8 +30,6 @@ export default function CompaniesDashboard() {
 
 			<CompaniesList
 				filteredCompanies={filteredCompanies}
-				statuses={statuses}
-				setChosenStatus={setChosenStatus}
 			/>
 		</>
 	);

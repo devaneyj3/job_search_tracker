@@ -27,6 +27,7 @@ export const ConnectionProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedConnection, setSelectedConnection] = useState(null);
 	const [noConnectionMsg, setNoConnectionMsg] = useState("");
+	const [connectionFilter, setConnectionFilter] = useState("All");
 
 	useEffect(() => {
 		const getConnections = async () => {
@@ -46,7 +47,7 @@ export const ConnectionProvider = ({ children }) => {
 
 				if (data.length > 0) {
 					const sortedConnections = data.sort(
-						(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+						(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
 					);
 					setConnections(sortedConnections);
 					setSelectedConnection(sortedConnections[0]);
@@ -107,12 +108,15 @@ export const ConnectionProvider = ({ children }) => {
 					if (company.id !== data.connection.companyId) return company;
 					const currentConnections = company.connections ?? [];
 					const alreadyExists = currentConnections.some(
-						(connection) => connection.id === data.connection.id
+						(connection) => connection.id === data.connection.id,
 					);
 					return alreadyExists
 						? company
-						: { ...company, connections: [data.connection, ...currentConnections] };
-				})
+						: {
+								...company,
+								connections: [data.connection, ...currentConnections],
+							};
+				}),
 			);
 			setSelectedCompany((prevCompany) => {
 				if (!prevCompany || prevCompany.id !== data.connection.companyId) {
@@ -120,11 +124,14 @@ export const ConnectionProvider = ({ children }) => {
 				}
 				const currentConnections = prevCompany.connections ?? [];
 				const alreadyExists = currentConnections.some(
-					(connection) => connection.id === data.connection.id
+					(connection) => connection.id === data.connection.id,
 				);
 				return alreadyExists
 					? prevCompany
-					: { ...prevCompany, connections: [data.connection, ...currentConnections] };
+					: {
+							...prevCompany,
+							connections: [data.connection, ...currentConnections],
+						};
 			});
 
 			setModalOpen(false);
@@ -133,7 +140,7 @@ export const ConnectionProvider = ({ children }) => {
 
 			return data.connection;
 		},
-		[session?.user?.id, setCompanies, setSelectedCompany]
+		[session?.user?.id, setCompanies, setSelectedCompany],
 	);
 
 	const deleteConnection = useCallback(
@@ -149,7 +156,7 @@ export const ConnectionProvider = ({ children }) => {
 
 			setConnections((prev) => {
 				const next = prev.filter(
-					(connection) => connection.id !== deletedConnectionId.id
+					(connection) => connection.id !== deletedConnectionId.id,
 				);
 				if (next.length === 0) {
 					setNoConnectionMsg("You haven't added any connections yet");
@@ -168,130 +175,136 @@ export const ConnectionProvider = ({ children }) => {
 				prevCompanies.map((company) => ({
 					...company,
 					connections: (company.connections ?? []).filter(
-						(connection) => connection.id !== deletedConnectionId.id
+						(connection) => connection.id !== deletedConnectionId.id,
 					),
-				}))
+				})),
 			);
 			setSelectedCompany((prevCompany) =>
 				prevCompany
 					? {
 							...prevCompany,
 							connections: (prevCompany.connections ?? []).filter(
-								(connection) => connection.id !== deletedConnectionId.id
+								(connection) => connection.id !== deletedConnectionId.id,
 							),
-					  }
-					: prevCompany
+						}
+					: prevCompany,
 			);
 
 			setModalOpen(false);
 			return deletedConnectionId;
 		},
-		[selectedConnection, setCompanies, setSelectedCompany]
+		[selectedConnection, setCompanies, setSelectedCompany],
 	);
 
-	const updateConnectionStatus = useCallback(async (connectionId, statusValue) => {
-		const response = await fetch("/api/connection", {
-			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				id: connectionId,
-				status: statusValue,
-			}),
-		});
+	const updateConnectionStatus = useCallback(
+		async (connectionId, statusValue) => {
+			const response = await fetch("/api/connection", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					id: connectionId,
+					status: statusValue,
+				}),
+			});
 
-		if (!response.ok) throw new Error(`Response status: ${response.status}`);
-		setConnections((prevConnections) =>
-			prevConnections.map((connection) =>
-				connection.id === connectionId
-					? { ...connection, status: statusValue }
-					: connection
-			)
-		);
-
-		setSelectedConnection((prev) =>
-			prev ? { ...prev, status: statusValue } : prev
-		);
-
-		// Mirror status update into company.connection arrays.
-		setCompanies((prevCompanies) =>
-			prevCompanies.map((company) => ({
-				...company,
-				connections: (company.connections ?? []).map((connection) =>
+			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			setConnections((prevConnections) =>
+				prevConnections.map((connection) =>
 					connection.id === connectionId
 						? { ...connection, status: statusValue }
-						: connection
+						: connection,
 				),
-			}))
-		);
-		setSelectedCompany((prevCompany) =>
-			prevCompany
-				? {
-						...prevCompany,
-						connections: (prevCompany.connections ?? []).map((connection) =>
-							connection.id === connectionId
-								? { ...connection, status: statusValue }
-								: connection
-						),
-				  }
-				: prevCompany
-		);
-	}, [setCompanies, setSelectedCompany]);
+			);
 
-	const updateConnectionFields = useCallback(async (connectionId, data) => {
-		const response = await fetch("/api/connection", {
-			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				id: connectionId,
-				fields: data,
-			}),
-		});
+			setSelectedConnection((prev) =>
+				prev ? { ...prev, status: statusValue } : prev,
+			);
 
-		if (!response.ok) throw new Error(`Response status: ${response.status}`);
-		const result = await response.json();
-		const updatedConnection = result.connection;
+			// Mirror status update into company.connection arrays.
+			setCompanies((prevCompanies) =>
+				prevCompanies.map((company) => ({
+					...company,
+					connections: (company.connections ?? []).map((connection) =>
+						connection.id === connectionId
+							? { ...connection, status: statusValue }
+							: connection,
+					),
+				})),
+			);
+			setSelectedCompany((prevCompany) =>
+				prevCompany
+					? {
+							...prevCompany,
+							connections: (prevCompany.connections ?? []).map((connection) =>
+								connection.id === connectionId
+									? { ...connection, status: statusValue }
+									: connection,
+							),
+						}
+					: prevCompany,
+			);
+		},
+		[setCompanies, setSelectedCompany],
+	);
 
-		setConnections((prevConnections) =>
-			prevConnections.map((connection) =>
-				connection.id === connectionId ? updatedConnection : connection
-			)
-		);
+	const updateConnectionFields = useCallback(
+		async (connectionId, data) => {
+			const response = await fetch("/api/connection", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					id: connectionId,
+					fields: data,
+				}),
+			});
 
-		setSelectedConnection((prev) =>
-			prev && prev.id === connectionId ? updatedConnection : prev
-		);
+			if (!response.ok) throw new Error(`Response status: ${response.status}`);
+			const result = await response.json();
+			const updatedConnection = result.connection;
 
-		// Remove from all companies, then add to updatedConnection.companyId.
-		setCompanies((prevCompanies) =>
-			prevCompanies.map((company) => {
-				const withoutConnection = (company.connections ?? []).filter(
-					(connection) => connection.id !== connectionId
+			setConnections((prevConnections) =>
+				prevConnections.map((connection) =>
+					connection.id === connectionId ? updatedConnection : connection,
+				),
+			);
+
+			setSelectedConnection((prev) =>
+				prev && prev.id === connectionId ? updatedConnection : prev,
+			);
+
+			// Remove from all companies, then add to updatedConnection.companyId.
+			setCompanies((prevCompanies) =>
+				prevCompanies.map((company) => {
+					const withoutConnection = (company.connections ?? []).filter(
+						(connection) => connection.id !== connectionId,
+					);
+					if (company.id !== updatedConnection.companyId) {
+						return { ...company, connections: withoutConnection };
+					}
+					return {
+						...company,
+						connections: [updatedConnection, ...withoutConnection],
+					};
+				}),
+			);
+			setSelectedCompany((prevCompany) => {
+				if (!prevCompany) return prevCompany;
+				const withoutConnection = (prevCompany.connections ?? []).filter(
+					(connection) => connection.id !== connectionId,
 				);
-				if (company.id !== updatedConnection.companyId) {
-					return { ...company, connections: withoutConnection };
+				if (prevCompany.id !== updatedConnection.companyId) {
+					return { ...prevCompany, connections: withoutConnection };
 				}
 				return {
-					...company,
+					...prevCompany,
 					connections: [updatedConnection, ...withoutConnection],
 				};
-			})
-		);
-		setSelectedCompany((prevCompany) => {
-			if (!prevCompany) return prevCompany;
-			const withoutConnection = (prevCompany.connections ?? []).filter(
-				(connection) => connection.id !== connectionId
-			);
-			if (prevCompany.id !== updatedConnection.companyId) {
-				return { ...prevCompany, connections: withoutConnection };
-			}
-			return {
-				...prevCompany,
-				connections: [updatedConnection, ...withoutConnection],
-			};
-		});
+			});
 
-		return updatedConnection;
-	}, [setCompanies, setSelectedCompany]);
+			return updatedConnection;
+		},
+		[setCompanies, setSelectedCompany],
+	);
 
 	useEffect(() => {
 		if (!connections.length) return;
@@ -303,8 +316,8 @@ export const ConnectionProvider = ({ children }) => {
 			prevConnections.filter(
 				(connection) =>
 					connection.companyId == null ||
-					companyIds.has(Number(connection.companyId))
-			)
+					companyIds.has(Number(connection.companyId)),
+			),
 		);
 	}, [companies, connections.length, isCompaniesLoading]);
 
@@ -323,6 +336,8 @@ export const ConnectionProvider = ({ children }) => {
 			isLoading,
 			updateConnectionStatus,
 			updateConnectionFields,
+			connectionFilter,
+			setConnectionFilter,
 		}),
 		[
 			connections,
@@ -335,7 +350,9 @@ export const ConnectionProvider = ({ children }) => {
 			isLoading,
 			updateConnectionStatus,
 			updateConnectionFields,
-		]
+			connectionFilter,
+			setConnectionFilter,
+		],
 	);
 
 	return (

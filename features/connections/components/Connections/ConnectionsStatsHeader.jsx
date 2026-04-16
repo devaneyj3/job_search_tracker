@@ -6,7 +6,7 @@ import { itemLength } from "@/features/shared/lib/utils";
 import { connectionStatus } from "@/Constants";
 
 export default function ConnectionsStatsHeader() {
-	const { connections, noConnectionMsg } = useConnection();
+	const { connections, setConnectionFilter, noConnectionMsg } = useConnection();
 
 	const metrics = connectionStatus
 		.filter((status) => status !== "Archived")
@@ -25,7 +25,12 @@ export default function ConnectionsStatsHeader() {
 
 	return (
 		<>
-			<StatsMetrics items={metrics} noItemMsg={noConnectionMsg} title="Connections" />
+			<StatsMetrics
+				items={metrics}
+				noItemMsg={noConnectionMsg}
+				title="Connections"
+				setFilter={setConnectionFilter}
+			/>
 		</>
 	);
 }

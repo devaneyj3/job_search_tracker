@@ -7,8 +7,14 @@
 .itemTitle {
   font-weight: 600;
 }
-.company, .location, .salary, .itemPosting, .position {
+.company {
   color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.itemPosting {
+  color: blue;
   display: flex;
   align-items: center;
 }
@@ -17,10 +23,6 @@
   margin-right: 10px;
 }
 
-
-.contactInfo {
-  margin: 20px 0 20px 0;
-}
 .contact {
   display: flex;
   p {
@@ -29,54 +31,17 @@
   }
 }
 
-.itemPosting {
-  color: blue
-}
-
-.contactDates {
-  margin: 20px;
-}
-
-.sent {
-  text-decoration: line-through;
-}
-
-.small {
-  color: red;
-  text-align: center;
-  font-size: small;
-  margin-left: 10px;
-}
-
 .badge {
   margin: 20px 0 10px 0;
-
 }
 .status {
   background-color: #285dfb;
 }
 
-.red {
-  background-color: red;
+.itemDescription {
+  margin-top: 20px;
+  font-size: 1rem;
+  max-width: 500px;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
-
-.btn {
-  margin-left: 20px;
-  &:hover {
-    cursor: pointer;
-    background-color: #666;
-  }
-}
-
-.inputWrapper {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  margin-left: 5px;
-}
-
-.contactWarning {
-  color: #999;
-  font-size: 8px;
-}
-

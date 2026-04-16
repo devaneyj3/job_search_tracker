@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/styles/Metrics.module.scss";
 import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
-export default function StatsMetrics({ items, title, noItemMsg }) {
+export default function StatsMetrics({ items, noItemMsg, setFilter }) {
 	if (items.length < 1 && !noItemMsg) {
 		return (
 			<div className={styles.container}>
@@ -14,7 +14,10 @@ export default function StatsMetrics({ items, title, noItemMsg }) {
 			<div className={styles.grid}>
 				{items.length > 0 &&
 					items.map((m) => (
-						<div key={m.id} className={styles.card}>
+						<div
+							key={m.id}
+							className={styles.card}
+							onClick={() => setFilter(m.label)}>
 							<div className={styles.value}>{m.value}</div>
 							<div className={styles.label}>{m.label}</div>
 						</div>

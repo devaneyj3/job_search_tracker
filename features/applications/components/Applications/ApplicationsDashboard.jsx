@@ -7,20 +7,13 @@ import ApplicationsStatsHeader from "./ApplicationsStatsHeader";
 import ApplicationsList from "./ApplicationsList";
 
 export default function ApplicationsDashboard() {
-	const { applications, noApplicationMsg } = useApplication();
-	const [chosenStatus, setChosenStatus] = useState("All");
+	const { applications, noApplicationMsg, applicationFilter } = useApplication()
 
-	// add array for filtering with not duplicates
-	const statuses = [
-		"All",
-		...new Set(applications.map((application) => application.status)),
-		"Archived",
-	];
 
 	const filteredApplications = applications.filter((application) => {
-		if (chosenStatus === "All") return application;
-		if (chosenStatus === "Archived") return application.archived;
-		return application.status === chosenStatus && application.archived !== true;
+		if (applicationFilter === "All") return application;
+		if (applicationFilter === "Archived") return application.archived;
+		return application.status === applicationFilter && application.archived !== true;
 	});
 
 	if (applications.length < 1 && !noApplicationMsg) {
@@ -34,11 +27,8 @@ export default function ApplicationsDashboard() {
 	return (
 		<>
 			<ApplicationsStatsHeader />
-
 			<ApplicationsList
 				filteredApplications={filteredApplications}
-				statuses={statuses}
-				setChosenStatus={setChosenStatus}
 			/>
 		</>
 	);

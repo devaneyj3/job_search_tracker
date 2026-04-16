@@ -5,7 +5,6 @@ import styles from "@/styles/ItemList.module.scss";
 import ApplicationTableRow from "@/features/applications/components/Applications/ApplicationTableRow";
 import AddApplicationButton from "@/features/applications/components/Applications/AddApplicationButton";
 import ApplicationDetailsSheet from "@/features/applications/components/Applications/ApplicationDetailsSheet";
-import { Button } from "@/features/shared/ui/button";
 import {
 	Table,
 	TableBody,
@@ -14,11 +13,7 @@ import {
 	TableRow,
 } from "@/features/shared/ui/table";
 
-export default function ApplicationsList({
-	filteredApplications,
-	statuses,
-	setChosenStatus,
-}) {
+export default function ApplicationsList({ filteredApplications }) {
 	const applicationContext = useApplication();
 
 	const context = useMemo(
@@ -50,23 +45,7 @@ export default function ApplicationsList({
 			<h1 className={styles.title}>
 				{filteredApplications.length} TOTAL APPLICATIONS
 			</h1>
-			{statuses && statuses.length > 0 && (
-				<div className={styles.filter_container}>
-					{statuses.map((status, index) => (
-						<div key={index}>
-							<Button
-								onClick={() => setChosenStatus(status)}
-								className={styles.filter_btn}
-								variant="outline">
-								{status}
-							</Button>
-						</div>
-					))}
-				</div>
-			)}
-			<section className={styles.btn_container}>
-				<AddApplicationButton />
-			</section>
+			<AddApplicationButton />
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>

@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import StatsMetrics from "@/features/shared/components/StatsMetrics";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { itemLength } from "@/features/shared/lib/utils";
 
 export default function CompaniesStatsHeader() {
-	const { companies, noCompanyMsg } = useCompany();
+	const { companies, noCompanyMsg, setCompanyFilter } = useCompany();
 
 	const researching = itemLength("Researching", companies);
 	const interested = itemLength("Interested", companies);
@@ -31,6 +31,7 @@ export default function CompaniesStatsHeader() {
 				items={metrics}
 				noItemMsg={noCompanyMsg}
 				title="Companies"
+				setFilter={setCompanyFilter}
 			/>
 		</>
 	);

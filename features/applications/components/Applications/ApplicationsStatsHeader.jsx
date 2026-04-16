@@ -5,7 +5,8 @@ import { useApplication } from "@/features/applications/context/applicationConte
 import { itemLength } from "@/features/shared/lib/utils";
 
 export default function ApplicationsStatsHeader() {
-	const { applications, noApplicationMsg } = useApplication();
+	const { applications, noApplicationMsg, setApplicationFilter } =
+		useApplication();
 
 	const researching = itemLength("Researching", applications);
 	const interested = itemLength("Interested", applications);
@@ -31,6 +32,7 @@ export default function ApplicationsStatsHeader() {
 				items={metrics}
 				noItemMsg={noApplicationMsg}
 				title="Applications"
+				setFilter={setApplicationFilter}
 			/>
 		</>
 	);

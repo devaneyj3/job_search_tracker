@@ -3,7 +3,6 @@ import { useConnection } from "@/features/connections/context/connectionContext"
 import { connectionStatus } from "@/Constants";
 import AddConnectionButton from "./AddConnectionButton";
 import styles from "@/styles/ItemList.module.scss";
-import { Button } from "@/features/shared/ui/button";
 import ConnectionTableRow from "./ConnectionTableRow";
 import ConnectionDetailsSheet from "./ConnectionDetailsSheet";
 import {
@@ -14,11 +13,7 @@ import {
 	TableRow,
 } from "@/features/shared/ui/table";
 
-export default function ConnectionsList({
-	filteredConnections,
-	statuses,
-	setChosenStatus,
-}) {
+export default function ConnectionsList({ filteredConnections }) {
 	const connectionContext = useConnection();
 
 	const context = useMemo(
@@ -51,27 +46,9 @@ export default function ConnectionsList({
 			<h1 className={styles.title}>
 				{filteredConnections.length} TOTAL CONNECTIONS
 			</h1>
-			{statuses && statuses.length > 0 && (
-				<div className={styles.filter_container}>
-					{statuses.map((status, index) => (
-						<>
-							<div key={index}>
-								<Button
-									onClick={() => setChosenStatus(status)}
-									className={styles.filter_btn}
-									variant="outline">
-									{status}
-								</Button>
-							</div>
-						</>
-					))}
-				</div>
-			)}
-			<section className={styles.btn_container}>
-			</section>
+			<AddConnectionButton />
 			{!noItemMsg && items.length > 0 ? (
 				<div className={styles.tableWrapper}>
-					<AddConnectionButton />
 					<Table className={styles.table}>
 						<TableHeader>
 							<TableRow>
