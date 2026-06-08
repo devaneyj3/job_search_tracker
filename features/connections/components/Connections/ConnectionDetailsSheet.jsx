@@ -13,7 +13,14 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import { Mail, Linkedin, Pencil, Briefcase, Building } from "lucide-react";
+import {
+	Mail,
+	Linkedin,
+	Pencil,
+	Briefcase,
+	Building,
+	ExternalLink,
+} from "lucide-react";
 import styles from "@/styles/ItemSheet.module.scss";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
@@ -22,10 +29,17 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
 import JobOtreachTemplate from "@/features/email/templates/JobOtreachTemplate";
+import {
+	buildGmailComposeUrl,
+	buildOutreachEmailDraft,
+} from "@/features/email/lib/outreachEmail";
+import SecondEmailJobOtreachTemplate from "@/features/email/templates/SeconEmailJobOutreachTemplate";
+import { NavigationTabs } from "@/features/shared/components/NavigationTabs/NavigationTabs";
 
 export default function ConnectionDetailsSheet({ item, context, status }) {
 	const { modalOpen, setModalOpen, update, updateConnectionFields } = context;
 	const [isEditing, setIsEditing] = useState(false);
+	const [selectedTab, setSelectedTab] = useState("Initial");
 	const companyName =
 		typeof item.company === "string" ? item.company : item.company?.name || "";
 
@@ -77,7 +91,27 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 	};
 
 	const date = readableDate(item.createdAt);
+	const recipient = (isEditing ? formData.email : item.email)?.trim();
+	const { subject, body } = buildOutreachEmailDraft({
+		contactName: isEditing ? formData.name : item.name,
+		companyName,
+		emailCount: item.emailCount,
+		firstEmailDate: item.lastEmailDate,
+	});
+	const gmailComposeUrl = recipient
+		? buildGmailComposeUrl({ to: recipient, subject, body })
+		: null;
 
+	const mailUpdateFields = {
+		id: item.id,
+		emailCount: item.emailCount + 1,
+		emailSent: true,
+		status: "Contacted",
+		statusDate: new Date(),
+		lastEmailDate: new Date(),
+	};
+
+	console.log(item);
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -116,7 +150,11 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 									type="email"
 								/>
 							) : (
-								item.email
+								<a
+									href={`mailto:${item.email}`}
+									className={styles.composeEmailSecondary}>
+									{item.email}
+								</a>
 							)}
 						</div>
 					)}
@@ -133,7 +171,11 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 									type="url"
 								/>
 							) : item.linkedinUrl ? (
-								<Link href={item.linkedinUrl} target="_blank">
+								<Link
+									href={item.linkedinUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles.composeEmailSecondary}>
 									View LinkedIn
 								</Link>
 							) : null}
@@ -151,7 +193,9 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 							{isEditing ? (
 								<Input
 									value={formData.position}
-									onChange={(e) => handleInputChange("position", e.target.value)}
+									onChange={(e) =>
+										handleInputChange("position", e.target.value)
+									}
 									placeholder={item.position || "Position"}
 								/>
 							) : (
@@ -166,6 +210,28 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 					</div>
 
 					<ItemStatusSelect id={item.id} status={status} update={update} />
+
+					{gmailComposeUrl ? (
+						<div className={styles.composeActions}>
+							<a
+								href={gmailComposeUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles.composeEmailLink}
+								onClick={() => update(mailUpdateFields)}>
+								<Mail size={16} strokeWidth={2} aria-hidden />
+								Compose in Gmail
+								<ExternalLink size={14} strokeWidth={2} aria-hidden />
+							</a>
+						</div>
+					) : (
+						<p className={styles.composeEmailHint}>
+							Add an email address above to compose a pre-filled outreach
+							message.
+						</p>
+					)}
+					<p>You sent {item.emailCount} emails</p>
+					<p>Your last email was sent on {readableDate(item.lastEmailDate)}</p>
 
 					{isEditing ? (
 						<div className={styles.contact}>
@@ -185,9 +251,25 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 							</SheetDescription>
 						)
 					)}
+					<NavigationTabs
+						selectedTab={selectedTab}
+						setSelectedTab={setSelectedTab}
+					/>
 				</SheetHeader>
-
-				<JobOtreachTemplate contactName={item.name} companyName={companyName} />
+				<section className={styles.template_container}>
+					{selectedTab === "Initial" ? (
+						<JobOtreachTemplate
+							contactName={item.name}
+							companyName={companyName}
+						/>
+					) : (
+						<SecondEmailJobOtreachTemplate
+							contactName={item.name}
+							companyName={companyName}
+							firstEmailDate={item.firstEmailDate}
+						/>
+					)}
+				</section>
 
 				<SheetFooter>
 					{isEditing ? (

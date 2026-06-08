@@ -27,9 +27,26 @@ const ConnectionTableRow = memo(
 				<TableCell className={styles.tableCell}>
 					<div className={styles.companyName}>{item.name || "N/A"}</div>
 				</TableCell>
-				<TableCell className={styles.tableCell}>{companyName || "N/A"}</TableCell>
-				<TableCell className={styles.tableCell}>{item.position || "N/A"}</TableCell>
-				<TableCell className={styles.tableCell}>{item.email || "N/A"}</TableCell>
+				<TableCell className={styles.tableCell}>
+					{companyName || "N/A"}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.position || "N/A"}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.email || "N/A"}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.emailCount ?? 0}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.emailSent && item.lastEmailDate
+						? readableDate(item.lastEmailDate)
+						: "—"}
+				</TableCell>
+				<TableCell className={styles.tableCell}>
+					{item.emailSent ? "Yes" : "No"}
+				</TableCell>
 				<TableCell className={styles.tableCell}>
 					<Badge className={styles.tableStatus}>
 						{item.status} on {date}
@@ -52,8 +69,12 @@ const ConnectionTableRow = memo(
 			(nextProps.item.company?.name ?? nextProps.item.company) &&
 		prevProps.item.position === nextProps.item.position &&
 		prevProps.item.email === nextProps.item.email &&
+		prevProps.item.emailCount === nextProps.item.emailCount &&
+		prevProps.item.emailSent === nextProps.item.emailSent &&
+		String(prevProps.item.lastEmailDate ?? "") ===
+			String(nextProps.item.lastEmailDate ?? "") &&
 		prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
-		prevProps.status === nextProps.status
+		prevProps.status === nextProps.status,
 );
 
 export default ConnectionTableRow;

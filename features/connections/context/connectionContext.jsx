@@ -196,66 +196,23 @@ export const ConnectionProvider = ({ children }) => {
 		[selectedConnection, setCompanies, setSelectedCompany],
 	);
 
-	const updateConnectionStatus = useCallback(
-		async (connectionId, statusValue) => {
-			const response = await fetch("/api/connection", {
-				method: "PATCH",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					id: connectionId,
-					status: statusValue,
-				}),
-			});
-
-			if (!response.ok) throw new Error(`Response status: ${response.status}`);
-			setConnections((prevConnections) =>
-				prevConnections.map((connection) =>
-					connection.id === connectionId
-						? { ...connection, status: statusValue }
-						: connection,
-				),
-			);
-
-			setSelectedConnection((prev) =>
-				prev ? { ...prev, status: statusValue } : prev,
-			);
-
-			// Mirror status update into company.connection arrays.
-			setCompanies((prevCompanies) =>
-				prevCompanies.map((company) => ({
-					...company,
-					connections: (company.connections ?? []).map((connection) =>
-						connection.id === connectionId
-							? { ...connection, status: statusValue }
-							: connection,
-					),
-				})),
-			);
-			setSelectedCompany((prevCompany) =>
-				prevCompany
-					? {
-							...prevCompany,
-							connections: (prevCompany.connections ?? []).map((connection) =>
-								connection.id === connectionId
-									? { ...connection, status: statusValue }
-									: connection,
-							),
-						}
-					: prevCompany,
-			);
-		},
-		[setCompanies, setSelectedCompany],
-	);
+	const mergeConnectionUpdate = (existing, updated) => ({
+		...existing,
+		...updated,
+		company: updated.company ?? existing.company,
+	});
 
 	const updateConnectionFields = useCallback(
-		async (connectionId, data) => {
+		async (idOrFields, fields) => {
+			const updateFields =
+				typeof idOrFields === "object"
+					? idOrFields
+					: { id: idOrFields, ...fields };
+
 			const response = await fetch("/api/connection", {
 				method: "PATCH",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					id: connectionId,
-					fields: data,
-				}),
+				body: JSON.stringify({ updateFields }),
 			});
 
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
@@ -264,46 +221,21 @@ export const ConnectionProvider = ({ children }) => {
 
 			setConnections((prevConnections) =>
 				prevConnections.map((connection) =>
-					connection.id === connectionId ? updatedConnection : connection,
+					connection.id === updateFields.id
+						? mergeConnectionUpdate(connection, updatedConnection)
+						: connection,
 				),
 			);
 
 			setSelectedConnection((prev) =>
-				prev && prev.id === connectionId ? updatedConnection : prev,
+				prev && prev.id === updateFields.id
+					? mergeConnectionUpdate(prev, updatedConnection)
+					: prev,
 			);
-
-			// Remove from all companies, then add to updatedConnection.companyId.
-			setCompanies((prevCompanies) =>
-				prevCompanies.map((company) => {
-					const withoutConnection = (company.connections ?? []).filter(
-						(connection) => connection.id !== connectionId,
-					);
-					if (company.id !== updatedConnection.companyId) {
-						return { ...company, connections: withoutConnection };
-					}
-					return {
-						...company,
-						connections: [updatedConnection, ...withoutConnection],
-					};
-				}),
-			);
-			setSelectedCompany((prevCompany) => {
-				if (!prevCompany) return prevCompany;
-				const withoutConnection = (prevCompany.connections ?? []).filter(
-					(connection) => connection.id !== connectionId,
-				);
-				if (prevCompany.id !== updatedConnection.companyId) {
-					return { ...prevCompany, connections: withoutConnection };
-				}
-				return {
-					...prevCompany,
-					connections: [updatedConnection, ...withoutConnection],
-				};
-			});
 
 			return updatedConnection;
 		},
-		[setCompanies, setSelectedCompany],
+		[],
 	);
 
 	useEffect(() => {
@@ -334,7 +266,6 @@ export const ConnectionProvider = ({ children }) => {
 			setModalOpen,
 			error,
 			isLoading,
-			updateConnectionStatus,
 			updateConnectionFields,
 			connectionFilter,
 			setConnectionFilter,
@@ -348,7 +279,6 @@ export const ConnectionProvider = ({ children }) => {
 			modalOpen,
 			error,
 			isLoading,
-			updateConnectionStatus,
 			updateConnectionFields,
 			connectionFilter,
 			setConnectionFilter,

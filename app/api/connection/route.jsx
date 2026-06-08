@@ -3,7 +3,6 @@ import {
 	getConnectionsByUserId,
 	createNewConnection,
 	deleteConnection,
-	updateConnectionStatus,
 	updateConnectionFields,
 } from "@/features/connections/lib/services";
 
@@ -15,7 +14,7 @@ export async function GET(request) {
 		if (!userId) {
 			return NextResponse.json(
 				{ error: "User ID is required" },
-				{ status: 400 }
+				{ status: 400 },
 			);
 		}
 
@@ -25,7 +24,7 @@ export async function GET(request) {
 		console.error("Error fetching connections:", error);
 		return NextResponse.json(
 			{ error: "Failed to fetch connections" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
@@ -59,7 +58,7 @@ export async function POST(req) {
 		console.error("Error creating Connection:", error);
 		return NextResponse.json(
 			{ success: false, error: error.message || "Failed to create Connection" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
@@ -73,34 +72,32 @@ export async function DELETE(req) {
 		console.error("Error deleting Connection:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to delete Connection" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
 
 export async function PATCH(req) {
 	try {
-		const { id, status, fields } = await req.json();
+		const { updateFields } = await req.json();
 
-		if (status) {
-			const updatedConnection = await updateConnectionStatus(id, status);
-			return NextResponse.json({ success: true, connection: updatedConnection });
-		}
-
-		if (fields) {
-			const updatedConnection = await updateConnectionFields(id, fields);
-			return NextResponse.json({ success: true, connection: updatedConnection });
+		if (updateFields) {
+			const updatedConnection = await updateConnectionFields(updateFields);
+			return NextResponse.json({
+				success: true,
+				connection: updatedConnection,
+			});
 		}
 
 		return NextResponse.json(
 			{ success: false, error: "Status or fields required" },
-			{ status: 400 }
+			{ status: 400 },
 		);
 	} catch (error) {
 		console.error("Error updating Connection:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to update Connection" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }

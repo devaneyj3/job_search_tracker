@@ -11,8 +11,15 @@ import {
 } from "@/features/shared/ui/select";
 
 export function ItemStatusSelect({ id, update, status }) {
+	const onChange = (value) => {
+		const updateFields = {
+			id,
+			status: value,
+		};
+		update(updateFields);
+	};
 	return (
-		<Select onValueChange={(value) => update(id, value)}>
+		<Select onValueChange={(value) => onChange(value)}>
 			<SelectTrigger className="w-[180px] font-bold">
 				<SelectValue placeholder="Status" />
 			</SelectTrigger>

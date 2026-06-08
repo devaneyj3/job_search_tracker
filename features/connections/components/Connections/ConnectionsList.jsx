@@ -23,7 +23,7 @@ export default function ConnectionsList({ filteredConnections }) {
 			setModalOpen: connectionContext.setModalOpen,
 			items: connectionContext.connections,
 			noItemMsg: connectionContext.noConnectionMsg,
-			update: connectionContext.updateConnectionStatus,
+			update: connectionContext.updateConnectionFields,
 			updateConnectionFields: connectionContext.updateConnectionFields,
 			modalOpen: connectionContext.modalOpen,
 		}),
@@ -33,7 +33,6 @@ export default function ConnectionsList({ filteredConnections }) {
 			connectionContext.setModalOpen,
 			connectionContext.connections,
 			connectionContext.noConnectionMsg,
-			connectionContext.updateConnectionStatus,
 			connectionContext.updateConnectionFields,
 			connectionContext.modalOpen,
 		],
@@ -58,6 +57,9 @@ export default function ConnectionsList({ filteredConnections }) {
 								<TableHead>Company</TableHead>
 								<TableHead>Position</TableHead>
 								<TableHead>Email</TableHead>
+								<TableHead>Emails Sent</TableHead>
+								<TableHead>Last Email</TableHead>
+								<TableHead>Email Sent</TableHead>
 								<TableHead>Status</TableHead>
 								<TableHead>Update Status</TableHead>
 							</TableRow>

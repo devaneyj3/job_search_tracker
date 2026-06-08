@@ -62,6 +62,9 @@ export async function createNewConnection({
 				status: status || "Prospecting",
 				notes,
 			},
+			include: {
+				company: true,
+			},
 		});
 
 		return connection;
@@ -107,49 +110,24 @@ export async function deleteConnection(id) {
 	}
 }
 
-export async function updateConnectionStatus(connectionId, status) {
-	if (!connectionId) {
-		throw new Error("Connection ID is required");
-	}
-	if (!status) {
-		throw new Error("Status is required");
-	}
 
-	try {
-		const updatedConnection = await prisma.connection.update({
-			where: {
-				id: connectionId,
-			},
-			data: {
-				status: status,
-				statusDate: new Date(),
-			},
-		});
-
-		return updatedConnection;
-	} catch (error) {
-		console.error("Error updating connection status:", error);
-
-		if (error.code === "P2025") {
-			throw new Error("Connection not found");
-		}
-
-		throw new Error(`Failed to update connection status: ${error.message}`);
-	}
-}
-
-export async function updateConnectionFields(connectionId, data) {
-	if (!connectionId) {
+export async function updateConnectionFields(updateFields) {
+	const { id, company, user, ...data } = updateFields;
+	if (!id) {
 		throw new Error("Connection ID is required");
 	}
 
 	try {
 		const updatedConnection = await prisma.connection.update({
 			where: {
-				id: connectionId,
+				id,
 			},
 			data: {
 				...data,
+				...(data.status !== undefined ? { statusDate: new Date() } : {}),
+			},
+			include: {
+				company: true,
 			},
 		});
 

@@ -1,0 +1,15 @@
+.navigation_container {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  .navigationTabItem {
+    cursor: pointer;
+    &:hover {
+      color: lightgray;
+    }
+  }
+
+  .active {
+    color: grey;
+  }
+}

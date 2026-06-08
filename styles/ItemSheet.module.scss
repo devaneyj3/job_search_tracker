@@ -45,3 +45,69 @@
   line-height: 1.6;
   white-space: pre-wrap;
 }
+
+.composeActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.composeEmailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f766e;
+  background: rgba(15, 118, 110, 0.1);
+  border: 1px solid rgba(15, 118, 110, 0.22);
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background: rgba(15, 118, 110, 0.16);
+    border-color: rgba(15, 118, 110, 0.35);
+    color: #0d5c56;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(15, 118, 110, 0.45);
+    outline-offset: 2px;
+  }
+}
+
+.composeEmailSecondary {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #57534e;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: #0f766e;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(15, 118, 110, 0.45);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.composeEmailHint {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #78716c;
+}
+
+.template_container {
+  display: flex;
+}
