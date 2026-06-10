@@ -28,6 +28,11 @@ import { connectionKeys } from "@/features/connections/lib/keys";
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
+import {
+	connectionFormEmptyDefaults,
+	connectionFormTestDefaults,
+	getFormDefaults,
+} from "@/features/shared/lib/formTestDefaults";
 
 function RhfSelect({ field, placeholder, children }) {
 	return (
@@ -107,15 +112,10 @@ export default function ConnectionForm({ setDialogOpen }) {
 
 	const form = useForm({
 		resolver: zodResolver(connectionFormSchema),
-		defaultValues: {
-			name: "",
-			email: "",
-			companyId: "",
-			position: "",
-			linkedinUrl: "",
-			status: "Prospecting",
-			notes: "",
-		},
+		defaultValues: getFormDefaults(
+			connectionFormEmptyDefaults,
+			connectionFormTestDefaults,
+		),
 		mode: "onBlur",
 	});
 

@@ -69,8 +69,8 @@ export async function POST(req) {
 export async function DELETE(req) {
 	try {
 		const { id } = await req.json();
-		await deleteCompany(id);
-		return NextResponse.json({ success: true });
+		const deletedCompany = await deleteCompany(id);
+		return NextResponse.json({ success: true, deletedCompany });
 	} catch (error) {
 		console.error("Error deleting Company:", error);
 		return NextResponse.json(

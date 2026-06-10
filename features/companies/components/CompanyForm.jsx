@@ -26,6 +26,11 @@ import { toast } from "sonner";
 import { companyFormSchema } from "@/features/companies/lib/schema";
 import { companyKeys } from "@/features/companies/lib/keys";
 import { useCompany } from "@/features/companies/context/companyContext";
+import {
+	companyFormEmptyDefaults,
+	companyFormTestDefaults,
+	getFormDefaults,
+} from "@/features/shared/lib/formTestDefaults";
 
 // helper: fetch field config by name from companyKeys
 function getCfg(name) {
@@ -39,17 +44,10 @@ export default function CreateCompany({ setDialogOpen }) {
 	const { createCompany } = useCompany();
 	const form = useForm({
 		resolver: zodResolver(companyFormSchema),
-		defaultValues: {
-			name: "",
-			website: "",
-			industry: "",
-			size: "",
-			location: "",
-			description: "",
-			linkedinUrl: "",
-			status: "Researching",
-			notes: "",
-		},
+		defaultValues: getFormDefaults(
+			companyFormEmptyDefaults,
+			companyFormTestDefaults,
+		),
 		mode: "onBlur",
 	});
 

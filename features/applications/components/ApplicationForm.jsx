@@ -21,13 +21,22 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
-import { applicationStatus, jobLocationOptions, jobTypeOptions } from "@/Constants";
+import {
+	applicationStatus,
+	jobLocationOptions,
+	jobTypeOptions,
+} from "@/Constants";
 import { toast } from "sonner";
 import { applicationFormSchema } from "@/features/applications/lib/schema";
 import { applicationKeys } from "@/features/applications/lib/keys";
 import { useApplication } from "@/features/applications/context/applicationContext";
 import { useCompany } from "@/features/companies/context/companyContext";
 import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
+import {
+	applicationFormEmptyDefaults,
+	applicationFormTestDefaults,
+	getFormDefaults,
+} from "@/features/shared/lib/formTestDefaults";
 
 // helper: fetch field config by name from applicationKeys
 function getCfg(name) {
@@ -48,16 +57,10 @@ export default function CreateApplication({ setDialogOpen }) {
 
 	const form = useForm({
 		resolver: zodResolver(applicationFormSchema),
-		defaultValues: {
-			jobType: "",
-			location: "",
-			applicationLink: "",
-			position: "",
-			jobDescription: "",
-			status: "Researching",
-			companyId: "",
-			notes: "",
-		},
+		defaultValues: getFormDefaults(
+			applicationFormEmptyDefaults,
+			applicationFormTestDefaults,
+		),
 		mode: "onBlur",
 	});
 

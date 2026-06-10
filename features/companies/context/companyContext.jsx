@@ -108,19 +108,21 @@ export const CompanyProvider = ({ children }) => {
 				body: JSON.stringify({ id }),
 			});
 
-			const deletedCompanyId = await res.json();
+			const result = await res.json();
+			
+
 			if (!res.ok) throw new Error("Failed to delete company");
 
+			const deletedId = result.deletedCompany.id
 			setCompanies((prev) => {
-				const next = prev.filter(
-					(company) => company.id !== deletedCompanyId.id,
-				);
+				const next = prev.filter((company) => company.id !== deletedId);
+				console.log(next, selectedCompany);
 				if (next.length === 0) {
 					setNoCompanyMsg("You haven't added any companies yet");
 					setSelectedCompany(null);
 				} else if (
 					selectedCompany &&
-					selectedCompany.id === deletedCompanyId.id
+					selectedCompany.id == deletedId
 				) {
 					setSelectedCompany(next[0] ?? null);
 				}
@@ -128,7 +130,7 @@ export const CompanyProvider = ({ children }) => {
 			});
 
 			setModalOpen(false);
-			return deletedCompanyId;
+			return result;
 		},
 		[selectedCompany],
 	);
