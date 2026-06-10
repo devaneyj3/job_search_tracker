@@ -122,41 +122,6 @@ export async function deleteApplication(id) {
 	}
 }
 
-export async function updateApplicationStatus(applicationId, status) {
-	if (!applicationId) {
-		throw new Error("Application ID is required");
-	}
-	if (!status) {
-		throw new Error("Status is required");
-	}
-
-	try {
-		const updatedApplication = await prisma.application.update({
-			where: {
-				id: applicationId,
-			},
-			data: {
-				status: status,
-				statusDate: new Date(),
-			},
-			include: {
-				company: true,
-			},
-		});
-
-		return updatedApplication;
-	} catch (error) {
-		console.error("Error updating application status:", error);
-
-		// Handle Prisma-specific errors
-		if (error.code === "P2025") {
-			throw new Error("Application not found");
-		}
-
-		throw new Error(`Failed to update application status: ${error.message}`);
-	}
-}
-
 /**
  * Update application fields
  * @param {number} applicationId - Application ID
@@ -164,7 +129,7 @@ export async function updateApplicationStatus(applicationId, status) {
  * @returns {Promise<Object>} Updated application
  * @throws {Error} If applicationId is missing or database operation fails
  */
-export async function updateApplicationFields(applicationId, data) {
+export async function updateApplication(applicationId, data) {
 	if (!applicationId) {
 		throw new Error("Application ID is required");
 	}

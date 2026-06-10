@@ -112,39 +112,6 @@ export async function deleteCompany(id) {
 		throw new Error(`Failed to delete company: ${error.message}`);
 	}
 }
-
-export async function updateCompanyStatus(companyId, status) {
-	if (!companyId) {
-		throw new Error("Company ID is required");
-	}
-	if (!status) {
-		throw new Error("Status is required");
-	}
-
-	try {
-		const updatedCompany = await prisma.company.update({
-			where: {
-				id: companyId,
-			},
-			data: {
-				status: status,
-				statusDate: new Date(),
-			},
-		});
-
-		return updatedCompany;
-	} catch (error) {
-		console.error("Error updating company status:", error);
-
-		// Handle Prisma-specific errors
-		if (error.code === "P2025") {
-			throw new Error("Company not found");
-		}
-
-		throw new Error(`Failed to update company status: ${error.message}`);
-	}
-}
-
 /**
  * Update company fields
  * @param {number} companyId - Company ID
@@ -152,7 +119,7 @@ export async function updateCompanyStatus(companyId, status) {
  * @returns {Promise<Object>} Updated company
  * @throws {Error} If companyId is missing or database operation fails
  */
-export async function updateCompanyFields(companyId, data) {
+export async function updateCompany(companyId, data) {
 	if (!companyId) {
 		throw new Error("Company ID is required");
 	}
@@ -164,6 +131,9 @@ export async function updateCompanyFields(companyId, data) {
 			},
 			data: {
 				...data,
+			},
+			include: {
+				connections: true,
 			},
 		});
 

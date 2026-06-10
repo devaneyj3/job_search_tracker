@@ -3,8 +3,7 @@ import {
 	getCompaniesByUserId,
 	createNewCompany,
 	deleteCompany,
-	updateCompanyStatus,
-	updateCompanyFields,
+	updateCompany,
 } from "@/features/companies/lib/services";
 
 export async function GET(request) {
@@ -15,7 +14,7 @@ export async function GET(request) {
 		if (!userId) {
 			return NextResponse.json(
 				{ error: "userId, companyId, or companyIds is required" },
-				{ status: 400 }
+				{ status: 400 },
 			);
 		}
 
@@ -25,7 +24,7 @@ export async function GET(request) {
 		console.error("Error fetching companies:", error);
 		return NextResponse.json(
 			{ error: "Failed to fetch companies" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
@@ -62,7 +61,7 @@ export async function POST(req) {
 		console.error("Error creating Company:", error);
 		return NextResponse.json(
 			{ success: false, error: error.message || "Failed to create Company" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
@@ -76,34 +75,29 @@ export async function DELETE(req) {
 		console.error("Error deleting Company:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to delete Company" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }
 
 export async function PATCH(req) {
 	try {
-		const { id, status, fields } = await req.json();
+		const { id, data } = await req.json();
 
-		if (status) {
-			const updatedCompany = await updateCompanyStatus(id, status);
-			return NextResponse.json({ success: true, company: updatedCompany });
-		}
-
-		if (fields) {
-			const updatedCompany = await updateCompanyFields(id, fields);
+		if (data) {
+			const updatedCompany = await updateCompany(id, data);
 			return NextResponse.json({ success: true, company: updatedCompany });
 		}
 
 		return NextResponse.json(
 			{ success: false, error: "Status or fields required" },
-			{ status: 400 }
+			{ status: 400 },
 		);
 	} catch (error) {
 		console.error("Error updating Company:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to update Company" },
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 }

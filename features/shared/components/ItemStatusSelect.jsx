@@ -13,10 +13,9 @@ import {
 export function ItemStatusSelect({ id, update, status }) {
 	const onChange = (value) => {
 		const updateFields = {
-			id,
 			status: value,
 		};
-		update(updateFields);
+		update(id, updateFields);
 	};
 	return (
 		<Select onValueChange={(value) => onChange(value)}>

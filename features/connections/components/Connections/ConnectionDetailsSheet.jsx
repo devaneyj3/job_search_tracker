@@ -104,7 +104,6 @@ export default function ConnectionDetailsSheet({ item}) {
 		: null;
 
 	const mailUpdateFields = {
-		id: item.id,
 		emailCount: item.emailCount + 1,
 		emailSent: true,
 		status: "Contacted",
@@ -217,7 +216,7 @@ export default function ConnectionDetailsSheet({ item}) {
 								target="_blank"
 								rel="noopener noreferrer"
 								className={styles.composeEmailLink}
-								onClick={() => updateConnection(mailUpdateFields)}>
+								onClick={() => updateConnection(item.id, mailUpdateFields)}>
 								<Mail size={16} strokeWidth={2} aria-hidden />
 								Compose in Gmail
 								<ExternalLink size={14} strokeWidth={2} aria-hidden />

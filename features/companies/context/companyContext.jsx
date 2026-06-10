@@ -143,11 +143,13 @@ export const CompanyProvider = ({ children }) => {
 					data,
 				}),
 			});
+			const res = await response.json();
+			const updatedCompany = res.company;
 
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
 			setCompanies((prevCompanies) =>
 				prevCompanies.map((company) =>
-					company.id === companyId ? { ...company, data } : company,
+					company.id === companyId ? updatedCompany : company,
 				),
 			);
 
@@ -155,7 +157,6 @@ export const CompanyProvider = ({ children }) => {
 		},
 		[session?.user?.id],
 	);
-
 
 	const values = useMemo(
 		() => ({

@@ -3,7 +3,7 @@ import {
 	getConnectionsByUserId,
 	createNewConnection,
 	deleteConnection,
-	updateConnectionFields,
+	updateConnection
 } from "@/features/connections/lib/services";
 
 export async function GET(request) {
@@ -82,7 +82,7 @@ export async function PATCH(req) {
 		const { updateFields } = await req.json();
 
 		if (updateFields) {
-			const updatedConnection = await updateConnectionFields(updateFields);
+			const updatedConnection = await updateConnection(updateFields);
 			return NextResponse.json({
 				success: true,
 				connection: updatedConnection,

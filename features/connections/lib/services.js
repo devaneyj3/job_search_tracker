@@ -111,7 +111,7 @@ export async function deleteConnection(id) {
 }
 
 
-export async function updateConnectionFields(updateFields) {
+export async function updateConnection(updateFields) {
 	const { id, company, user, ...data } = updateFields;
 	if (!id) {
 		throw new Error("Connection ID is required");

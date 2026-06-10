@@ -202,16 +202,14 @@ export const ConnectionProvider = ({ children }) => {
 		company: updated.company ?? existing.company,
 	});
 
-	const updateConnection = useCallback(async (idOrFields, fields) => {
-		const updateFields =
-			typeof idOrFields === "object"
-				? idOrFields
-				: { id: idOrFields, ...fields };
-
+	const updateConnection = useCallback(async (connectionId, data) => {
 		const response = await fetch("/api/connection", {
 			method: "PATCH",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ updateFields }),
+			body: JSON.stringify({
+				id: connectionId,
+				data,
+			}),
 		});
 
 		if (!response.ok) throw new Error(`Response status: ${response.status}`);

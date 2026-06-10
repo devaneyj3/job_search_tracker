@@ -3,8 +3,7 @@ import {
 	getApplicationsByUserId,
 	createNewApplication,
 	deleteApplication,
-	updateApplicationStatus,
-	updateApplicationFields,
+	updateApplication,
 } from "@/features/applications/lib/services";
 
 export async function GET(request) {
@@ -78,15 +77,10 @@ export async function DELETE(req) {
 
 export async function PATCH(req) {
 	try {
-		const { id, status, fields } = await req.json();
-
-		if (status) {
-			const updatedApplication = await updateApplicationStatus(id, status);
-			return NextResponse.json({ success: true, application: updatedApplication });
-		}
+		const { id, fields } = await req.json();
 
 		if (fields) {
-			const updatedApplication = await updateApplicationFields(id, fields);
+			const updatedApplication = await updateApplication(id, fields);
 			return NextResponse.json({ success: true, application: updatedApplication });
 		}
 
