@@ -88,7 +88,7 @@ export const ApplicationProvider = ({ children }) => {
 
 			let nextApplications;
 			setApplications((prev) => {
-				nextApplications = [...prev, data.application];
+				nextApplications = [data.application, ...prev];
 				return nextApplications;
 			});
 			setModalOpen(false);

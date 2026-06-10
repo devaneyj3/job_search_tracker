@@ -98,7 +98,7 @@ export const ConnectionProvider = ({ children }) => {
 
 			let nextConnections;
 			setConnections((prev) => {
-				nextConnections = [...prev, data.connection];
+				nextConnections = [data.connection, ...prev];
 				return nextConnections;
 			});
 

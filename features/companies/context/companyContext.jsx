@@ -88,7 +88,7 @@ export const CompanyProvider = ({ children }) => {
 
 			let nextCompanies;
 			setCompanies((prev) => {
-				nextCompanies = [...prev, data.company];
+				nextCompanies = [data.company, ...prev];
 				return nextCompanies;
 			});
 			setModalOpen(false);
