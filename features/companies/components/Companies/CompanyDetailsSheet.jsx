@@ -70,7 +70,7 @@ export default function CompanyDetailsSheet({ item }) {
 
 	const handleSave = async () => {
 		try {
-			if (!updateCompanyFields) {
+			if (!updateCompany) {
 				toast.error("Update function not available");
 				return;
 			}

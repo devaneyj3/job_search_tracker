@@ -38,7 +38,7 @@ import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
 
 export default function ConnectionDetailsSheet({ item}) {
-	const { modalOpen, setModalOpen, updateConnectionFields } = useConnection();
+	const { modalOpen, setModalOpen, updateConnection } = useConnection();
 	const [isEditing, setIsEditing] = useState(false);
 	const [selectedTab, setSelectedTab] = useState("Initial");
 	const companyName =
@@ -64,7 +64,7 @@ export default function ConnectionDetailsSheet({ item}) {
 
 	const handleSave = async () => {
 		try {
-			if (!updateConnectionFields) {
+			if (!updateConnection) {
 				toast.error("Update function not available");
 				return;
 			}
@@ -77,7 +77,7 @@ export default function ConnectionDetailsSheet({ item}) {
 				notes: formData.notes,
 			};
 
-			await updateConnectionFields(item.id, dataToUpdate);
+			await updateConnection(item.id, dataToUpdate);
 			toast.success("Connection updated successfully");
 			setIsEditing(false);
 		} catch (error) {
@@ -208,7 +208,7 @@ export default function ConnectionDetailsSheet({ item}) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={connectionStatus} update={updateConnectionFields} />
+					<ItemStatusSelect id={item.id} status={connectionStatus} update={updateConnection} />
 
 					{gmailComposeUrl ? (
 						<div className={styles.composeActions}>
@@ -217,7 +217,7 @@ export default function ConnectionDetailsSheet({ item}) {
 								target="_blank"
 								rel="noopener noreferrer"
 								className={styles.composeEmailLink}
-								onClick={() => update(mailUpdateFields)}>
+								onClick={() => updateConnection(mailUpdateFields)}>
 								<Mail size={16} strokeWidth={2} aria-hidden />
 								Compose in Gmail
 								<ExternalLink size={14} strokeWidth={2} aria-hidden />
