@@ -153,7 +153,7 @@ export const CompanyProvider = ({ children }) => {
 				),
 			);
 
-			setSelectedCompany((prev) => (prev ? { ...prev, data } : prev));
+			setSelectedCompany((prev) => (prev ? updatedCompany : prev));
 		},
 		[session?.user?.id],
 	);
