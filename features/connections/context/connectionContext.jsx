@@ -218,14 +218,14 @@ export const ConnectionProvider = ({ children }) => {
 
 		setConnections((prevConnections) =>
 			prevConnections.map((connection) =>
-				connection.id === updateFields.id
+				connection.id === connectionId
 					? mergeConnectionUpdate(connection, updatedConnection)
 					: connection,
 			),
 		);
 
 		setSelectedConnection((prev) =>
-			prev && prev.id === updateFields.id
+			prev && prev.id === connectionId
 				? mergeConnectionUpdate(prev, updatedConnection)
 				: prev,
 		);

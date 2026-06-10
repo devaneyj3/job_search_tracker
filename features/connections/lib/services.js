@@ -111,16 +111,15 @@ export async function deleteConnection(id) {
 }
 
 
-export async function updateConnection(updateFields) {
-	const { id, company, user, ...data } = updateFields;
-	if (!id) {
+export async function updateConnection(connectionId, data) {
+	if (!connectionId) {
 		throw new Error("Connection ID is required");
 	}
 
 	try {
 		const updatedConnection = await prisma.connection.update({
 			where: {
-				id,
+				id: connectionId,
 			},
 			data: {
 				...data,
