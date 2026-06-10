@@ -15,7 +15,6 @@ import {
 } from "@/features/shared/ui/sheet";
 import {
 	Mail,
-	Linkedin,
 	Pencil,
 	Briefcase,
 	Building,
@@ -35,9 +34,11 @@ import {
 } from "@/features/email/lib/outreachEmail";
 import SecondEmailJobOtreachTemplate from "@/features/email/templates/SeconEmailJobOutreachTemplate";
 import { NavigationTabs } from "@/features/shared/components/NavigationTabs/NavigationTabs";
+import { useConnection } from "../../context/connectionContext";
+import { connectionStatus } from "@/Constants";
 
-export default function ConnectionDetailsSheet({ item, context, status }) {
-	const { modalOpen, setModalOpen, update, updateConnectionFields } = context;
+export default function ConnectionDetailsSheet({ item}) {
+	const { modalOpen, setModalOpen, updateConnectionFields } = useConnection();
 	const [isEditing, setIsEditing] = useState(false);
 	const [selectedTab, setSelectedTab] = useState("Initial");
 	const companyName =
@@ -111,7 +112,6 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 		lastEmailDate: new Date(),
 	};
 
-	console.log(item);
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -160,7 +160,6 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 					)}
 					{(isEditing || item.linkedinUrl) && (
 						<div className={styles.itemPosting}>
-							<Linkedin size={15} className={styles.icon} />
 							{isEditing ? (
 								<Input
 									value={formData.linkedinUrl}
@@ -209,7 +208,7 @@ export default function ConnectionDetailsSheet({ item, context, status }) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={status} update={update} />
+					<ItemStatusSelect id={item.id} status={connectionStatus} update={updateConnectionFields} />
 
 					{gmailComposeUrl ? (
 						<div className={styles.composeActions}>

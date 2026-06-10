@@ -1,6 +1,4 @@
-import React, { useMemo } from "react";
-import { useApplication } from "@/features/applications/context/applicationContext";
-import { applicationStatus } from "@/Constants";
+import React from "react";
 import styles from "@/styles/ItemList.module.scss";
 import ApplicationTableRow from "@/features/applications/components/Applications/ApplicationTableRow";
 import AddApplicationButton from "@/features/applications/components/Applications/AddApplicationButton";
@@ -12,34 +10,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/features/shared/ui/table";
+import { useApplication } from "../../context/applicationContext";
 
 export default function ApplicationsList({ filteredApplications }) {
-	const applicationContext = useApplication();
-
-	const context = useMemo(
-		() => ({
-			selectedItem: applicationContext.selectedApplication,
-			setSelectedItem: applicationContext.setSelectedApplication,
-			setModalOpen: applicationContext.setModalOpen,
-			items: applicationContext.applications,
-			noItemMsg: applicationContext.noApplicationMsg,
-			update: applicationContext.updateApplicationStatus,
-			updateApplicationFields: applicationContext.updateApplicationFields,
-			modalOpen: applicationContext.modalOpen,
-		}),
-		[
-			applicationContext.selectedApplication,
-			applicationContext.setSelectedApplication,
-			applicationContext.setModalOpen,
-			applicationContext.applications,
-			applicationContext.noApplicationMsg,
-			applicationContext.updateApplicationStatus,
-			applicationContext.updateApplicationFields,
-			applicationContext.modalOpen,
-		],
-	);
-	const { selectedItem, items, noItemMsg } = context;
-
+	const { selectedItem, items, noItemMsg } = useApplication();
 	return (
 		<main className={styles.container}>
 			<div className={styles.row}>
@@ -64,12 +38,7 @@ export default function ApplicationsList({ filteredApplications }) {
 						</TableHeader>
 						<TableBody>
 							{filteredApplications.map((item) => (
-								<ApplicationTableRow
-									key={item.id}
-									item={item}
-									context={context}
-									status={applicationStatus}
-								/>
+								<ApplicationTableRow key={item.id} item={item} />
 							))}
 						</TableBody>
 					</Table>
@@ -77,13 +46,7 @@ export default function ApplicationsList({ filteredApplications }) {
 			) : (
 				<div>{noItemMsg}</div>
 			)}
-			{selectedItem && (
-				<ApplicationDetailsSheet
-					item={selectedItem}
-					context={context}
-					status={applicationStatus}
-				/>
-			)}
+			{selectedItem && <ApplicationDetailsSheet item={selectedItem} />}
 		</main>
 	);
 }

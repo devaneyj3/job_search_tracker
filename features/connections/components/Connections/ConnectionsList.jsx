@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { connectionStatus } from "@/Constants";
 import AddConnectionButton from "./AddConnectionButton";
@@ -14,31 +14,11 @@ import {
 } from "@/features/shared/ui/table";
 
 export default function ConnectionsList({ filteredConnections }) {
-	const connectionContext = useConnection();
-
-	const context = useMemo(
-		() => ({
-			selectedItem: connectionContext.selectedConnection,
-			setSelectedItem: connectionContext.setSelectedConnection,
-			setModalOpen: connectionContext.setModalOpen,
-			items: connectionContext.connections,
-			noItemMsg: connectionContext.noConnectionMsg,
-			update: connectionContext.updateConnectionFields,
-			updateConnectionFields: connectionContext.updateConnectionFields,
-			modalOpen: connectionContext.modalOpen,
-		}),
-		[
-			connectionContext.selectedConnection,
-			connectionContext.setSelectedConnection,
-			connectionContext.setModalOpen,
-			connectionContext.connections,
-			connectionContext.noConnectionMsg,
-			connectionContext.updateConnectionFields,
-			connectionContext.modalOpen,
-		],
-	);
-
-	const { selectedItem, items, noItemMsg } = context;
+	const {
+		selectedItem,
+		items,
+		noItemMsg
+	} = useConnection();
 
 	return (
 		<main className={styles.container}>
@@ -69,8 +49,6 @@ export default function ConnectionsList({ filteredConnections }) {
 								<ConnectionTableRow
 									key={item.id}
 									item={item}
-									context={context}
-									status={connectionStatus}
 								/>
 							))}
 						</TableBody>
@@ -82,8 +60,6 @@ export default function ConnectionsList({ filteredConnections }) {
 			{selectedItem && (
 				<ConnectionDetailsSheet
 					item={selectedItem}
-					context={context}
-					status={connectionStatus}
 				/>
 			)}
 		</main>

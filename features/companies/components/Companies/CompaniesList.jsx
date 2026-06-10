@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useCompany } from "@/features/companies/context/companyContext";
-import { companyStatus } from "@/Constants";
 import styles from "@/styles/ItemList.module.scss";
 import CompanyTableRow from "@/features/companies/components/Companies/CompanyTableRow";
 import AddCompanyButton from "@/features/companies/components/Companies/AddCompanyButton";
@@ -14,31 +13,7 @@ import {
 } from "@/features/shared/ui/table";
 
 export default function CompaniesList({ filteredCompanies }) {
-	const companyContext = useCompany();
-
-	const context = useMemo(
-		() => ({
-			selectedItem: companyContext.selectedCompany,
-			setSelectedItem: companyContext.setSelectedCompany,
-			setModalOpen: companyContext.setModalOpen,
-			items: companyContext.companies,
-			noItemMsg: companyContext.noCompanyMsg,
-			update: companyContext.updateCompanyStatus,
-			updateCompanyFields: companyContext.updateCompanyFields,
-			modalOpen: companyContext.modalOpen,
-		}),
-		[
-			companyContext.selectedCompany,
-			companyContext.setSelectedCompany,
-			companyContext.setModalOpen,
-			companyContext.companies,
-			companyContext.noCompanyMsg,
-			companyContext.updateCompanyStatus,
-			companyContext.updateCompanyFields,
-			companyContext.modalOpen,
-		],
-	);
-	const { selectedItem, items, noItemMsg } = context;
+	const { selectedItem, items, noItemMsg } = useCompany();
 
 	return (
 		<main className={styles.container}>
@@ -64,12 +39,7 @@ export default function CompaniesList({ filteredCompanies }) {
 						</TableHeader>
 						<TableBody>
 							{filteredCompanies.map((item) => (
-								<CompanyTableRow
-									key={item.id}
-									item={item}
-									context={context}
-									status={companyStatus}
-								/>
+								<CompanyTableRow key={item.id} item={item} />
 							))}
 						</TableBody>
 					</Table>
@@ -77,13 +47,7 @@ export default function CompaniesList({ filteredCompanies }) {
 			) : (
 				<div>{noItemMsg}</div>
 			)}
-			{selectedItem && (
-				<CompanyDetailsSheet
-					item={selectedItem}
-					context={context}
-					status={companyStatus}
-				/>
-			)}
+			{selectedItem && <CompanyDetailsSheet item={selectedItem} />}
 		</main>
 	);
 }

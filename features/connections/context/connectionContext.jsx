@@ -202,41 +202,38 @@ export const ConnectionProvider = ({ children }) => {
 		company: updated.company ?? existing.company,
 	});
 
-	const updateConnectionFields = useCallback(
-		async (idOrFields, fields) => {
-			const updateFields =
-				typeof idOrFields === "object"
-					? idOrFields
-					: { id: idOrFields, ...fields };
+	const updateConnectionFields = useCallback(async (idOrFields, fields) => {
+		const updateFields =
+			typeof idOrFields === "object"
+				? idOrFields
+				: { id: idOrFields, ...fields };
 
-			const response = await fetch("/api/connection", {
-				method: "PATCH",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ updateFields }),
-			});
+		const response = await fetch("/api/connection", {
+			method: "PATCH",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ updateFields }),
+		});
 
-			if (!response.ok) throw new Error(`Response status: ${response.status}`);
-			const result = await response.json();
-			const updatedConnection = result.connection;
+		if (!response.ok) throw new Error(`Response status: ${response.status}`);
+		const result = await response.json();
+		const updatedConnection = result.connection;
 
-			setConnections((prevConnections) =>
-				prevConnections.map((connection) =>
-					connection.id === updateFields.id
-						? mergeConnectionUpdate(connection, updatedConnection)
-						: connection,
-				),
-			);
+		setConnections((prevConnections) =>
+			prevConnections.map((connection) =>
+				connection.id === updateFields.id
+					? mergeConnectionUpdate(connection, updatedConnection)
+					: connection,
+			),
+		);
 
-			setSelectedConnection((prev) =>
-				prev && prev.id === updateFields.id
-					? mergeConnectionUpdate(prev, updatedConnection)
-					: prev,
-			);
+		setSelectedConnection((prev) =>
+			prev && prev.id === updateFields.id
+				? mergeConnectionUpdate(prev, updatedConnection)
+				: prev,
+		);
 
-			return updatedConnection;
-		},
-		[],
-	);
+		return updatedConnection;
+	}, []);
 
 	useEffect(() => {
 		if (!connections.length) return;

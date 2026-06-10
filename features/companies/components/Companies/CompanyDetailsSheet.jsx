@@ -21,7 +21,7 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { toast } from "sonner";
 import CompanySheetTextDropdown from "./CompanySheetTextDropdown";
-import { companySizeOptions } from "@/Constants";
+import { companySizeOptions, companyStatus } from "@/Constants";
 import {
 	Select,
 	SelectContent,
@@ -29,14 +29,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
+import { useCompany } from "../../context/companyContext";
 
-export default function CompanyDetailsSheet({ item, context, status }) {
-	const { modalOpen, setModalOpen, update, updateCompanyFields } = context;
+export default function CompanyDetailsSheet({ item }) {
+	const { modalOpen, setModalOpen, updateCompanyFields } = useCompany();
 	const [isEditing, setIsEditing] = useState(false);
-
-
-	//toggle text dropdown
-
 	const [activeSection, setActiveSection] = useState(null);
 
 	const toggleSection = (section) => {
@@ -50,10 +47,6 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 		}
 	}, []);
 	
-
-	
-
-
 	const getInitialFormData = () => ({
 		name: item.name || "",
 		website: item.website || "",
@@ -261,7 +254,7 @@ export default function CompanyDetailsSheet({ item, context, status }) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={status} update={update} />
+					<ItemStatusSelect id={item.id} status={companyStatus} update={updateCompanyFields} />
 
 					{isEditing ? (
 						<div className={styles.contact}>

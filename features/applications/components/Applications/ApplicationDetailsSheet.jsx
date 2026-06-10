@@ -21,7 +21,7 @@ import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect"
 import { toast } from "sonner";
 import ApplicationSheetTextDropdown from "./ApplicationSheetTextDropdown";
 import Link from "next/link";
-import { jobLocationOptions, jobTypeOptions } from "@/Constants";
+import { applicationStatus, jobLocationOptions, jobTypeOptions } from "@/Constants";
 import {
 	Select,
 	SelectContent,
@@ -29,8 +29,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/shared/ui/select";
-export default function ApplicationDetailsSheet({ item, context, status }) {
-	const { modalOpen, setModalOpen, update, updateApplicationFields } = context;
+import { useApplication } from "../../context/applicationContext";
+
+export default function ApplicationDetailsSheet({ item }) {
+	const { modalOpen, setModalOpen, updateApplicationFields } = useApplication();
 	const [isEditing, setIsEditing] = useState(false);
 
 	const [activeSection, setActiveSection] = useState(null);
@@ -223,7 +225,7 @@ export default function ApplicationDetailsSheet({ item, context, status }) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={status} update={update} />
+					<ItemStatusSelect id={item.id} status={applicationStatus} update={updateApplicationFields} />
 
 					{isEditing ? (
 						<div className={styles.contact}>

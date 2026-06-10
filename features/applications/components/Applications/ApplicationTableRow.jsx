@@ -1,5 +1,4 @@
 "use client";
-import { memo } from "react";
 import styles from "@/styles/ItemList.module.scss";
 import Link from "next/link";
 
@@ -7,12 +6,15 @@ import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
 import { readableDate } from "@/features/shared/lib/utils";
 import { TableCell, TableRow } from "@/features/shared/ui/table";
+import { applicationStatus } from "@/Constants";
 
-const ApplicationTableRow = memo(
-	function ApplicationTableRow({ item, context, status }) {
-		if (!context) return null;
-
-		const { selectedItem, setSelectedItem, setModalOpen, update } = context;
+	const ApplicationTableRow = ({ item }) => {
+		const {
+		selectedItem,
+		setSelectedItem,
+		setModalOpen,
+		update
+	} = useApplication();
 		const date = readableDate(item.createdAt);
 		const displayName = item.company?.name || "Unknown Company";
 		const isActive = item.id === selectedItem?.id;
@@ -46,22 +48,11 @@ const ApplicationTableRow = memo(
 				</TableCell>
 				<TableCell className={styles.tableCell}>
 					<div onClick={(event) => event.stopPropagation()}>
-						<ItemStatusSelect id={item.id} update={update} status={status} />
+						<ItemStatusSelect id={item.id} update={update} status={applicationStatus} />
 					</div>
 				</TableCell>
 			</TableRow>
 		);
 	},
-	(prevProps, nextProps) =>
-		prevProps.item.id === nextProps.item.id &&
-		prevProps.item.status === nextProps.item.status &&
-		prevProps.item.company?.name === nextProps.item.company?.name &&
-		prevProps.item.position === nextProps.item.position &&
-		prevProps.item.jobType === nextProps.item.jobType &&
-		prevProps.item.location === nextProps.item.location &&
-		prevProps.item.applicationLink === nextProps.item.applicationLink &&
-		prevProps.context.selectedItem?.id === nextProps.context.selectedItem?.id &&
-		prevProps.status === nextProps.status
-);
 
 export default ApplicationTableRow;

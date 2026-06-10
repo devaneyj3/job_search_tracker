@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
 import styles from "@/styles/OutreachDashboard.module.scss";
 import { useCompany } from "@/features/companies/context/companyContext";
