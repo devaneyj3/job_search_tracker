@@ -133,32 +133,7 @@ export const ApplicationProvider = ({ children }) => {
 		[selectedApplication],
 	);
 
-	const updateApplicationStatus = useCallback(
-		async (applicationId, status) => {
-			const response = await fetch("/api/application", {
-				method: "PATCH",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					id: applicationId,
-					status,
-				}),
-			});
-
-			if (!response.ok) throw new Error(`Response status: ${response.status}`);
-			setApplications((prevApplications) =>
-				prevApplications.map((application) =>
-					application.id === applicationId
-						? { ...application, status }
-						: application,
-				),
-			);
-
-			setSelectedApplication((prev) => (prev ? { ...prev, status } : prev));
-		},
-		[session?.user?.id],
-	);
-
-	const updateApplicationFields = useCallback(
+	const updateApplication = useCallback(
 		async (applicationId, data) => {
 			const response = await fetch("/api/application", {
 				method: "PATCH",
@@ -201,8 +176,7 @@ export const ApplicationProvider = ({ children }) => {
 			setModalOpen,
 			error,
 			isLoading,
-			updateApplicationStatus,
-			updateApplicationFields,
+			updateApplication,
 			applicationFilter,
 			setApplicationFilter,
 		}),
@@ -212,11 +186,10 @@ export const ApplicationProvider = ({ children }) => {
 			noApplicationMsg,
 			createApplication,
 			deleteApplication,
+			updateApplication,
 			modalOpen,
 			error,
 			isLoading,
-			updateApplicationStatus,
-			updateApplicationFields,
 			applicationFilter,
 			setApplicationFilter,
 		],

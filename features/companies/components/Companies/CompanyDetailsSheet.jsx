@@ -32,7 +32,7 @@ import {
 import { useCompany } from "../../context/companyContext";
 
 export default function CompanyDetailsSheet({ item }) {
-	const { modalOpen, setModalOpen, updateCompanyFields } = useCompany();
+	const { modalOpen, setModalOpen, updateCompany } = useCompany();
 	const [isEditing, setIsEditing] = useState(false);
 	const [activeSection, setActiveSection] = useState(null);
 
@@ -46,7 +46,7 @@ export default function CompanyDetailsSheet({ item }) {
 			setActiveSection(hash);
 		}
 	}, []);
-	
+
 	const getInitialFormData = () => ({
 		name: item.name || "",
 		website: item.website || "",
@@ -86,7 +86,7 @@ export default function CompanyDetailsSheet({ item }) {
 				notes: formData.notes,
 			};
 
-			await updateCompanyFields(item.id, dataToUpdate);
+			await updateCompany(item.id, dataToUpdate);
 			toast.success("Company updated successfully");
 			setIsEditing(false);
 		} catch (error) {
@@ -153,7 +153,6 @@ export default function CompanyDetailsSheet({ item }) {
 					{(isEditing || item.linkedinUrl) && (
 						<>
 							<div className={styles.itemPosting}>
-
 								{isEditing ? (
 									<Input
 										value={formData.linkedinUrl}
@@ -185,7 +184,9 @@ export default function CompanyDetailsSheet({ item }) {
 							{isEditing ? (
 								<Input
 									value={formData.industry}
-									onChange={(e) => handleInputChange("industry", e.target.value)}
+									onChange={(e) =>
+										handleInputChange("industry", e.target.value)
+									}
 									placeholder={item.industry || "Industry"}
 								/>
 							) : (
@@ -197,13 +198,10 @@ export default function CompanyDetailsSheet({ item }) {
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
 							{isEditing ? (
-								formData.size &&
-								!companySizeOptions.includes(formData.size) ? (
+								formData.size && !companySizeOptions.includes(formData.size) ? (
 									<Input
 										value={formData.size}
-										onChange={(e) =>
-											handleInputChange("size", e.target.value)
-										}
+										onChange={(e) => handleInputChange("size", e.target.value)}
 										placeholder="Company size"
 									/>
 								) : (
@@ -240,7 +238,9 @@ export default function CompanyDetailsSheet({ item }) {
 							{isEditing ? (
 								<Input
 									value={formData.location}
-									onChange={(e) => handleInputChange("location", e.target.value)}
+									onChange={(e) =>
+										handleInputChange("location", e.target.value)
+									}
 									placeholder={item.location || "Location"}
 								/>
 							) : (
@@ -254,7 +254,11 @@ export default function CompanyDetailsSheet({ item }) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={companyStatus} update={updateCompanyFields} />
+					<ItemStatusSelect
+						id={item.id}
+						status={companyStatus}
+						update={updateCompany}
+					/>
 
 					{isEditing ? (
 						<div className={styles.contact}>
@@ -262,7 +266,9 @@ export default function CompanyDetailsSheet({ item }) {
 							<Textarea
 								id="description"
 								value={formData.description}
-								onChange={(e) => handleInputChange("description", e.target.value)}
+								onChange={(e) =>
+									handleInputChange("description", e.target.value)
+								}
 								placeholder={item.description || "Description"}
 								rows={6}
 							/>
@@ -279,10 +285,22 @@ export default function CompanyDetailsSheet({ item }) {
 						</div>
 					) : (
 						<>
-							<CompanySheetTextDropdown item={item} label="Notes" field='notes' activeSection={activeSection}
-								toggleSection={toggleSection} index={0} />
-							<CompanySheetTextDropdown item={item} label="Description" field='description' activeSection={activeSection}
-								toggleSection={toggleSection} index={1} />
+							<CompanySheetTextDropdown
+								item={item}
+								label="Notes"
+								field="notes"
+								activeSection={activeSection}
+								toggleSection={toggleSection}
+								index={0}
+							/>
+							<CompanySheetTextDropdown
+								item={item}
+								label="Description"
+								field="description"
+								activeSection={activeSection}
+								toggleSection={toggleSection}
+								index={1}
+							/>
 						</>
 					)}
 				</SheetHeader>
@@ -297,7 +315,9 @@ export default function CompanyDetailsSheet({ item }) {
 							))}
 						</div>
 					</div>
-				) : <div className={styles.contact}>No Connections</div>}
+				) : (
+					<div className={styles.contact}>No Connections</div>
+				)}
 
 				<SheetFooter>
 					{isEditing ? (

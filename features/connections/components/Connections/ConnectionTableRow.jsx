@@ -9,18 +9,18 @@ import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
 
 const ConnectionTableRow = ({ item }) => {
-	const { selectedItem, setSelectedItem, update } = useConnection();
+	const { selectedConnection, setSelectedConnection, setModalOpen, updateConnection } = useConnection();
 
 	const date = readableDate(item.createdAt);
 	const companyName =
 		typeof item.company === "string" ? item.company : item.company?.name;
-	const isActive = item.id === selectedItem?.id;
+	const isActive = item.id === selectedConnection?.id;
 
 	return (
 		<TableRow
 			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 			onClick={() => {
-				setSelectedItem(item);
+				setSelectedConnection(item);
 				setModalOpen(true);
 			}}>
 			<TableCell className={styles.tableCell}>
@@ -49,7 +49,7 @@ const ConnectionTableRow = ({ item }) => {
 				<div onClick={(event) => event.stopPropagation()}>
 					<ItemStatusSelect
 						id={item.id}
-						update={update}
+						update={updateConnection}
 						status={connectionStatus}
 					/>
 				</div>

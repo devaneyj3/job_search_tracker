@@ -32,7 +32,7 @@ import {
 import { useApplication } from "../../context/applicationContext";
 
 export default function ApplicationDetailsSheet({ item }) {
-	const { modalOpen, setModalOpen, updateApplicationFields } = useApplication();
+	const { modalOpen, setModalOpen, updateApplication } = useApplication();
 	const [isEditing, setIsEditing] = useState(false);
 
 	const [activeSection, setActiveSection] = useState(null);
@@ -69,7 +69,7 @@ export default function ApplicationDetailsSheet({ item }) {
 
 	const handleSave = async () => {
 		try {
-			if (!updateApplicationFields) {
+			if (!updateApplication) {
 				toast.error("Update function not available");
 				return;
 			}
@@ -103,7 +103,7 @@ export default function ApplicationDetailsSheet({ item }) {
 				notes: formData.notes,
 			};
 
-			await updateApplicationFields(item.id, dataToUpdate);
+			await updateApplication(item.id, dataToUpdate);
 			toast.success("Application updated successfully");
 			setIsEditing(false);
 		} catch (error) {
@@ -225,7 +225,7 @@ export default function ApplicationDetailsSheet({ item }) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={applicationStatus} update={updateApplicationFields} />
+					<ItemStatusSelect id={item.id} status={applicationStatus} update={updateApplication} />
 
 					{isEditing ? (
 						<div className={styles.contact}>

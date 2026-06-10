@@ -9,16 +9,16 @@ import { useCompany } from "../../context/companyContext";
 import { companyStatus } from "@/Constants";
 
 const CompanyTableRow = ({ item }) => {
-	const { selectedItem, setSelectedItem, setModalOpen, update } = useCompany;
+	const { selectedCompany, setSelectedCompany, setModalOpen, updateCompany } = useCompany();
 	const date = readableDate(item.createdAt);
-	const isActive = item.id === selectedItem?.id;
+	const isActive = item.id === selectedCompany?.id;
 	const connectionCount = item.connections?.length ?? 0;
 
 	return (
 		<TableRow
 			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 			onClick={() => {
-				setSelectedItem(item);
+				setSelectedCompany(item);
 				setModalOpen(true);
 			}}>
 			<TableCell className={styles.tableCell}>
@@ -45,7 +45,7 @@ const CompanyTableRow = ({ item }) => {
 				<div onClick={(event) => event.stopPropagation()}>
 					<ItemStatusSelect
 						id={item.id}
-						update={update}
+						update={updateCompany}
 						status={companyStatus}
 					/>
 				</div>

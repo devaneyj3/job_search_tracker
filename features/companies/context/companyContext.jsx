@@ -133,58 +133,29 @@ export const CompanyProvider = ({ children }) => {
 		[selectedCompany],
 	);
 
-	const updateCompanyStatus = useCallback(
-		async (companyId, status) => {
-			const response = await fetch("/api/company", {
-				method: "PATCH",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					id: companyId,
-					status,
-				}),
-			});
-
-			if (!response.ok) throw new Error(`Response status: ${response.status}`);
-			setCompanies((prevCompanies) =>
-				prevCompanies.map((company) =>
-					company.id === companyId ? { ...company, status } : company,
-				),
-			);
-
-			setSelectedCompany((prev) => (prev ? { ...prev, status } : prev));
-		},
-		[session?.user?.id],
-	);
-
-	const updateCompanyFields = useCallback(
+	const updateCompany = useCallback(
 		async (companyId, data) => {
 			const response = await fetch("/api/company", {
 				method: "PATCH",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					id: companyId,
-					fields: data,
+					data,
 				}),
 			});
 
 			if (!response.ok) throw new Error(`Response status: ${response.status}`);
-			const result = await response.json();
-			const updatedCompany = result.company;
-
 			setCompanies((prevCompanies) =>
 				prevCompanies.map((company) =>
-					company.id === companyId ? updatedCompany : company,
+					company.id === companyId ? { ...company, data } : company,
 				),
 			);
 
-			setSelectedCompany((prev) =>
-				prev && prev.id === companyId ? updatedCompany : prev,
-			);
-
-			return updatedCompany;
+			setSelectedCompany((prev) => (prev ? { ...prev, data } : prev));
 		},
 		[session?.user?.id],
 	);
+
 
 	const values = useMemo(
 		() => ({
@@ -199,8 +170,7 @@ export const CompanyProvider = ({ children }) => {
 			setModalOpen,
 			error,
 			isLoading,
-			updateCompanyStatus,
-			updateCompanyFields,
+			updateCompany,
 			companyFilter,
 			setCompanyFilter,
 		}),
@@ -213,8 +183,7 @@ export const CompanyProvider = ({ children }) => {
 			modalOpen,
 			error,
 			isLoading,
-			updateCompanyStatus,
-			updateCompanyFields,
+			updateCompany,
 			companyFilter,
 			setCompanyFilter,
 		],

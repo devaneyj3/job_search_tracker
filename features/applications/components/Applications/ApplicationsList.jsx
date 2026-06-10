@@ -13,7 +13,8 @@ import {
 import { useApplication } from "../../context/applicationContext";
 
 export default function ApplicationsList({ filteredApplications }) {
-	const { selectedItem, items, noItemMsg } = useApplication();
+const { selectedApplication, applications, noApplicationMsg } =
+	useApplication();
 	return (
 		<main className={styles.container}>
 			<div className={styles.row}>
@@ -22,7 +23,7 @@ export default function ApplicationsList({ filteredApplications }) {
 				</h1>
 				<AddApplicationButton />
 			</div>
-			{!noItemMsg && items.length > 0 ? (
+			{!noApplicationMsg && applications.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>
 						<TableHeader>
@@ -44,9 +45,9 @@ export default function ApplicationsList({ filteredApplications }) {
 					</Table>
 				</div>
 			) : (
-				<div>{noItemMsg}</div>
+				<div>{noApplicationMsg}</div>
 			)}
-			{selectedItem && <ApplicationDetailsSheet item={selectedItem} />}
+			{selectedApplication && <ApplicationDetailsSheet item={selectedApplication} />}
 		</main>
 	);
 }

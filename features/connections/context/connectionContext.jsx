@@ -202,7 +202,7 @@ export const ConnectionProvider = ({ children }) => {
 		company: updated.company ?? existing.company,
 	});
 
-	const updateConnectionFields = useCallback(async (idOrFields, fields) => {
+	const updateConnection = useCallback(async (idOrFields, fields) => {
 		const updateFields =
 			typeof idOrFields === "object"
 				? idOrFields
@@ -263,7 +263,7 @@ export const ConnectionProvider = ({ children }) => {
 			setModalOpen,
 			error,
 			isLoading,
-			updateConnectionFields,
+			updateConnection,
 			connectionFilter,
 			setConnectionFilter,
 		}),
@@ -276,7 +276,7 @@ export const ConnectionProvider = ({ children }) => {
 			modalOpen,
 			error,
 			isLoading,
-			updateConnectionFields,
+			updateConnection,
 			connectionFilter,
 			setConnectionFilter,
 		],

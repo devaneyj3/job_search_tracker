@@ -13,7 +13,7 @@ import {
 } from "@/features/shared/ui/table";
 
 export default function CompaniesList({ filteredCompanies }) {
-	const { selectedItem, items, noItemMsg } = useCompany();
+	const { selectedCompany, companies, noCompanyMsg } = useCompany();
 
 	return (
 		<main className={styles.container}>
@@ -23,7 +23,7 @@ export default function CompaniesList({ filteredCompanies }) {
 				</h1>
 				<AddCompanyButton />
 			</div>
-			{!noItemMsg && items.length > 0 ? (
+			{!noCompanyMsg && companies.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>
 						<TableHeader>
@@ -45,9 +45,9 @@ export default function CompaniesList({ filteredCompanies }) {
 					</Table>
 				</div>
 			) : (
-				<div>{noItemMsg}</div>
+				<div>{noCompanyMsg}</div>
 			)}
-			{selectedItem && <CompanyDetailsSheet item={selectedItem} />}
+			{selectedCompany && <CompanyDetailsSheet item={selectedCompany} />}
 		</main>
 	);
 }

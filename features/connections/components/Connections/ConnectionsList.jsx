@@ -1,6 +1,5 @@
 import React from "react";
 import { useConnection } from "@/features/connections/context/connectionContext";
-import { connectionStatus } from "@/Constants";
 import AddConnectionButton from "./AddConnectionButton";
 import styles from "@/styles/ItemList.module.scss";
 import ConnectionTableRow from "./ConnectionTableRow";
@@ -14,11 +13,7 @@ import {
 } from "@/features/shared/ui/table";
 
 export default function ConnectionsList({ filteredConnections }) {
-	const {
-		selectedItem,
-		items,
-		noItemMsg
-	} = useConnection();
+	const { selectedConnection, connections, noConnectionMsg } = useConnection();
 
 	return (
 		<main className={styles.container}>
@@ -28,7 +23,7 @@ export default function ConnectionsList({ filteredConnections }) {
 				</h1>
 				<AddConnectionButton />
 			</div>
-			{!noItemMsg && items.length > 0 ? (
+			{!noConnectionMsg && connections.length > 0 ? (
 				<div className={styles.tableWrapper}>
 					<Table className={styles.table}>
 						<TableHeader>
@@ -55,11 +50,11 @@ export default function ConnectionsList({ filteredConnections }) {
 					</Table>
 				</div>
 			) : (
-				<div>{noItemMsg}</div>
+				<div>{noConnectionMsg}</div>
 			)}
-			{selectedItem && (
+			{selectedConnection && (
 				<ConnectionDetailsSheet
-					item={selectedItem}
+					item={selectedConnection}
 				/>
 			)}
 		</main>

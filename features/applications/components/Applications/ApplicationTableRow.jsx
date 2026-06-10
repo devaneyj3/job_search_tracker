@@ -7,23 +7,24 @@ import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect"
 import { readableDate } from "@/features/shared/lib/utils";
 import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { applicationStatus } from "@/Constants";
+import { useApplication } from "../../context/applicationContext";
 
 	const ApplicationTableRow = ({ item }) => {
 		const {
-		selectedItem,
-		setSelectedItem,
+		selectedApplication,
+		setSelectedApplication,
 		setModalOpen,
-		update
+		updateApplication
 	} = useApplication();
 		const date = readableDate(item.createdAt);
 		const displayName = item.company?.name || "Unknown Company";
-		const isActive = item.id === selectedItem?.id;
+		const isActive = item.id === selectedApplication?.id;
 
 		return (
 			<TableRow
 				className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 				onClick={() => {
-					setSelectedItem(item);
+					setSelectedApplication(item);
 					setModalOpen(true);
 				}}>
 				<TableCell className={styles.tableCell}>
@@ -48,7 +49,7 @@ import { applicationStatus } from "@/Constants";
 				</TableCell>
 				<TableCell className={styles.tableCell}>
 					<div onClick={(event) => event.stopPropagation()}>
-						<ItemStatusSelect id={item.id} update={update} status={applicationStatus} />
+						<ItemStatusSelect id={item.id} update={updateApplication} status={applicationStatus} />
 					</div>
 				</TableCell>
 			</TableRow>
