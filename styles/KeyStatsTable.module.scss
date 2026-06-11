@@ -6,6 +6,10 @@
   overflow: hidden;
   box-shadow: $shadow-sm;
 }
+
+.embedded {
+  overflow: hidden;
+}
 .tableWrap {
   overflow-x: auto;
 }

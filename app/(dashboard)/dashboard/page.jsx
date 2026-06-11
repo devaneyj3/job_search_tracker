@@ -1,4 +1,4 @@
-import OverviewDashboard from "@/features/shared/components/dashboard/OverviewDashboard";
+import OverviewDashboard from "@/features/dashboard/OverviewDashboard";
 import React from "react";
 
 export const metadata = {

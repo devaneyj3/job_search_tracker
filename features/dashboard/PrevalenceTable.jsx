@@ -2,12 +2,18 @@
 import React from "react";
 import styles from "@/styles/PrevalenceTable.module.scss";
 
-export default function PrevalenceTable({ rows = [] }) {
+export default function PrevalenceTable({
+	rows = [],
+	hideHeader = false,
+	embedded = false,
+}) {
 	return (
-		<section className={styles.card}>
-			<div className={styles.header}>
-				How common is following up? (with sources)
-			</div>
+		<section className={embedded ? styles.embedded : styles.card}>
+			{hideHeader ? null : (
+				<div className={styles.header}>
+					How common is following up? (with sources)
+				</div>
+			)}
 			<div className={styles.tableWrap}>
 				<table className={styles.table}>
 					<thead>

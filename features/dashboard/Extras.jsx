@@ -2,10 +2,10 @@
 import React from "react";
 import styles from "@/styles/Extras.module.scss";
 
-export default function Extras({ items = [] }) {
+export default function Extras({ items = [], showTitle = true }) {
 	return (
 		<section className={styles.block}>
-			<h2 className={styles.h2}>Extra reading</h2>
+			{showTitle ? <h2 className={styles.h2}>Extra reading</h2> : null}
 			<ul className={styles.ul}>
 				{items.map((e, i) => (
 					<li key={i}>

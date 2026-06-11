@@ -2,10 +2,12 @@
 import React from "react";
 import styles from "@/styles/WhatToSend.module.scss";
 
-export default function WhatToSend() {
+export default function WhatToSend({ showTitle = true }) {
 	return (
 		<section className={styles.block}>
-			<h2 className={styles.h2}>What to send (keep it tight)</h2>
+			{showTitle ? (
+				<h2 className={styles.h2}>What to send (keep it tight)</h2>
+			) : null}
 			<ul className={styles.ul}>
 				<li>
 					<span className={styles.strong}>Subject:</span> “Follow‑up on

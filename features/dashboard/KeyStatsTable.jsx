@@ -2,9 +2,9 @@
 import React from "react";
 import styles from "@/styles/KeyStatsTable.module.scss";
 
-export default function KeyStatsTable({ rows = [] }) {
+export default function KeyStatsTable({ rows = [], embedded = false }) {
 	return (
-		<section className={styles.card}>
+		<section className={embedded ? styles.embedded : styles.card}>
 			<div className={styles.tableWrap}>
 				<table className={styles.table}>
 					<thead>

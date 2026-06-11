@@ -3,10 +3,12 @@ import React from "react";
 import styles from "@/styles/Cadence.module.scss";
 import Link from "next/link";
 
-export default function Cadence() {
+export default function Cadence({ showTitle = true }) {
 	return (
 		<section className={styles.block}>
-			<h2 className={styles.h2}>Recommended follow‑up cadence</h2>
+			{showTitle ? (
+				<h2 className={styles.h2}>Recommended follow‑up cadence</h2>
+			) : null}
 			<ol className={styles.ol}>
 				<li>
 					<span className={styles.strong}>Application day:</span> Submit via ATS

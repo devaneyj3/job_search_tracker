@@ -2,10 +2,12 @@
 import React from "react";
 import styles from "@/styles/Tips.module.scss";
 
-export default function Tips() {
+export default function Tips({ showTitle = true }) {
 	return (
 		<section className={styles.block}>
-			<h2 className={styles.h2}>Tips that move the needle</h2>
+			{showTitle ? (
+				<h2 className={styles.h2}>Tips that move the needle</h2>
+			) : null}
 			<ul className={styles.ul}>
 				<li>
 					<span className={styles.strong}>Subject lines matter:</span> Use a
