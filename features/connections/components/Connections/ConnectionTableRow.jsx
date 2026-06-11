@@ -8,47 +8,58 @@ import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
 
-const ConnectionTableRow = ({ item }) => {
-	const { selectedConnection, setSelectedConnection, setModalOpen, updateConnection } = useConnection();
+const ConnectionTableRow = ({ connection }) => {
+	const {
+		selectedConnection,
+		setSelectedConnection,
+		setModalOpen,
+		updateConnection,
+	} = useConnection();
 
-	const date = readableDate(item.createdAt);
-	const companyName =
-		typeof item.company === "string" ? item.company : item.company?.name;
-	const isActive = item.id === selectedConnection?.id;
+	const date = readableDate(connection.createdAt);
+	const isActive = connection.id === selectedConnection?.id;
 
 	return (
 		<TableRow
 			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
 			onClick={() => {
-				setSelectedConnection(item);
+				setSelectedConnection(connection);
 				setModalOpen(true);
 			}}>
 			<TableCell className={styles.tableCell}>
-				<div className={styles.companyName}>{item.name || "N/A"}</div>
+				<div className={styles.companyName}>
+					{connection.company?.name || "N/A"}
+				</div>
 			</TableCell>
-			<TableCell className={styles.tableCell}>{companyName || "N/A"}</TableCell>
 			<TableCell className={styles.tableCell}>
-				{item.position || "N/A"}
+				{connection.company?.name || "N/A"}
 			</TableCell>
-			<TableCell className={styles.tableCell}>{item.email || "N/A"}</TableCell>
-			<TableCell className={styles.tableCell}>{item.emailCount ?? 0}</TableCell>
 			<TableCell className={styles.tableCell}>
-				{item.emailSent && item.lastEmailDate
-					? readableDate(item.lastEmailDate)
+				{connection.position || "N/A"}
+			</TableCell>
+			<TableCell className={styles.tableCell}>
+				{connection.email || "N/A"}
+			</TableCell>
+			<TableCell className={styles.tableCell}>
+				{connection.emailCount ?? 0}
+			</TableCell>
+			<TableCell className={styles.tableCell}>
+				{connection.emailSent && connection.lastEmailDate
+					? readableDate(connection.lastEmailDate)
 					: "—"}
 			</TableCell>
 			<TableCell className={styles.tableCell}>
-				{item.emailSent ? "Yes" : "No"}
+				{connection.emailSent ? "Yes" : "No"}
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				<Badge className={styles.tableStatus}>
-					{item.status} on {date}
+					{connection.status} on {date}
 				</Badge>
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				<div onClick={(event) => event.stopPropagation()}>
 					<ItemStatusSelect
-						id={item.id}
+						id={connection.id}
 						update={updateConnection}
 						status={connectionStatus}
 					/>

@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en" className={plex.variable}>
+		<html lang="en" className={plex.variable} suppressHydrationWarning>
 			<Providers>
 				<body
 					className={plex.className}
