@@ -43,6 +43,11 @@ export type VerificationToken = Prisma.VerificationTokenModel
  */
 export type Connection = Prisma.ConnectionModel
 /**
+ * Model Email
+ * 
+ */
+export type Email = Prisma.EmailModel
+/**
  * Model Company
  * 
  */

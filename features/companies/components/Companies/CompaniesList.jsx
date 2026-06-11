@@ -14,6 +14,7 @@ import {
 
 export default function CompaniesList({ filteredCompanies }) {
 	const { selectedCompany, companies, noCompanyMsg } = useCompany();
+	console.log(companies);
 
 	return (
 		<main className={styles.container}>

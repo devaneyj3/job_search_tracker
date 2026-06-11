@@ -15,7 +15,6 @@ export async function getCompaniesByUserId(userId) {
 				},
 			},
 		});
-
 		return companies;
 	} catch (error) {
 		console.error("Error fetching companies by userId:", error);
@@ -67,16 +66,16 @@ export async function createNewCompany({
 		if (error.code === "P2002") {
 			// Check which field caused the unique constraint violation
 			const target = error.meta?.target || [];
-			
+
 			// If the constraint is on 'id', it means the sequence is out of sync
 			if (target.includes("id") || target.length === 0) {
 				throw new Error("Database sequence error. Please contact support or reset the database sequence.");
 			}
-			
+
 			if (target.includes("name")) {
 				throw new Error("A company with this name already exists for your account");
 			}
-			
+
 			throw new Error(`A company with this ${target.join(", ")} already exists`);
 		}
 		if (error.code === "P2003") {

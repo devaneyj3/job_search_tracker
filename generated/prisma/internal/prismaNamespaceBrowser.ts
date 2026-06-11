@@ -56,6 +56,7 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Connection: 'Connection',
+  Email: 'Email',
   Company: 'Company',
   Application: 'Application'
 } as const
@@ -146,9 +147,8 @@ export const ConnectionScalarFieldEnum = {
   status: 'status',
   statusDate: 'statusDate',
   emailSent: 'emailSent',
-  firstEmailDate: 'firstEmailDate',
-  lastEmailDate: 'lastEmailDate',
   emailCount: 'emailCount',
+  lastEmailDate: 'lastEmailDate',
   responded: 'responded',
   responseDate: 'responseDate',
   notes: 'notes',
@@ -159,6 +159,20 @@ export const ConnectionScalarFieldEnum = {
 } as const
 
 export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
+export const EmailScalarFieldEnum = {
+  id: 'id',
+  connectionId: 'connectionId',
+  subject: 'subject',
+  body: 'body',
+  sequence: 'sequence',
+  sent: 'sent',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailScalarFieldEnum = (typeof EmailScalarFieldEnum)[keyof typeof EmailScalarFieldEnum]
 
 
 export const CompanyScalarFieldEnum = {

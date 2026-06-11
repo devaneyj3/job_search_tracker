@@ -12,6 +12,9 @@ export async function getConnectionsByUserId(userId) {
 			include: {
 				company: true
 			},
+			include: {
+				emails: true
+			},
 		});
 
 		return connections;
@@ -63,7 +66,10 @@ export async function createNewConnection({
 				notes,
 			},
 			include: {
-				company: true,
+				company: true
+			},
+			include: {
+				emails: true
 			},
 		});
 
@@ -126,7 +132,10 @@ export async function updateConnection(connectionId, data) {
 				...(data.status !== undefined ? { statusDate: new Date() } : {}),
 			},
 			include: {
-				company: true,
+				company: true
+			},
+			include: {
+				emails: true
 			},
 		});
 

@@ -15,6 +15,8 @@ import {
 export default function ConnectionsList({ filteredConnections }) {
 	const { selectedConnection, connections, noConnectionMsg } = useConnection();
 
+	console.log(connections);
+
 	return (
 		<main className={styles.container}>
 			<div className={styles.row}>
@@ -41,10 +43,7 @@ export default function ConnectionsList({ filteredConnections }) {
 						</TableHeader>
 						<TableBody>
 							{filteredConnections.map((item) => (
-								<ConnectionTableRow
-									key={item.id}
-									item={item}
-								/>
+								<ConnectionTableRow key={item.id} item={item} />
 							))}
 						</TableBody>
 					</Table>
@@ -53,9 +52,7 @@ export default function ConnectionsList({ filteredConnections }) {
 				<div>{noConnectionMsg}</div>
 			)}
 			{selectedConnection && (
-				<ConnectionDetailsSheet
-					item={selectedConnection}
-				/>
+				<ConnectionDetailsSheet item={selectedConnection} />
 			)}
 		</main>
 	);

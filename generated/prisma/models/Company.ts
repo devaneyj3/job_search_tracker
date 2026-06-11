@@ -682,6 +682,10 @@ export type CompanyUpdateOneWithoutConnectionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutConnectionsInput, Prisma.CompanyUpdateWithoutConnectionsInput>, Prisma.CompanyUncheckedUpdateWithoutConnectionsInput>
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type CompanyCreateNestedOneWithoutApplicationsInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutApplicationsInput, Prisma.CompanyUncheckedCreateWithoutApplicationsInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutApplicationsInput

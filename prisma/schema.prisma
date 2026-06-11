@@ -67,37 +67,60 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-
 model Connection {
-  id                Int          @id @default(autoincrement())
-  userId            String       @db.Uuid
-  companyId         Int?
-  name              String
-  email             String
-  position          String
-  linkedinUrl       String
-  connectedDate     DateTime?    @default(now()) @db.Timestamp(6)
-  status            String
-  statusDate        DateTime?
-  emailSent         Boolean?      @default(false)
-  firstEmailDate    DateTime?    @default(now()) @db.Timestamp(6)
-  lastEmailDate     DateTime?    @default(now()) @db.Timestamp(6)
-  emailCount        Int?          @default(0)
-  responded         Boolean?      @default(false)
-  responseDate      DateTime?    @db.Timestamp(6)
-  notes             String?
-  archived          Boolean?      @default(false)
-  archivedDate      DateTime?    @db.Timestamp(6)
-  createdAt         DateTime?     @default(now()) @db.Timestamp(6)
-  updatedAt         DateTime?     @default(now()) @db.Timestamp(6)
-  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company           Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id              Int      @id @default(autoincrement())
 
-  @@index([userId])
-  @@index([emailSent])
-  @@index([connectedDate])
-  @@index([companyId])
-  @@index([status])
+  userId          String   @db.Uuid
+  companyId       Int?
+
+  name            String
+  email           String
+  position        String
+  linkedinUrl     String
+
+  connectedDate   DateTime? @default(now())
+
+  status          String
+  statusDate      DateTime?
+
+  emailSent       Boolean   @default(false)
+  emailCount      Int       @default(0)
+  lastEmailDate   DateTime?
+
+  responded       Boolean   @default(false)
+  responseDate    DateTime?
+
+  notes           String?
+
+  archived        Boolean   @default(false)
+  archivedDate    DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  emails          Email[]
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company         Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+model Email {
+  id            Int         @id @default(autoincrement())
+
+  connectionId  Int
+
+  subject       String
+  body          String
+
+  sequence      Int
+
+  sent          Boolean     @default(false)
+  sentAt        DateTime?   @db.Timestamp(6)
+
+  createdAt     DateTime    @default(now())
+
+  connection    Connection  @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@index([connectionId])
 }
 
 model Company {
