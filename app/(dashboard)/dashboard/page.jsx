@@ -1,11 +1,11 @@
-import CompaniesDashboard from "@/features/companies/components/Companies/CompaniesDashboard";
+import OverviewDashboard from "@/features/shared/components/dashboard/OverviewDashboard";
 import React from "react";
 
 export const metadata = {
-	title: "Dashboard | Company Tracker",
-	description: "Manage your companies",
+	title: "Overview | Job Tracker",
+	description: "Your job search dashboard",
 };
 
 export default function DashboardPage() {
-	return <CompaniesDashboard />;
+	return <OverviewDashboard />;
 }

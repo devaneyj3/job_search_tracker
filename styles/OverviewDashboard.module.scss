@@ -1,0 +1,200 @@
+.container {
+  --overview-ink: #14120f;
+  --overview-muted: #57534e;
+  --overview-accent: #0f766e;
+  --overview-accent-soft: rgba(15, 118, 110, 0.1);
+  --overview-border: rgba(28, 25, 23, 0.08);
+
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem) 3rem;
+  color: var(--overview-ink);
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.35rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.quickNav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.navCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--overview-border);
+  background: #fffefb;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    border-color: rgba(15, 118, 110, 0.35);
+    box-shadow: 0 8px 24px -12px rgba(15, 118, 110, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+.navCardValue {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--overview-accent);
+}
+
+.navCardLabel {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.navCardHint {
+  font-size: 0.8125rem;
+  color: var(--overview-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--overview-muted);
+  margin: 0;
+}
+
+.sectionLink {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--overview-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.metricPill {
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--overview-border);
+}
+
+.metricPillValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.metricPillLabel {
+  font-size: 0.8125rem;
+  color: var(--overview-muted);
+  margin-top: 0.15rem;
+}
+
+.outreachGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.outreachCard {
+  padding: 1rem;
+  border-radius: 0.65rem;
+  background: var(--overview-accent-soft);
+  border: 1px solid rgba(15, 118, 110, 0.15);
+}
+
+.outreachValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--overview-accent);
+}
+
+.outreachLabel {
+  font-size: 0.8125rem;
+  color: var(--overview-muted);
+  margin-top: 0.2rem;
+}
+
+.attentionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attentionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--overview-border);
+  font-size: 0.875rem;
+}
+
+.attentionMeta {
+  color: var(--overview-muted);
+  font-size: 0.8125rem;
+}
+
+.emptyHint {
+  color: var(--overview-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
