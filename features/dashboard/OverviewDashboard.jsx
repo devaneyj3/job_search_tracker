@@ -52,9 +52,7 @@ export default function OverviewDashboard() {
 	const isLoading =
 		companiesLoading || applicationsLoading || connectionsLoading;
 	const hasData =
-		companies.length > 0 ||
-		applications.length > 0 ||
-		connections.length > 0;
+		companies.length > 0 || applications.length > 0 || connections.length > 0;
 
 	const counts = {
 		companies: countActive(companies),
@@ -82,7 +80,7 @@ export default function OverviewDashboard() {
 			.map((connection) => ({
 				id: `connection-${connection.id}`,
 				label: connection.name,
-				action: "Send outreach",
+				action: "Send Intial Email",
 				meta:
 					typeof connection.company === "object"
 						? connection.company?.name
@@ -135,26 +133,28 @@ export default function OverviewDashboard() {
 				<div className={styles.layout}>
 					<div className={styles.primary}>
 						<div className={styles.navGrid}>
-							{NAV_ITEMS.map(({ href, label, description, icon: Icon, key }) => (
-								<Link key={key} href={href} className={styles.navCard}>
-									<span className={styles.navIcon} aria-hidden>
-										<Icon size={22} strokeWidth={1.75} />
-									</span>
-									<div className={styles.navBody}>
-										<div className={styles.navTop}>
-											<span className={styles.navLabel}>{label}</span>
-											<span className={styles.navCount}>{counts[key]}</span>
+							{NAV_ITEMS.map(
+								({ href, label, description, icon: Icon, key }) => (
+									<Link key={key} href={href} className={styles.navCard}>
+										<span className={styles.navIcon} aria-hidden>
+											<Icon size={22} strokeWidth={1.75} />
+										</span>
+										<div className={styles.navBody}>
+											<div className={styles.navTop}>
+												<span className={styles.navLabel}>{label}</span>
+												<span className={styles.navCount}>{counts[key]}</span>
+											</div>
+											<p className={styles.navDescription}>{description}</p>
 										</div>
-										<p className={styles.navDescription}>{description}</p>
-									</div>
-									<ArrowRight
-										className={styles.navArrow}
-										size={18}
-										strokeWidth={2}
-										aria-hidden
-									/>
-								</Link>
-							))}
+										<ArrowRight
+											className={styles.navArrow}
+											size={18}
+											strokeWidth={2}
+											aria-hidden
+										/>
+									</Link>
+								),
+							)}
 						</div>
 
 						<div className={styles.statStrip}>
@@ -183,7 +183,9 @@ export default function OverviewDashboard() {
 													<span className={styles.focusAction}>
 														{item.action}
 													</span>
-													<span className={styles.focusLabel}>{item.label}</span>
+													<span className={styles.focusLabel}>
+														{item.label}
+													</span>
 												</div>
 												<span className={styles.focusMeta}>{item.meta}</span>
 											</Link>
@@ -208,7 +210,11 @@ export default function OverviewDashboard() {
 									Cadence, email templates, and research-backed tips.
 								</p>
 							</div>
-							<ArrowRight size={18} className={styles.playbookArrow} aria-hidden />
+							<ArrowRight
+								size={18}
+								className={styles.playbookArrow}
+								aria-hidden
+							/>
 						</Link>
 					</aside>
 				</div>
