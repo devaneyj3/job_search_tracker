@@ -23,14 +23,18 @@ export const ApplicationProvider = ({ children }) => {
 	const [applicationFilter, setApplicationFilter] = useState("All");
 
 	useEffect(() => {
-		const getApplications = async () => {
-			if (!session?.user?.id) {
-				setApplications([]);
-				setSelectedApplication(null);
-				setIsLoading(false);
-				setError("No User session");
-				return;
-			}
+		if (status === "loading") {
+			setIsLoading(true);
+			return;
+		}
+		if (!session?.user?.id) {
+			setApplications([]);
+			setSelectedApplication(null);
+			setIsLoading(false);
+			setError("No User session");
+			return;
+		}
+		const load = async () => {
 			setIsLoading(true);
 			setError(null);
 			try {
@@ -56,22 +60,8 @@ export const ApplicationProvider = ({ children }) => {
 				setIsLoading(false);
 			}
 		};
-
-		if (status === "loading") {
-			setIsLoading(true);
-			return;
-		}
-
-		if (status === "authenticated") {
-			getApplications();
-		} else {
-			setApplications([]);
-			setSelectedApplication(null);
-			setIsLoading(false);
-			setError(null);
-			setNoApplicationMsg("");
-		}
-	}, [session?.user?.id, status]);
+		load();
+	}, [(session?.user?.id, status)]);
 
 	const createApplication = useCallback(
 		async (newApplication) => {
@@ -85,16 +75,10 @@ export const ApplicationProvider = ({ children }) => {
 			if (!res.ok) {
 				throw new Error(data.error || "Failed to save application to database");
 			}
-
-			let nextApplications;
-			setApplications((prev) => {
-				nextApplications = [data.application, ...prev];
-				return nextApplications;
-			});
+			setApplications((prev) => [data.application, ...prev]);
 			setModalOpen(false);
 			setSelectedApplication(data.application);
 			setNoApplicationMsg("");
-
 			return data.application;
 		},
 		[session?.user?.id],
@@ -111,24 +95,12 @@ export const ApplicationProvider = ({ children }) => {
 			const deletedApplicationId = await res.json();
 			if (!res.ok) throw new Error("Failed to delete application");
 
-			setApplications((prev) => {
-				const next = prev.filter(
-					(application) => application.id !== deletedApplicationId.id,
-				);
-				if (next.length === 0) {
-					setNoApplicationMsg("You haven't added any applications yet");
-					setSelectedApplication(null);
-				} else if (
-					selectedApplication &&
-					selectedApplication.id === deletedApplicationId.id
-				) {
-					setSelectedApplication(next[0] ?? null);
-				}
-				return next;
-			});
+			setApplications((prev) =>
+				prev.filter((a) => a.id !== deletedApplicationId.id),
+			);
+			setSelectedApplication((prev) => (prev.id === id ? null : prev));
 
 			setModalOpen(false);
-			return deletedApplicationId;
 		},
 		[selectedApplication],
 	);

@@ -9,18 +9,11 @@ import {
 	useCallback,
 } from "react";
 import { useSession } from "next-auth/react";
-import { useCompany } from "@/features/companies/context/companyContext";
 
 export const ConnectionContext = createContext({});
 
 export const ConnectionProvider = ({ children }) => {
 	const { data: session, status } = useSession();
-	const {
-		companies,
-		isLoading: isCompaniesLoading,
-		setCompanies,
-		setSelectedCompany,
-	} = useCompany();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [connections, setConnections] = useState([]);
 	const [error, setError] = useState(null);
@@ -29,15 +22,26 @@ export const ConnectionProvider = ({ children }) => {
 	const [noConnectionMsg, setNoConnectionMsg] = useState("");
 	const [connectionFilter, setConnectionFilter] = useState("All");
 
+	console.log(connections);
+	const mergeConnectionUpdate = (existing, updated) => ({
+		...existing,
+		...updated,
+		company: updated.company ?? existing.company,
+	});
+
 	useEffect(() => {
-		const getConnections = async () => {
-			if (!session?.user?.id) {
-				setConnections([]);
-				setSelectedConnection(null);
-				setIsLoading(false);
-				setError("No User session");
-				return;
-			}
+		if (status === "loading") {
+			setIsLoading(true);
+			return;
+		}
+		if (!session?.user?.id) {
+			setConnections([]);
+			setSelectedConnection(null);
+			setIsLoading(false);
+			setError("No User session");
+			return;
+		}
+		const load = async () => {
 			setIsLoading(true);
 			setError(null);
 			try {
@@ -64,20 +68,7 @@ export const ConnectionProvider = ({ children }) => {
 			}
 		};
 
-		if (status === "loading") {
-			setIsLoading(true);
-			return;
-		}
-
-		if (status === "authenticated") {
-			getConnections();
-		} else {
-			setConnections([]);
-			setSelectedConnection(null);
-			setIsLoading(false);
-			setError(null);
-			setNoConnectionMsg("");
-		}
+		load();
 	}, [session?.user?.id, status]);
 
 	const createConnection = useCallback(
@@ -90,59 +81,18 @@ export const ConnectionProvider = ({ children }) => {
 					userId: session?.user?.id,
 				}),
 			});
-
 			const data = await res.json();
 			if (!res.ok) {
 				throw new Error(data.error || "Failed to save connection to database");
 			}
-
-			let nextConnections;
-			setConnections((prev) => {
-				nextConnections = [data.connection, ...prev];
-				return nextConnections;
-			});
-
-			// Keep company context in sync so new connection appears immediately in company UI.
-			setCompanies((prevCompanies) =>
-				prevCompanies.map((company) => {
-					if (company.id !== data.connection.companyId) return company;
-					const currentConnections = company.connections ?? [];
-					const alreadyExists = currentConnections.some(
-						(connection) => connection.id === data.connection.id,
-					);
-					return alreadyExists
-						? company
-						: {
-								...company,
-								connections: [data.connection, ...currentConnections],
-							};
-				}),
-			);
-			setSelectedCompany((prevCompany) => {
-				if (!prevCompany || prevCompany.id !== data.connection.companyId) {
-					return prevCompany;
-				}
-				const currentConnections = prevCompany.connections ?? [];
-				const alreadyExists = currentConnections.some(
-					(connection) => connection.id === data.connection.id,
-				);
-				return alreadyExists
-					? prevCompany
-					: {
-							...prevCompany,
-							connections: [data.connection, ...currentConnections],
-						};
-			});
-
+			setConnections((prev) => [data.connection, ...prev]);
 			setModalOpen(false);
 			setSelectedConnection(data.connection);
 			setNoConnectionMsg("");
-
 			return data.connection;
 		},
-		[session?.user?.id, setCompanies, setSelectedCompany],
+		[session?.user?.id],
 	);
-
 	const deleteConnection = useCallback(
 		async (id) => {
 			const res = await fetch("/api/connection", {
@@ -154,53 +104,15 @@ export const ConnectionProvider = ({ children }) => {
 			const deletedConnectionId = await res.json();
 			if (!res.ok) throw new Error("Failed to delete connection");
 
-			setConnections((prev) => {
-				const next = prev.filter(
-					(connection) => connection.id !== deletedConnectionId.id,
-				);
-				if (next.length === 0) {
-					setNoConnectionMsg("You haven't added any connections yet");
-					setSelectedConnection(null);
-				} else if (
-					selectedConnection &&
-					selectedConnection.id === deletedConnectionId.id
-				) {
-					setSelectedConnection(next[0] ?? null);
-				}
-				return next;
-			});
-
-			// Remove deleted connection from all company.connection arrays.
-			setCompanies((prevCompanies) =>
-				prevCompanies.map((company) => ({
-					...company,
-					connections: (company.connections ?? []).filter(
-						(connection) => connection.id !== deletedConnectionId.id,
-					),
-				})),
+			setConnections((prev) =>
+				prev.filter((c) => c.id !== deletedConnectionId.id),
 			);
-			setSelectedCompany((prevCompany) =>
-				prevCompany
-					? {
-							...prevCompany,
-							connections: (prevCompany.connections ?? []).filter(
-								(connection) => connection.id !== deletedConnectionId.id,
-							),
-						}
-					: prevCompany,
-			);
-
+			setSelectedConnection((prev) => (prev.id === id ? null : prev));
 			setModalOpen(false);
 			return deletedConnectionId;
 		},
-		[selectedConnection, setCompanies, setSelectedCompany],
+		[selectedConnection],
 	);
-
-	const mergeConnectionUpdate = (existing, updated) => ({
-		...existing,
-		...updated,
-		company: updated.company ?? existing.company,
-	});
 
 	const updateConnection = useCallback(async (connectionId, data) => {
 		const response = await fetch("/api/connection", {
@@ -232,21 +144,6 @@ export const ConnectionProvider = ({ children }) => {
 
 		return updatedConnection;
 	}, []);
-
-	useEffect(() => {
-		if (!connections.length) return;
-		if (isCompaniesLoading) return;
-		if (!Array.isArray(companies)) return;
-		if (companies.length === 0) return;
-		const companyIds = new Set(companies.map((company) => Number(company.id)));
-		setConnections((prevConnections) =>
-			prevConnections.filter(
-				(connection) =>
-					connection.companyId == null ||
-					companyIds.has(Number(connection.companyId)),
-			),
-		);
-	}, [companies, connections.length, isCompaniesLoading]);
 
 	const values = useMemo(
 		() => ({

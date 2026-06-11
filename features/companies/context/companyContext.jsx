@@ -23,16 +23,20 @@ export const CompanyProvider = ({ children }) => {
 	const [companyFilter, setCompanyFilter] = useState("All");
 
 	useEffect(() => {
-		const getCompanies = async () => {
-			if (!session?.user?.id) {
-				setCompanies([]);
-				setSelectedCompany(null);
-				setIsLoading(false);
-				setError("No User session");
-				return;
-			}
+		if (status === "loading") {
 			setIsLoading(true);
-			setError(null);
+			return;
+		}
+		if (!session?.user?.id) {
+			setCompanies([]);
+			setSelectedCompany(null);
+			setIsLoading(false);
+			setError("No User session");
+			return;
+		}
+		setIsLoading(true);
+		setError(null);
+		const load = async () => {
 			try {
 				const res = await fetch(`/api/company?userId=${session.user.id}`);
 				if (!res.ok) throw new Error("Failed to fetch companies");
@@ -56,21 +60,7 @@ export const CompanyProvider = ({ children }) => {
 				setIsLoading(false);
 			}
 		};
-
-		if (status === "loading") {
-			setIsLoading(true);
-			return;
-		}
-
-		if (status === "authenticated") {
-			getCompanies();
-		} else {
-			setCompanies([]);
-			setSelectedCompany(null);
-			setIsLoading(false);
-			setError(null);
-			setNoCompanyMsg("");
-		}
+		load();
 	}, [session?.user?.id, status]);
 
 	const createCompany = useCallback(
@@ -85,12 +75,7 @@ export const CompanyProvider = ({ children }) => {
 			if (!res.ok) {
 				throw new Error(data.error || "Failed to save company to database");
 			}
-
-			let nextCompanies;
-			setCompanies((prev) => {
-				nextCompanies = [data.company, ...prev];
-				return nextCompanies;
-			});
+			setCompanies((prev) => [data.company, ...prev]);
 			setModalOpen(false);
 			setSelectedCompany(data.company);
 			setNoCompanyMsg("");
@@ -109,26 +94,14 @@ export const CompanyProvider = ({ children }) => {
 			});
 
 			const result = await res.json();
-			
 
 			if (!res.ok) throw new Error("Failed to delete company");
 
-			const deletedId = result.deletedCompany.id
-			setCompanies((prev) => {
-				const next = prev.filter((company) => company.id !== deletedId);
-				console.log(next, selectedCompany);
-				if (next.length === 0) {
-					setNoCompanyMsg("You haven't added any companies yet");
-					setSelectedCompany(null);
-				} else if (
-					selectedCompany &&
-					selectedCompany.id == deletedId
-				) {
-					setSelectedCompany(next[0] ?? null);
-				}
-				return next;
-			});
-
+			const deletedId = result.deletedCompany.id;
+			setCompanies((prev) =>
+				prev.filter((company) => company.id !== deletedId),
+			);
+			setSelectedCompany((prev) => (prev.id === id ? null : prev));
 			setModalOpen(false);
 			return result;
 		},
