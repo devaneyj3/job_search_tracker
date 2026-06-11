@@ -27,9 +27,7 @@ const ConnectionTableRow = ({ connection }) => {
 				setModalOpen(true);
 			}}>
 			<TableCell className={styles.tableCell}>
-				<div className={styles.companyName}>
-					{connection.company?.name || "N/A"}
-				</div>
+				<div className={styles.companyName}>{connection.name || "N/A"}</div>
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				{connection.company?.name || "N/A"}
