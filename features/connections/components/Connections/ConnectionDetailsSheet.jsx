@@ -38,7 +38,8 @@ import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
 
 export default function ConnectionDetailsSheet({ item}) {
-	const { modalOpen, setModalOpen, updateConnection } = useConnection();
+	const { modalOpen, setModalOpen, updateConnection, recordConnectionEmail } =
+		useConnection();
 	const [isEditing, setIsEditing] = useState(false);
 	const [selectedTab, setSelectedTab] = useState("Initial");
 	const companyName =
@@ -103,12 +104,17 @@ export default function ConnectionDetailsSheet({ item}) {
 		? buildGmailComposeUrl({ to: recipient, subject, body })
 		: null;
 
-	const mailUpdateFields = {
-		emailCount: item.emailCount + 1,
-		emailSent: true,
-		status: "Contacted",
-		statusDate: new Date(),
-		lastEmailDate: new Date(),
+	const handleComposeClick = async () => {
+		try {
+			await recordConnectionEmail(item.id, {
+				subject,
+				body,
+				sequence: item.emailCount + 1,
+			});
+		} catch (error) {
+			console.error("Error recording email:", error);
+			toast.error("Failed to record email");
+		}
 	};
 
 	return (
@@ -207,7 +213,11 @@ export default function ConnectionDetailsSheet({ item}) {
 						</Badge>
 					</div>
 
-					<ItemStatusSelect id={item.id} status={connectionStatus} update={updateConnection} />
+					<ItemStatusSelect
+						id={item.id}
+						status={connectionStatus}
+						update={updateConnection}
+					/>
 
 					{gmailComposeUrl ? (
 						<div className={styles.composeActions}>
@@ -216,7 +226,7 @@ export default function ConnectionDetailsSheet({ item}) {
 								target="_blank"
 								rel="noopener noreferrer"
 								className={styles.composeEmailLink}
-								onClick={() => updateConnection(item.id, mailUpdateFields)}>
+								onClick={handleComposeClick}>
 								<Mail size={16} strokeWidth={2} aria-hidden />
 								Compose in Gmail
 								<ExternalLink size={14} strokeWidth={2} aria-hidden />
@@ -264,7 +274,7 @@ export default function ConnectionDetailsSheet({ item}) {
 						<SecondEmailJobOtreachTemplate
 							contactName={item.name}
 							companyName={companyName}
-							firstEmailDate={item.firstEmailDate}
+							firstEmailDate={item.lastEmailDate}
 						/>
 					)}
 				</section>

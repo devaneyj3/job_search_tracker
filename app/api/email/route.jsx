@@ -1,5 +1,10 @@
-import { createNewEmail, deleteEmail, getEmailsByConnectionId, updateEmail } from "@/lib/emailService";
+import {
+	recordConnectionEmail,
+	deleteEmail,
+	getEmailsByConnectionId,
+} from "@/lib/emailService";
 import { NextResponse } from "next/server";
+
 export async function GET(request) {
 	try {
 		const { searchParams } = new URL(request.url);
@@ -24,16 +29,15 @@ export async function GET(request) {
 
 export async function POST(req) {
 	try {
-		const { emailId, subject, body, sequence, sent } = await req.json();
-		const newEmail = await createNewEmail({
-			emailId,
+		const { connectionId, subject, body, sequence } = await req.json();
+		const { email, connection } = await recordConnectionEmail({
+			connectionId,
 			subject,
 			body,
 			sequence,
-			sent
 		});
 
-		return NextResponse.json({ success: true, email: newEmail });
+		return NextResponse.json({ success: true, email, connection });
 	} catch (error) {
 		console.error("Error creating email:", error);
 		return NextResponse.json(
@@ -55,31 +59,6 @@ export async function DELETE(req) {
 		console.error("Error deleting email:", error);
 		return NextResponse.json(
 			{ success: false, error: "Failed to delete email" },
-			{ status: 500 },
-		);
-	}
-}
-
-export async function PATCH(req) {
-	try {
-		const { id, fields } = await req.json();
-
-		if (fields) {
-			const updatedEmail = await updateEmail(id, fields);
-			return NextResponse.json({
-				success: true,
-				email: updatedEmail,
-			});
-		}
-
-		return NextResponse.json(
-			{ success: false, error: "Fields required" },
-			{ status: 400 },
-		);
-	} catch (error) {
-		console.error("Error updating email:", error);
-		return NextResponse.json(
-			{ success: false, error: "Failed to update email" },
 			{ status: 500 },
 		);
 	}

@@ -22,7 +22,6 @@ export const ConnectionProvider = ({ children }) => {
 	const [noConnectionMsg, setNoConnectionMsg] = useState("");
 	const [connectionFilter, setConnectionFilter] = useState("All");
 
-	console.log(connections);
 	const mergeConnectionUpdate = (existing, updated) => ({
 		...existing,
 		...updated,
@@ -152,6 +151,41 @@ export const ConnectionProvider = ({ children }) => {
 		//TODO: When updating connection.companyId I want the connection to sync to the company state so that I get the value without refreashing
 	}, []);
 
+	const recordConnectionEmail = useCallback(
+		async (connectionId, { subject, body, sequence }) => {
+			const res = await fetch("/api/email", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					connectionId,
+					subject,
+					body,
+					sequence,
+				}),
+			});
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Failed to record email");
+
+			const updatedConnection = data.connection;
+
+			setConnections((prev) =>
+				prev.map((c) =>
+					c.id === connectionId
+						? mergeConnectionUpdate(c, updatedConnection)
+						: c,
+				),
+			);
+			setSelectedConnection((prev) =>
+				prev?.id === connectionId
+					? mergeConnectionUpdate(prev, updatedConnection)
+					: prev,
+			);
+
+			return { email: data.email, connection: updatedConnection };
+		},
+		[],
+	);
+
 	const values = useMemo(
 		() => ({
 			connections,
@@ -168,6 +202,7 @@ export const ConnectionProvider = ({ children }) => {
 			updateConnection,
 			connectionFilter,
 			setConnectionFilter,
+			recordConnectionEmail,
 		}),
 		[
 			connections,
@@ -181,6 +216,7 @@ export const ConnectionProvider = ({ children }) => {
 			updateConnection,
 			connectionFilter,
 			setConnectionFilter,
+			recordConnectionEmail,
 		],
 	);
 
