@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment from "moment";
 import business from "moment-business";
+import { EMAIL_LABELS } from "@/lib/emailLabels";
 
 export function cn(...inputs) {
 	return twMerge(clsx(inputs));
@@ -28,4 +29,10 @@ export const readableDate = (date) => {
 export const daysFromNow = (date, daysFromNow) => {
 	const today = moment.utc(date);
 	return business.addWeekDays(today, daysFromNow);
+};
+
+export const emailToSend = (item) => {
+	const fiveBuisnessDays = readableDate(daysFromNow(item.lastEmailDate, 5))
+	const nextEmail = EMAIL_LABELS[item.emails.length]
+	return `Send ${nextEmail} email on ${fiveBuisnessDays}`;
 };

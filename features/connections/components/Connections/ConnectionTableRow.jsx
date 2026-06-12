@@ -3,7 +3,7 @@ import styles from "@/styles/ItemList.module.scss";
 
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
-import { readableDate } from "@/features/shared/lib/utils";
+import { emailToSend, readableDate } from "@/features/shared/lib/utils";
 import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
@@ -20,7 +20,7 @@ const ConnectionTableRow = ({ connection }) => {
 	const date = readableDate(connection.createdAt);
 	const isActive = connection.id === selectedConnection?.id;
 
-	console.log(connection);
+	const todoSendString = emailToSend(connection);
 	return (
 		<TableRow
 			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
@@ -42,10 +42,9 @@ const ConnectionTableRow = ({ connection }) => {
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				{connection.emails.map((email) => {
-					return (
-						<EmailFlow key={email.id} email={email}/>
-					)
+					return <EmailFlow key={email.id} email={email} />;
 				})}
+				{todoSendString}
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				<Badge className={styles.tableStatus}>

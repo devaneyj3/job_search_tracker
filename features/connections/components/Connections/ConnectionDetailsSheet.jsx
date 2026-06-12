@@ -14,7 +14,11 @@ import {
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
 import { Mail, Pencil, Briefcase, Building, ExternalLink } from "lucide-react";
-import { readableDate } from "@/features/shared/lib/utils";
+import {
+	daysFromNow,
+	emailToSend,
+	readableDate,
+} from "@/features/shared/lib/utils";
 import Link from "next/link";
 import DeleteItemDialog from "@/features/shared/components/DeleteItemDialog";
 import { Badge } from "@/features/shared/ui/badge";
@@ -32,6 +36,7 @@ import { connectionStatus } from "@/Constants";
 import EmailFlow from "@/features/shared/components/EmailFlow/EmailFlow";
 
 import styles from "@/styles/ItemSheet.module.scss";
+import { EMAIL_LABELS } from "@/lib/emailLabels";
 
 export default function ConnectionDetailsSheet({ item }) {
 	const { modalOpen, setModalOpen, updateConnection, recordConnectionEmail } =
@@ -112,7 +117,7 @@ export default function ConnectionDetailsSheet({ item }) {
 			toast.error("Failed to record email");
 		}
 	};
-	console.log(item);
+	const todoSendString = emailToSend(item);
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className={styles.sheetContent}>
@@ -235,11 +240,6 @@ export default function ConnectionDetailsSheet({ item }) {
 								message.
 							</p>
 						)}
-						<p>You sent {item.emailCount} emails</p>
-						<p>
-							Your last email was sent on {readableDate(item.lastEmailDate)}
-						</p>
-
 						{isEditing ? (
 							<div className={styles.contact}>
 								<Label htmlFor="notes">Notes: </Label>
@@ -265,6 +265,11 @@ export default function ConnectionDetailsSheet({ item }) {
 							item.emails.map((email) => {
 								return <EmailFlow key={email.id} email={email} />;
 							})}
+							<p>{todoSendString}</p>
+						<p>You sent {item.emailCount} emails</p>
+						<p>
+							Your last email was sent on {readableDate(item.lastEmailDate)}
+						</p>
 					</div>
 				</SheetHeader>
 				<NavigationTabs

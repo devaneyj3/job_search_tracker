@@ -74,10 +74,8 @@ export default function OverviewDashboard() {
 		...connections
 			.filter(
 				(connection) =>
-					connection.archived !== true &&
-					(connection.status === "Prospecting" || !connection.emailSent),
+					connection.archived !== true
 			)
-			.slice(0, 4)
 			.map((connection) => ({
 				id: `connection-${connection.id}`,
 				label: connection.name,
@@ -101,7 +99,7 @@ export default function OverviewDashboard() {
 				meta: application.company?.name || "Unknown company",
 				href: "/applications",
 			})),
-	].slice(0, 5);
+	]
 
 	const statStrip = [
 		{ label: "Emails sent", value: totalEmailsSent },
