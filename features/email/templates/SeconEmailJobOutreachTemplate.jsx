@@ -5,15 +5,15 @@ import { readableDate } from "@/features/shared/lib/utils";
 
 export default function SecondEmailJobOtreachTemplate({
 	contactName,
-  firstEmailDate,
-  companyName
+	firstEmailDate,
+	companyName,
 }) {
 	let firstName = contactName.split(" ")[0];
 	return (
 		<div className={styles.container}>
 			<p className={styles.paragraph}>Hi {firstName},</p>
 			<p>
-				I wanted to follow up regarding my last email on $
+				I wanted to follow up regarding my last email on {' '}
 				{readableDate(firstEmailDate)}. I realize you are busy and appreciate
 				you looking at my emails.
 			</p>

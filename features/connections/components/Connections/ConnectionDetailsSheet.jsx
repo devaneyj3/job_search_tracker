@@ -13,14 +13,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/features/shared/ui/sheet";
-import {
-	Mail,
-	Pencil,
-	Briefcase,
-	Building,
-	ExternalLink,
-} from "lucide-react";
-import styles from "@/styles/ItemSheet.module.scss";
+import { Mail, Pencil, Briefcase, Building, ExternalLink } from "lucide-react";
 import { readableDate } from "@/features/shared/lib/utils";
 import Link from "next/link";
 import DeleteItemDialog from "@/features/shared/components/DeleteItemDialog";
@@ -36,8 +29,11 @@ import SecondEmailJobOtreachTemplate from "@/features/email/templates/SeconEmail
 import { NavigationTabs } from "@/features/shared/components/NavigationTabs/NavigationTabs";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
+import EmailFlow from "@/features/shared/components/EmailFlow/EmailFlow";
 
-export default function ConnectionDetailsSheet({ item}) {
+import styles from "@/styles/ItemSheet.module.scss";
+
+export default function ConnectionDetailsSheet({ item }) {
 	const { modalOpen, setModalOpen, updateConnection, recordConnectionEmail } =
 		useConnection();
 	const [isEditing, setIsEditing] = useState(false);
@@ -116,154 +112,165 @@ export default function ConnectionDetailsSheet({ item}) {
 			toast.error("Failed to record email");
 		}
 	};
-
+	console.log(item);
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
-			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
-				<SheetHeader>
-					<div className={styles.itemTitleContainer}>
-						<SheetTitle className={styles.itemTitle}>
-							{isEditing ? (
-								<Input
-									value={formData.name}
-									onChange={(e) => handleInputChange("name", e.target.value)}
-									placeholder={item.name || "Connection Name"}
-									className="text-lg font-semibold"
-								/>
-							) : (
-								item.name
-							)}
-						</SheetTitle>
-						<div style={{ display: "flex", gap: "8px" }}>
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={() => setIsEditing(!isEditing)}>
-								<Pencil size={16} />
-							</Button>
-							<DeleteItemDialog id={item.id} type="connection" />
+			<SheetContent className={styles.sheetContent}>
+				<div style={{ display: "flex", gap: "8px" }}>
+					<Button
+						variant="outline"
+						size="icon"
+						onClick={() => setIsEditing(!isEditing)}>
+						<Pencil size={16} />
+					</Button>
+					<DeleteItemDialog id={item.id} type="connection" />
+				</div>
+				<SheetHeader className={styles.sheetHeader}>
+					<div className={styles.infoColunm}>
+						<div className={styles.itemTitleContainer}>
+							<SheetTitle className={styles.itemTitle}>
+								{isEditing ? (
+									<Input
+										value={formData.name}
+										onChange={(e) => handleInputChange("name", e.target.value)}
+										placeholder={item.name || "Connection Name"}
+										className="text-lg font-semibold"
+									/>
+								) : (
+									item.name
+								)}
+							</SheetTitle>
 						</div>
-					</div>
-					{(isEditing || item.email) && (
-						<div className={styles.itemPosting}>
-							<Mail size={15} className={styles.icon} />
-							{isEditing ? (
-								<Input
-									value={formData.email}
-									onChange={(e) => handleInputChange("email", e.target.value)}
-									placeholder={item.email || "Email"}
-									type="email"
-								/>
-							) : (
+						{(isEditing || item.email) && (
+							<div className={styles.itemPosting}>
+								<Mail size={15} className={styles.icon} />
+								{isEditing ? (
+									<Input
+										value={formData.email}
+										onChange={(e) => handleInputChange("email", e.target.value)}
+										placeholder={item.email || "Email"}
+										type="email"
+									/>
+								) : (
+									<a
+										href={`mailto:${item.email}`}
+										className={styles.composeEmailSecondary}>
+										{item.email}
+									</a>
+								)}
+							</div>
+						)}
+						{(isEditing || item.linkedinUrl) && (
+							<div className={styles.itemPosting}>
+								{isEditing ? (
+									<Input
+										value={formData.linkedinUrl}
+										onChange={(e) =>
+											handleInputChange("linkedinUrl", e.target.value)
+										}
+										placeholder={item.linkedinUrl || "LinkedIn URL"}
+										type="url"
+									/>
+								) : item.linkedinUrl ? (
+									<Link
+										href={item.linkedinUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										className={styles.composeEmailSecondary}>
+										View LinkedIn
+									</Link>
+								) : null}
+							</div>
+						)}
+						{companyName && (
+							<div className={styles.company}>
+								<Building size={15} className={styles.icon} />
+								{companyName}
+							</div>
+						)}
+						{(isEditing || item.position) && (
+							<div className={styles.company}>
+								<Briefcase size={15} className={styles.icon} />
+								{isEditing ? (
+									<Input
+										value={formData.position}
+										onChange={(e) =>
+											handleInputChange("position", e.target.value)
+										}
+										placeholder={item.position || "Position"}
+									/>
+								) : (
+									item.position
+								)}
+							</div>
+						)}
+						<div className={styles.badge}>
+							<Badge className={styles.status}>
+								{item.status} on {date}
+							</Badge>
+						</div>
+
+						<ItemStatusSelect
+							id={item.id}
+							status={connectionStatus}
+							update={updateConnection}
+						/>
+
+						{gmailComposeUrl ? (
+							<div className={styles.composeActions}>
 								<a
-									href={`mailto:${item.email}`}
-									className={styles.composeEmailSecondary}>
-									{item.email}
-								</a>
-							)}
-						</div>
-					)}
-					{(isEditing || item.linkedinUrl) && (
-						<div className={styles.itemPosting}>
-							{isEditing ? (
-								<Input
-									value={formData.linkedinUrl}
-									onChange={(e) =>
-										handleInputChange("linkedinUrl", e.target.value)
-									}
-									placeholder={item.linkedinUrl || "LinkedIn URL"}
-									type="url"
-								/>
-							) : item.linkedinUrl ? (
-								<Link
-									href={item.linkedinUrl}
+									href={gmailComposeUrl}
 									target="_blank"
 									rel="noopener noreferrer"
-									className={styles.composeEmailSecondary}>
-									View LinkedIn
-								</Link>
-							) : null}
-						</div>
-					)}
-					{companyName && (
-						<div className={styles.company}>
-							<Building size={15} className={styles.icon} />
-							{companyName}
-						</div>
-					)}
-					{(isEditing || item.position) && (
-						<div className={styles.company}>
-							<Briefcase size={15} className={styles.icon} />
-							{isEditing ? (
-								<Input
-									value={formData.position}
-									onChange={(e) =>
-										handleInputChange("position", e.target.value)
-									}
-									placeholder={item.position || "Position"}
-								/>
-							) : (
-								item.position
-							)}
-						</div>
-					)}
-					<div className={styles.badge}>
-						<Badge className={styles.status}>
-							{item.status} on {date}
-						</Badge>
-					</div>
-
-					<ItemStatusSelect
-						id={item.id}
-						status={connectionStatus}
-						update={updateConnection}
-					/>
-
-					{gmailComposeUrl ? (
-						<div className={styles.composeActions}>
-							<a
-								href={gmailComposeUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles.composeEmailLink}
-								onClick={handleComposeClick}>
-								<Mail size={16} strokeWidth={2} aria-hidden />
-								Compose in Gmail
-								<ExternalLink size={14} strokeWidth={2} aria-hidden />
-							</a>
-						</div>
-					) : (
-						<p className={styles.composeEmailHint}>
-							Add an email address above to compose a pre-filled outreach
-							message.
+									className={styles.composeEmailLink}
+									onClick={handleComposeClick}>
+									<Mail size={16} strokeWidth={2} aria-hidden />
+									Compose in Gmail
+									<ExternalLink size={14} strokeWidth={2} aria-hidden />
+								</a>
+							</div>
+						) : (
+							<p className={styles.composeEmailHint}>
+								Add an email address above to compose a pre-filled outreach
+								message.
+							</p>
+						)}
+						<p>You sent {item.emailCount} emails</p>
+						<p>
+							Your last email was sent on {readableDate(item.lastEmailDate)}
 						</p>
-					)}
-					<p>You sent {item.emailCount} emails</p>
-					<p>Your last email was sent on {readableDate(item.lastEmailDate)}</p>
 
-					{isEditing ? (
-						<div className={styles.contact}>
-							<Label htmlFor="notes">Notes: </Label>
-							<Textarea
-								id="notes"
-								value={formData.notes}
-								onChange={(e) => handleInputChange("notes", e.target.value)}
-								placeholder={item.notes || "Notes"}
-								rows={4}
-							/>
-						</div>
-					) : (
-						item.notes && (
-							<SheetDescription className={styles.itemDescription}>
-								<strong>Notes:</strong> {item.notes}
-							</SheetDescription>
-						)
-					)}
-					<NavigationTabs
-						selectedTab={selectedTab}
-						setSelectedTab={setSelectedTab}
-					/>
+						{isEditing ? (
+							<div className={styles.contact}>
+								<Label htmlFor="notes">Notes: </Label>
+								<Textarea
+									id="notes"
+									value={formData.notes}
+									onChange={(e) => handleInputChange("notes", e.target.value)}
+									placeholder={item.notes || "Notes"}
+									rows={4}
+								/>
+							</div>
+						) : (
+							item.notes && (
+								<SheetDescription className={styles.itemDescription}>
+									<strong>Notes:</strong> {item.notes}
+								</SheetDescription>
+							)
+						)}
+					</div>
+					<div className={styles.emailContainer}>
+						<h2>Email Flow</h2>
+						{item.emails &&
+							item.emails.map((email) => {
+								return <EmailFlow key={email.id} email={email} />;
+							})}
+					</div>
 				</SheetHeader>
+				<NavigationTabs
+					selectedTab={selectedTab}
+					setSelectedTab={setSelectedTab}
+				/>
 				<section className={styles.template_container}>
 					{selectedTab === "Initial" ? (
 						<JobOtreachTemplate

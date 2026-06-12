@@ -1,3 +1,17 @@
+.sheetContent {
+  max-width: 75%;
+  width: 70%;
+  padding: 1%;
+  
+}
+.sheetHeader {
+  display: flex;
+  justify-items: space-between;
+  .infoColunm {
+    width: 50%;
+
+  }
+}
 .itemTitleContainer {
   display: flex;
   justify-content: space-between;
@@ -110,4 +124,17 @@
 
 .template_container {
   display: flex;
+}
+
+.emailContainer {
+  border-radius: 1rem;
+  border: 1px solid lightgray;
+  background-color: rgb(242, 238, 238);
+  -webkit-box-shadow: 5px 5px 15px 5px  rgb(242, 238, 238); 
+  box-shadow: 5px 5px 15px 5px  rgb(213, 215, 224);
+  padding: 1rem;
+  width: 50%;
+  h2 {
+    font-weight: bold;
+  }
 }
