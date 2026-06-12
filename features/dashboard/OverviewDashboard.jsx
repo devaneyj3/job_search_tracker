@@ -15,6 +15,7 @@ import { useApplication } from "@/features/applications/context/applicationConte
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { itemLength } from "@/features/shared/lib/utils";
 import styles from "@/styles/OverviewDashboard.module.scss";
+import { EMAIL_LABELS } from "@/lib/emailLabels";
 
 function countActive(items) {
 	return items.filter((item) => item.archived !== true).length;
@@ -80,7 +81,7 @@ export default function OverviewDashboard() {
 			.map((connection) => ({
 				id: `connection-${connection.id}`,
 				label: connection.name,
-				action: "Send Intial Email",
+				action: `Send ${EMAIL_LABELS[connection.emails.length]} Email`,
 				meta:
 					typeof connection.company === "object"
 						? connection.company?.name

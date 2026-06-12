@@ -7,6 +7,7 @@ import { readableDate } from "@/features/shared/lib/utils";
 import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
+import EmailFlow from "@/features/shared/components/EmailFlow/EmailFlow";
 
 const ConnectionTableRow = ({ connection }) => {
 	const {
@@ -19,6 +20,7 @@ const ConnectionTableRow = ({ connection }) => {
 	const date = readableDate(connection.createdAt);
 	const isActive = connection.id === selectedConnection?.id;
 
+	console.log(connection);
 	return (
 		<TableRow
 			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
@@ -39,15 +41,11 @@ const ConnectionTableRow = ({ connection }) => {
 				{connection.email || "N/A"}
 			</TableCell>
 			<TableCell className={styles.tableCell}>
-				{connection.emailCount ?? 0}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.emailSent && connection.lastEmailDate
-					? readableDate(connection.lastEmailDate)
-					: "—"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.emailSent ? "Yes" : "No"}
+				{connection.emails.map((email) => {
+					return (
+						<EmailFlow key={email.id} email={email}/>
+					)
+				})}
 			</TableCell>
 			<TableCell className={styles.tableCell}>
 				<Badge className={styles.tableStatus}>
