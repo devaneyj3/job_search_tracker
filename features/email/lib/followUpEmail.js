@@ -7,7 +7,7 @@ const followUpEmail = (company, firstName, firstEmailDate = null) => {
 
 I wanted to follow-up on my email from ${when}.
 
-A lot of software engineers just want to stay in their chosen domain. One thing that sets me apart is flexibillity to work across many business domains.
+A lot of software engineers just want to stay in their chosen domain. One thing that sets me apart is flexibility to work across many business domains.
 
 Since I currently work for a small business I have the benefit of working across many business areas, such as IT Support, System Administration, and Marketing.
 

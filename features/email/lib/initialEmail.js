@@ -8,7 +8,7 @@ At my current role with AG USA as a software engineer I focus on creating applic
 
 - Migrating a legacy store to Shopify ($5,900 in the first month)
 - Rebuilding two websites that have brought in about $11k over the past few months
-- Constucting a Python/Pandas reporting tool that cut admin work roughly in half
+- Constructing a Python/Pandas reporting tool that cut admin work roughly in half
 
 Outside of work, I'm always learning and improving my skills through courses and personal projects. While earning my Software Engineering degree from Western Governors University, I worked as a janitor, which taught me persistence and discipline.
 
