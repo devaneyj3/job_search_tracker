@@ -5,11 +5,13 @@ const followUpEmail = (company, firstName, firstEmailDate = null) => {
 	const subject = `Re: ${company} — following up`;
 	const body = `Hi ${firstName},
 
-Quick follow-up on my note from ${when}. I know you're busy.
+I wanted to follow-up on my email from ${when}.
 
-One thing I didn't mention: I've also built and shipped revenue-generating sites on my own, on top of the AG USA work I shared earlier.
+A lot of software engineers just want to stay in their chosen domain. One thing that sets me apart is flexibillity to work across many business domains.
 
-Still interested in ${company} if timing opens up. Happy to keep it to a short call if useful.
+Since I currently work for a small business I have the benefit of working across many business areas, such as IT Support, System Administration, and Marketing.
+
+I'm still interested in ${company}. Happy to keep it to a short call.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;
