@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
 			<Providers>
 				<body
 					className={plex.className}
+					suppressHydrationWarning
 					style={{ backgroundColor: "#f3efe8", margin: 0 }}>
 					<main>{children}</main>
 				</body>

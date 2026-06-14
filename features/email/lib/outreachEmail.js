@@ -1,14 +1,37 @@
 import followUpEmail from "./followUpEmail";
 import initialEmail from "./initialEmail";
+import thirdEmail from "./thirdEmail";
 
-export function buildOutreachEmailDraft({ contactName, companyName, emailCount, firstEmailDate = null }) {
+function parseContact(contactName, companyName) {
 	const firstName = contactName?.trim().split(/\s+/)[0] || "there";
 	const company = companyName?.trim() || "your company";
-	if (emailCount == 0) {
-		return initialEmail(company, firstName)
-	} else {
-		return followUpEmail(company, firstName, firstEmailDate)
-	}
+	return { firstName, company };
+}
+
+export function buildOutreachEmailDraft({
+	contactName,
+	companyName,
+	emailCount,
+	firstEmailDate = null,
+}) {
+	const { firstName, company } = parseContact(contactName, companyName);
+
+	if (emailCount === 0) return initialEmail(company, firstName);
+	if (emailCount === 1) return followUpEmail(company, firstName, firstEmailDate);
+	return thirdEmail(company, firstName);
+}
+
+export function buildOutreachEmailPreview({
+	contactName,
+	companyName,
+	template,
+	firstEmailDate = null,
+}) {
+	const { firstName, company } = parseContact(contactName, companyName);
+
+	if (template === "Initial") return initialEmail(company, firstName);
+	if (template === "Follow-Up") return followUpEmail(company, firstName, firstEmailDate);
+	return thirdEmail(company, firstName);
 }
 
 export function buildGmailComposeUrl({ to, subject, body }) {

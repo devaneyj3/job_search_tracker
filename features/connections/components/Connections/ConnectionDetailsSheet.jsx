@@ -30,6 +30,7 @@ import {
 	buildOutreachEmailDraft,
 } from "@/features/email/lib/outreachEmail";
 import SecondEmailJobOtreachTemplate from "@/features/email/templates/SeconEmailJobOutreachTemplate";
+import ThirdEmailJobOutreachTemplate from "@/features/email/templates/ThirdEmailJobOutreachTemplate";
 import { NavigationTabs } from "@/features/shared/components/NavigationTabs/NavigationTabs";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
@@ -99,7 +100,7 @@ export default function ConnectionDetailsSheet({ item }) {
 		contactName: isEditing ? formData.name : item.name,
 		companyName,
 		emailCount: item.emailCount,
-		firstEmailDate: item.lastEmailDate,
+		firstEmailDate: item.emails?.[0]?.sentAt ?? item.lastEmailDate,
 	});
 	const gmailComposeUrl = recipient
 		? buildGmailComposeUrl({ to: recipient, subject, body })
@@ -277,16 +278,22 @@ export default function ConnectionDetailsSheet({ item }) {
 					setSelectedTab={setSelectedTab}
 				/>
 				<section className={styles.template_container}>
-					{selectedTab === "Initial" ? (
+					{selectedTab === "Initial" && (
 						<JobOtreachTemplate
 							contactName={item.name}
 							companyName={companyName}
 						/>
-					) : (
+					)}
+					{selectedTab === "Follow-Up" && (
 						<SecondEmailJobOtreachTemplate
-							contactName={item.name}
+							item={item}
 							companyName={companyName}
-							firstEmailDate={item.lastEmailDate}
+						/>
+					)}
+					{selectedTab === "Third" && (
+						<ThirdEmailJobOutreachTemplate
+							item={item}
+							companyName={companyName}
 						/>
 					)}
 				</section>

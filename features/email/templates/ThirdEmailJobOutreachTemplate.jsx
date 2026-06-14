@@ -1,16 +1,11 @@
 import { buildOutreachEmailPreview } from "@/features/email/lib/outreachEmail";
 import styles from "@/styles/JobOutreachTemplate.module.scss";
 
-export default function SecondEmailJobOutreachTemplate({
-	item,
-	companyName,
-	contactName,
-}) {
+const ThirdEmailJobOutreachTemplate = ({ item, companyName, contactName }) => {
 	const { subject, body } = buildOutreachEmailPreview({
 		contactName: contactName ?? item?.name,
 		companyName,
-		template: "Follow-Up",
-		firstEmailDate: item?.emails?.[0]?.sentAt ?? item?.lastEmailDate,
+		template: "Third",
 	});
 
 	return (
@@ -21,4 +16,6 @@ export default function SecondEmailJobOutreachTemplate({
 			<div className={styles.body}>{body}</div>
 		</div>
 	);
-}
+};
+
+export default ThirdEmailJobOutreachTemplate;

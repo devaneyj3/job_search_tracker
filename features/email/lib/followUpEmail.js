@@ -1,23 +1,20 @@
-import { readableDate } from "@/features/shared/lib/utils"
+import { readableDate } from "@/features/shared/lib/utils";
 
-const followUpEmail = (company, firstName, firstEmailDate) => {
+const followUpEmail = (company, firstName, firstEmailDate = null) => {
+	const when = firstEmailDate ? readableDate(firstEmailDate) : "my last message";
+	const subject = `Re: ${company} — following up`;
+	const body = `Hi ${firstName},
 
-  const subject = `Follow up email from ${readableDate(firstEmailDate)}`;
+Quick follow-up on my note from ${when}. I know you're busy.
 
-  const body = `Hi ${firstName},
-  
-  I wanted to follow up regarding my last email on ${readableDate(firstEmailDate)}. I realize you are busy and appreciate you looking at my emails.
-  
-  In addition to the accomplishments highlighted in my previous email, I have taken the initiative to independently design, develop, and launch multiple revenue-generating websites for the company. These projects have directly supported business growth, demonstrating both technical expertise and a strong sense of ownership in delivering results that impact the bottom line.
+One thing I didn't mention: I've also built and shipped revenue-generating sites on my own, on top of the AG USA work I shared earlier.
 
-  These websites have generated over $11,000 for a small business based out of Georgia for the past few months.
+Still interested in ${company} if timing opens up. Happy to keep it to a short call if useful.
 
-  If you think my background could be a fit for ${company} now or down the road, I'd love to grab ten minutes to introduce myself.
-  
-  Jordan Devaney
-  https://www.linkedin.com/in/jordandevaney/`;
+Jordan Devaney
+https://www.linkedin.com/in/jordandevaney/`;
 
-  return { subject, body };
-}
+	return { subject, body };
+};
 
-export default followUpEmail
+export default followUpEmail;
