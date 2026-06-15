@@ -1,0 +1,35 @@
+.container {
+  max-width: 28rem;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.message {
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.hint {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.link {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: #285dfb;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}

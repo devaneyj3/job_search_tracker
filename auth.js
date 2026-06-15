@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/features/shared/lib/prisma";
+import { authCookieOptions } from "@/features/shared/lib/authCookies";
 
 let handlers, signIn, signOut, auth;
 
@@ -15,6 +16,17 @@ try {
 		],
 		trustHost: true,
 		adapter: PrismaAdapter(prisma),
+		cookies: {
+			pkceCodeVerifier: {
+				options: authCookieOptions(60 * 15),
+			},
+			state: {
+				options: authCookieOptions(60 * 15),
+			},
+		},
+		pages: {
+			error: "/auth/error",
+		},
 		callbacks: {
 			async jwt({ token, user }) {
 				try {
