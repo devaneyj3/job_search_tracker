@@ -1,10 +1,10 @@
 "use client";
-import styles from "@/styles/ItemList.module.scss";
 
+import styles from "@/styles/ItemList.module.scss";
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
+import { ItemCard, ItemCardField } from "@/features/shared/components/ItemCard";
 import { emailToSend, readableDate } from "@/features/shared/lib/utils";
-import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { useConnection } from "../../context/connectionContext";
 import { connectionStatus } from "@/Constants";
 import EmailFlow from "@/features/shared/components/EmailFlow/EmailFlow";
@@ -19,48 +19,56 @@ const ConnectionTableRow = ({ connection }) => {
 
 	const date = readableDate(connection.createdAt);
 	const isActive = connection.id === selectedConnection?.id;
-
 	const todoSendString = emailToSend(connection);
+
+	const openSheet = () => {
+		setSelectedConnection(connection);
+		setModalOpen(true);
+	};
+
 	return (
-		<TableRow
-			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
-			onClick={() => {
-				setSelectedConnection(connection);
-				setModalOpen(true);
-			}}>
-			<TableCell className={styles.tableCell}>
-				<div className={styles.companyName}>{connection.name || "N/A"}</div>
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.company?.name || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.position || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.email || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{connection.emails.map((email) => {
-					return <EmailFlow key={email.id} email={email} />;
-				})}
-				{todoSendString}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				<Badge className={styles.tableStatus}>
-					{connection.status} on {date}
+		<ItemCard
+			isActive={isActive}
+			onClick={openSheet}
+			title={connection.name || "N/A"}
+			meta={
+				connection.responded ? (
+					<span className={styles.cardMeta}>Responded</span>
+				) : null
+			}
+			badge={
+				<Badge className={styles.cardStatus}>
+					{connection.status} · {date}
 				</Badge>
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				<div onClick={(event) => event.stopPropagation()}>
-					<ItemStatusSelect
-						id={connection.id}
-						update={updateConnection}
-						status={connectionStatus}
-					/>
+			}
+			footer={
+				<ItemStatusSelect
+					id={connection.id}
+					update={updateConnection}
+					status={connectionStatus}
+				/>
+			}>
+			<ItemCardField label="Company">
+				{connection.company?.name || "N/A"}
+			</ItemCardField>
+			<ItemCardField label="Position">
+				{connection.position || "N/A"}
+			</ItemCardField>
+			<ItemCardField label="Email">
+				{connection.email || "N/A"}
+			</ItemCardField>
+			<ItemCardField label="Email flow">
+				<div className={styles.cardStack}>
+					{connection.emails.map((email) => (
+						<EmailFlow key={email.id} email={email} />
+					))}
+					{todoSendString && (
+						<span className={styles.cardMuted}>{todoSendString}</span>
+					)}
 				</div>
-			</TableCell>
-		</TableRow>
+			</ItemCardField>
+		</ItemCard>
 	);
 };
+
 export default ConnectionTableRow;

@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "@/styles/Welcome.module.scss";
 import SignInCard from "./SignInCard";
-import Image from "next/image";
 
 const highlights = [
 	"Companies & pipeline",
@@ -33,23 +32,9 @@ export default function Welcome() {
 				</ul>
 			</header>
 
-			<div className={styles.content}>
-				<section className={styles.signInSection} aria-label="Sign in">
-					<SignInCard />
-				</section>
-				<div className={styles.imageSection}>
-					<div className={styles.imageFrame}>
-						<Image
-							src="/images/sign-in.png"
-							width={500}
-							height={500}
-							alt="Decorative illustration for the job tracker app"
-							className={styles.image}
-							priority
-						/>
-					</div>
-				</div>
-			</div>
+			<section className={styles.signInSection} aria-label="Sign in">
+				<SignInCard />
+			</section>
 		</div>
 	);
 }

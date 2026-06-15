@@ -4,17 +4,9 @@ import styles from "@/styles/ItemList.module.scss";
 import CompanyTableRow from "@/features/companies/components/Companies/CompanyTableRow";
 import AddCompanyButton from "@/features/companies/components/Companies/AddCompanyButton";
 import CompanyDetailsSheet from "@/features/companies/components/Companies/CompanyDetailsSheet";
-import {
-	Table,
-	TableBody,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/features/shared/ui/table";
 
 export default function CompaniesList({ filteredCompanies }) {
 	const { selectedCompany, companies, noCompanyMsg } = useCompany();
-	console.log(companies);
 
 	return (
 		<main className={styles.container}>
@@ -25,28 +17,13 @@ export default function CompaniesList({ filteredCompanies }) {
 				<AddCompanyButton />
 			</div>
 			{!noCompanyMsg && companies.length > 0 ? (
-				<div className={styles.tableWrapper}>
-					<Table className={styles.table}>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Company</TableHead>
-								<TableHead>Industry</TableHead>
-								<TableHead>Location</TableHead>
-								<TableHead>Size</TableHead>
-								<TableHead>Status</TableHead>
-								<TableHead>Connections</TableHead>
-								<TableHead>Update Status</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{filteredCompanies.map((item) => (
-								<CompanyTableRow key={item.id} item={item} />
-							))}
-						</TableBody>
-					</Table>
+				<div className={styles.cardGrid}>
+					{filteredCompanies.map((item) => (
+						<CompanyTableRow key={item.id} item={item} />
+					))}
 				</div>
 			) : (
-				<div>{noCompanyMsg}</div>
+				<p className={styles.emptyMessage}>{noCompanyMsg}</p>
 			)}
 			{selectedCompany && <CompanyDetailsSheet item={selectedCompany} />}
 		</main>

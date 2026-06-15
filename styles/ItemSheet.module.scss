@@ -2,22 +2,51 @@
   max-width: 75%;
   width: 70%;
   padding: 1%;
-  
 }
+
+@media (max-width: 768px) {
+  .sheetContent {
+    max-width: 100%;
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
 .sheetHeader {
   display: flex;
   justify-items: space-between;
+  gap: 1rem;
+
   .infoColunm {
     width: 50%;
-
   }
 }
+
+@media (max-width: 768px) {
+  .sheetHeader {
+    flex-direction: column;
+  }
+
+  .sheetHeader .infoColunm {
+    width: 100%;
+  }
+
+  .emailContainer {
+    width: 100%;
+  }
+
+  .itemTitleContainer {
+    margin-right: 0;
+  }
+}
+
 .itemTitleContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-right: 50px;
 }
+
 .itemTitle {
   font-weight: 600;
 }

@@ -4,13 +4,6 @@ import AddConnectionButton from "./AddConnectionButton";
 import styles from "@/styles/ItemList.module.scss";
 import ConnectionTableRow from "./ConnectionTableRow";
 import ConnectionDetailsSheet from "./ConnectionDetailsSheet";
-import {
-	Table,
-	TableBody,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/features/shared/ui/table";
 
 export default function ConnectionsList({ filteredConnections }) {
 	const { selectedConnection, connections, noConnectionMsg } = useConnection();
@@ -24,31 +17,16 @@ export default function ConnectionsList({ filteredConnections }) {
 				<AddConnectionButton />
 			</div>
 			{!noConnectionMsg && connections.length > 0 ? (
-				<div className={styles.tableWrapper}>
-					<Table className={styles.table}>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Name</TableHead>
-								<TableHead>Company</TableHead>
-								<TableHead>Position</TableHead>
-								<TableHead>Email</TableHead>
-								<TableHead>Email Flow</TableHead>
-								<TableHead>Status</TableHead>
-								<TableHead>Update Status</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{filteredConnections.map((connection) => (
-								<ConnectionTableRow
-									key={connection.id}
-									connection={connection}
-								/>
-							))}
-						</TableBody>
-					</Table>
+				<div className={styles.cardGrid}>
+					{filteredConnections.map((connection) => (
+						<ConnectionTableRow
+							key={connection.id}
+							connection={connection}
+						/>
+					))}
 				</div>
 			) : (
-				<div>{noConnectionMsg}</div>
+				<p className={styles.emptyMessage}>{noConnectionMsg}</p>
 			)}
 			{selectedConnection && (
 				<ConnectionDetailsSheet item={selectedConnection} />

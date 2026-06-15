@@ -1,11 +1,11 @@
 "use client";
+
 import styles from "@/styles/ItemList.module.scss";
 import Link from "next/link";
-
 import { Badge } from "@/features/shared/ui/badge";
 import { ItemStatusSelect } from "@/features/shared/components/ItemStatusSelect";
+import { ItemCard, ItemCardField } from "@/features/shared/components/ItemCard";
 import { readableDate } from "@/features/shared/lib/utils";
-import { TableCell, TableRow } from "@/features/shared/ui/table";
 import { applicationStatus } from "@/Constants";
 import { useApplication } from "../../context/applicationContext";
 
@@ -20,52 +20,45 @@ const ApplicationTableRow = ({ item }) => {
 	const displayName = item.company?.name || "Unknown Company";
 	const isActive = item.id === selectedApplication?.id;
 
+	const openSheet = () => {
+		setSelectedApplication(item);
+		setModalOpen(true);
+	};
+
 	return (
-		<TableRow
-			className={`${styles.tableRow} ${isActive ? styles.tableRowActive : ""}`}
-			onClick={() => {
-				setSelectedApplication(item);
-				setModalOpen(true);
-			}}>
-			<TableCell className={styles.tableCell}>
-				<div className={styles.companyName}>{displayName}</div>
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{item.position || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{item.jobType || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				{item.location || "N/A"}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
+		<ItemCard
+			isActive={isActive}
+			onClick={openSheet}
+			title={displayName}
+			badge={
+				<Badge className={styles.cardStatus}>
+					{item.status} · {date}
+				</Badge>
+			}
+			footer={
+				<ItemStatusSelect
+					id={item.id}
+					update={updateApplication}
+					status={applicationStatus}
+				/>
+			}>
+			<ItemCardField label="Position">{item.position || "N/A"}</ItemCardField>
+			<ItemCardField label="Type">{item.jobType || "N/A"}</ItemCardField>
+			<ItemCardField label="Location">{item.location || "N/A"}</ItemCardField>
+			<ItemCardField label="Link">
 				{item.applicationLink ? (
 					<Link
 						href={item.applicationLink}
 						target="_blank"
+						className={styles.cardLink}
 						onClick={(event) => event.stopPropagation()}>
-						Application Link
+						View posting
 					</Link>
 				) : (
 					"N/A"
 				)}
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				<Badge className={styles.tableStatus}>
-					{item.status} on {date}
-				</Badge>
-			</TableCell>
-			<TableCell className={styles.tableCell}>
-				<div onClick={(event) => event.stopPropagation()}>
-					<ItemStatusSelect
-						id={item.id}
-						update={updateApplication}
-						status={applicationStatus}
-					/>
-				</div>
-			</TableCell>
-		</TableRow>
+			</ItemCardField>
+		</ItemCard>
 	);
 };
 
