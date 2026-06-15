@@ -32,7 +32,15 @@ export const daysFromNow = (date, daysFromNow) => {
 };
 
 export const emailToSend = (item) => {
-	const fiveBuisnessDays = readableDate(daysFromNow(item.lastEmailDate, 5))
-	const nextEmail = EMAIL_LABELS[item.emails.length]
+	if (item.responded) {
+		return "Contact responded — no further emails";
+	}
+
+	if (!item.lastEmailDate || item.emails?.length >= EMAIL_LABELS.length) {
+		return null;
+	}
+
+	const fiveBuisnessDays = readableDate(daysFromNow(item.lastEmailDate, 5));
+	const nextEmail = EMAIL_LABELS[item.emails.length];
 	return `Send ${nextEmail} email on ${fiveBuisnessDays}`;
 };

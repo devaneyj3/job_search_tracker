@@ -126,6 +126,8 @@ export async function updateConnection(connectionId, data) {
 			data: {
 				...data,
 				...(data.status !== undefined ? { statusDate: new Date() } : {}),
+				...(data.responded === true ? { responseDate: new Date() } : {}),
+				...(data.responded === false ? { responseDate: null } : {}),
 			},
 			include: {
 				company: true,

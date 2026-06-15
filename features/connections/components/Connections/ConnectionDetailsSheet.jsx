@@ -107,6 +107,8 @@ export default function ConnectionDetailsSheet({ item }) {
 		: null;
 
 	const handleComposeClick = async () => {
+		if (item.responded) return;
+
 		try {
 			await recordConnectionEmail(item.id, {
 				subject,
@@ -118,6 +120,23 @@ export default function ConnectionDetailsSheet({ item }) {
 			toast.error("Failed to record email");
 		}
 	};
+
+	const handleRespondedToggle = async () => {
+		try {
+			const markingResponded = !item.responded;
+			await updateConnection(item.id, {
+				responded: markingResponded,
+				...(markingResponded ? { status: "Responded" } : {}),
+			});
+			toast.success(
+				markingResponded ? "Marked as responded" : "Marked as not responded",
+			);
+		} catch (error) {
+			console.error("Error updating responded status:", error);
+			toast.error("Failed to update responded status");
+		}
+	};
+
 	const todoSendString = emailToSend(item);
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
@@ -222,7 +241,7 @@ export default function ConnectionDetailsSheet({ item }) {
 							update={updateConnection}
 						/>
 
-						{gmailComposeUrl ? (
+						{!item.responded && gmailComposeUrl ? (
 							<div className={styles.composeActions}>
 								<a
 									href={gmailComposeUrl}
@@ -235,6 +254,10 @@ export default function ConnectionDetailsSheet({ item }) {
 									<ExternalLink size={14} strokeWidth={2} aria-hidden />
 								</a>
 							</div>
+						) : item.responded ? (
+							<p className={styles.composeEmailHint}>
+								This contact responded. No further outreach emails.
+							</p>
 						) : (
 							<p className={styles.composeEmailHint}>
 								Add an email address above to compose a pre-filled outreach
@@ -266,11 +289,30 @@ export default function ConnectionDetailsSheet({ item }) {
 							item.emails.map((email) => {
 								return <EmailFlow key={email.id} email={email} />;
 							})}
-							<p>{todoSendString}</p>
+						<p>{todoSendString}</p>
 						<p>You sent {item.emailCount} emails</p>
 						<p>
 							Your last email was sent on {readableDate(item.lastEmailDate)}
 						</p>
+						<div className={styles.respondedActions}>
+							{item.responded ? (
+								<>
+									<Badge className={styles.respondedBadge}>
+										Responded on {readableDate(item.responseDate)}
+									</Badge>
+									<Button
+										variant="outline"
+										size="sm"
+										onClick={handleRespondedToggle}>
+										Undo
+									</Button>
+								</>
+							) : (
+								<Button variant="outline" onClick={handleRespondedToggle}>
+									Mark as responded
+								</Button>
+							)}
+						</div>
 					</div>
 				</SheetHeader>
 				<NavigationTabs
