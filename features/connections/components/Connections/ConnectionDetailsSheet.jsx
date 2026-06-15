@@ -43,7 +43,7 @@ export default function ConnectionDetailsSheet({ item }) {
 	const { modalOpen, setModalOpen, updateConnection, recordConnectionEmail } =
 		useConnection();
 	const [isEditing, setIsEditing] = useState(false);
-	const [selectedTab, setSelectedTab] = useState("Initial");
+	const [selectedTab, setSelectedTab] = useState(EMAIL_LABELS[item.emailCount]);
 	const companyName =
 		typeof item.company === "string" ? item.company : item.company?.name || "";
 
@@ -106,7 +106,7 @@ export default function ConnectionDetailsSheet({ item }) {
 		? buildGmailComposeUrl({ to: recipient, subject, body })
 		: null;
 
-	const handleComposeClick = async () => {
+	const recordEmailToDB = async () => {
 		if (item.responded) return;
 
 		try {
@@ -248,9 +248,9 @@ export default function ConnectionDetailsSheet({ item }) {
 									target="_blank"
 									rel="noopener noreferrer"
 									className={styles.composeEmailLink}
-									onClick={handleComposeClick}>
+									onClick={recordEmailToDB}>
 									<Mail size={16} strokeWidth={2} aria-hidden />
-									Compose in Gmail
+									Send {EMAIL_LABELS[item.emailCount]} Email in Gmail
 									<ExternalLink size={14} strokeWidth={2} aria-hidden />
 								</a>
 							</div>

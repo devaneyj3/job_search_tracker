@@ -33,6 +33,10 @@ import {
 	connectionFormTestDefaults,
 	getFormDefaults,
 } from "@/features/shared/lib/formTestDefaults";
+import {
+	buildGmailComposeUrl,
+	buildOutreachEmailDraft,
+} from "@/features/email/lib/outreachEmail";
 
 function RhfSelect({ field, placeholder, children }) {
 	return (
@@ -97,7 +101,7 @@ function renderFieldControl(field, cfg, sortedCompanies) {
 }
 
 export default function ConnectionForm({ setDialogOpen }) {
-	const { createConnection } = useConnection();
+	const { createConnection, recordConnectionEmail } = useConnection();
 	const { companies } = useCompany();
 
 	const fieldByName = useMemo(
@@ -120,20 +124,52 @@ export default function ConnectionForm({ setDialogOpen }) {
 	});
 
 	async function onSubmit(values) {
+		const recipient = values.email?.trim();
+		const gmailWindow = recipient ? window.open("about:blank", "_blank") : null;
+
 		try {
-			await createConnection({
+			const companyName =
+				companies.find((c) => c.id === Number(values.companyId))?.name ?? "";
+
+			const connection = await createConnection({
 				...values,
 				companyId: Number(values.companyId),
 			});
-			toast("Connection has been created", {
-				action: { label: "Close", onClick: () => {} },
+
+			if (!recipient) {
+				toast.success("Connection created");
+				setDialogOpen(false);
+				return;
+			}
+
+			const { subject, body } = buildOutreachEmailDraft({
+				contactName: values.name,
+				companyName,
+				emailCount: 0,
 			});
+
+			await recordConnectionEmail(connection.id, {
+				subject,
+				body,
+				sequence: 1,
+			});
+
+			const gmailUrl = buildGmailComposeUrl({ to: recipient, subject, body });
+
+			if (gmailWindow) {
+				gmailWindow.location.href = gmailUrl;
+			} else {
+				window.open(gmailUrl, "_blank", "noopener,noreferrer");
+			}
+
+			toast.success("Connection created — compose in Gmail");
 			setDialogOpen(false);
 		} catch (error) {
+			gmailWindow?.close();
 			console.error("Error in onSubmit:", error);
-			toast(error.message || "Failed to create connection. Please try again.", {
-				action: { label: "Close", onClick: () => {} },
-			});
+			toast.error(
+				error.message || "Failed to create connection. Please try again.",
+			);
 		}
 	}
 
