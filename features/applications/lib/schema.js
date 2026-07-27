@@ -18,13 +18,10 @@ export const applicationFormSchema = z.object({
 			message: "Job description is required",
 		}),
 	status: z.enum(applicationStatus),
-	companyId: z.coerce
-		.number({
-			message: "Associated company is required",
-		})
-		.int()
-		.positive({
-			message: "Associated company is required",
+	companyName: z
+		.string()
+		.min(2, {
+			message: "Employer name must be at least 2 characters",
 		}),
 	notes: z.string().optional().or(z.literal("")),
 });

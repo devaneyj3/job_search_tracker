@@ -17,7 +17,7 @@ const ApplicationTableRow = ({ item }) => {
 		updateApplication,
 	} = useApplication();
 	const date = readableDate(item.createdAt);
-	const displayName = item.company?.name || "Unknown Company";
+	const displayName = item.companyName || "Unknown employer";
 	const isActive = item.id === selectedApplication?.id;
 
 	const openSheet = () => {

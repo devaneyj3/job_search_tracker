@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
+import React from "react";
 import styles from "@/styles/CreateForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,15 +30,12 @@ import { toast } from "sonner";
 import { applicationFormSchema } from "@/features/applications/lib/schema";
 import { applicationKeys } from "@/features/applications/lib/keys";
 import { useApplication } from "@/features/applications/context/applicationContext";
-import { useCompany } from "@/features/companies/context/companyContext";
-import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
 import {
 	applicationFormEmptyDefaults,
 	applicationFormTestDefaults,
 	getFormDefaults,
 } from "@/features/shared/lib/formTestDefaults";
 
-// helper: fetch field config by name from applicationKeys
 function getCfg(name) {
 	const cfg = applicationKeys.find((f) => f.name === name);
 	if (!cfg)
@@ -48,12 +45,6 @@ function getCfg(name) {
 
 export default function CreateApplication({ setDialogOpen }) {
 	const { createApplication } = useApplication();
-	const { companies } = useCompany();
-
-	const sortedCompanies = useMemo(
-		() => sortCompaniesByName(companies),
-		[companies],
-	);
 
 	const form = useForm({
 		resolver: zodResolver(applicationFormSchema),
@@ -67,7 +58,7 @@ export default function CreateApplication({ setDialogOpen }) {
 	async function onSubmit(values) {
 		try {
 			await createApplication({
-				companyId: Number(values.companyId),
+				companyName: values.companyName.trim(),
 				jobType: values.jobType,
 				location: values.location,
 				applicationLink: values.applicationLink,
@@ -145,23 +136,6 @@ export default function CreateApplication({ setDialogOpen }) {
 									))}
 								</SelectContent>
 							</Select>
-						) : name === "companyId" ? (
-							<Select
-								onValueChange={field.onChange}
-								value={field.value ? String(field.value) : ""}>
-								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder={placeholder} />
-									</SelectTrigger>
-								</FormControl>
-								<SelectContent>
-									{sortedCompanies.map((company) => (
-										<SelectItem key={company.id} value={String(company.id)}>
-											{company.name}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
 						) : name === "notes" || name === "jobDescription" ? (
 							<FormControl>
 								<Textarea
@@ -170,7 +144,9 @@ export default function CreateApplication({ setDialogOpen }) {
 									rows={name === "jobDescription" ? 5 : 3}
 								/>
 							</FormControl>
-						) : name === "position" || name === "applicationLink" ? (
+						) : name === "position" ||
+						  name === "applicationLink" ||
+						  name === "companyName" ? (
 							<FormControl>
 								<Input
 									type={name === "applicationLink" ? "url" : "text"}
@@ -191,7 +167,7 @@ export default function CreateApplication({ setDialogOpen }) {
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className={styles.form}>
 				<div className={styles.twoCol}>
-					<RenderField name="companyId" />
+					<RenderField name="companyName" />
 					<RenderField name="applicationLink" />
 				</div>
 				<div className={styles.twoCol}>

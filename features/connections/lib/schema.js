@@ -16,13 +16,10 @@ export const connectionFormSchema = z.object({
 		})
 		.optional()
 		.or(z.literal("")),
-	companyId: z.coerce
-		.number({
-			message: "Company is required",
-		})
-		.int()
-		.positive({
-			message: "Company is required",
+	companyName: z
+		.string()
+		.min(2, {
+			message: "Employer name must be at least 2 characters",
 		}),
 	position: z
 		.string()

@@ -48,8 +48,8 @@ const ConnectionTableRow = ({ connection }) => {
 					status={connectionStatus}
 				/>
 			}>
-			<ItemCardField label="Company">
-				{connection.company?.name || "N/A"}
+			<ItemCardField label="Employer">
+				{connection.companyName || "N/A"}
 			</ItemCardField>
 			<ItemCardField label="Position">
 				{connection.position || "N/A"}

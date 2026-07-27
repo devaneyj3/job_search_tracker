@@ -3,8 +3,8 @@ import Providers from "@/features/shared/components/Providers";
 import { plex } from "@/lib/fonts";
 
 export const metadata = {
-	title: "Company Tracker",
-	description: "Track companies you're interested in",
+	title: "Job Tracker",
+	description: "Track your job search outreach and applications",
 	icons: {
 		icon: "/logo.png",
 	},

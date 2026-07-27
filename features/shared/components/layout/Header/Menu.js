@@ -17,7 +17,6 @@ import styles from "@/styles/Header.module.scss";
 const NAV_LINKS = [
 	{ href: "/dashboard", label: "Dashboard" },
 	{ href: "/playbook", label: "Follow-up" },
-	{ href: "/companies", label: "Companies" },
 	{ href: "/applications", label: "Applications" },
 	{ href: "/connections", label: "Connections" },
 ];

@@ -48,11 +48,6 @@ export type Connection = Prisma.ConnectionModel
  */
 export type Email = Prisma.EmailModel
 /**
- * Model Company
- * 
- */
-export type Company = Prisma.CompanyModel
-/**
  * Model Application
  * 
  */

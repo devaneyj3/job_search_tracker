@@ -5,12 +5,10 @@ import {
 	ArrowRight,
 	BookOpen,
 	Briefcase,
-	Building2,
 	Mail,
 	Users,
 } from "lucide-react";
 import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
-import { useCompany } from "@/features/companies/context/companyContext";
 import { useApplication } from "@/features/applications/context/applicationContext";
 import { useConnection } from "@/features/connections/context/connectionContext";
 import { itemLength } from "@/features/shared/lib/utils";
@@ -22,13 +20,6 @@ function countActive(items) {
 }
 
 const NAV_ITEMS = [
-	{
-		href: "/companies",
-		label: "Companies",
-		description: "Targets you're researching or pursuing",
-		icon: Building2,
-		key: "companies",
-	},
 	{
 		href: "/connections",
 		label: "Connections",
@@ -46,17 +37,13 @@ const NAV_ITEMS = [
 ];
 
 export default function OverviewDashboard() {
-	const { companies, isLoading: companiesLoading } = useCompany();
 	const { applications, isLoading: applicationsLoading } = useApplication();
 	const { connections, isLoading: connectionsLoading } = useConnection();
 
-	const isLoading =
-		companiesLoading || applicationsLoading || connectionsLoading;
-	const hasData =
-		companies.length > 0 || applications.length > 0 || connections.length > 0;
+	const isLoading = applicationsLoading || connectionsLoading;
+	const hasData = applications.length > 0 || connections.length > 0;
 
 	const counts = {
-		companies: countActive(companies),
 		connections: countActive(connections),
 		applications: countActive(applications),
 	};
@@ -72,18 +59,12 @@ export default function OverviewDashboard() {
 
 	const needsAttention = [
 		...connections
-			.filter(
-				(connection) =>
-					connection.archived !== true
-			)
+			.filter((connection) => connection.archived !== true)
 			.map((connection) => ({
 				id: `connection-${connection.id}`,
 				label: connection.name,
 				action: `Send ${EMAIL_LABELS[connection.emails.length]} Email`,
-				meta:
-					typeof connection.company === "object"
-						? connection.company?.name
-						: connection.company || "No company",
+				meta: connection.companyName || "No employer",
 				href: "/connections",
 			})),
 		...applications
@@ -96,10 +77,10 @@ export default function OverviewDashboard() {
 				id: `application-${application.id}`,
 				label: application.position,
 				action: "Follow up",
-				meta: application.company?.name || "Unknown company",
+				meta: application.companyName || "Unknown employer",
 				href: "/applications",
 			})),
-	]
+	];
 
 	const statStrip = [
 		{ label: "Emails sent", value: totalEmailsSent },
@@ -124,8 +105,7 @@ export default function OverviewDashboard() {
 					<p className={styles.kicker}>Job search command center</p>
 					<h1 className={styles.title}>Dashboard</h1>
 					<p className={styles.subtitle}>
-						Pick up where you left off — outreach, applications, and targets in
-						one place.
+						Pick up where you left off — outreach and applications in one place.
 					</p>
 				</header>
 
@@ -193,7 +173,7 @@ export default function OverviewDashboard() {
 								</ul>
 							) : (
 								<p className={styles.emptyState}>
-									You&apos;re caught up. Add a company or connection to get
+									You&apos;re caught up. Add a connection or application to get
 									moving.
 								</p>
 							)}

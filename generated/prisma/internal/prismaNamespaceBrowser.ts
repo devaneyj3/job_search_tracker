@@ -57,7 +57,6 @@ export const ModelName = {
   VerificationToken: 'VerificationToken',
   Connection: 'Connection',
   Email: 'Email',
-  Company: 'Company',
   Application: 'Application'
 } as const
 
@@ -138,7 +137,7 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 export const ConnectionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  companyId: 'companyId',
+  companyName: 'companyName',
   name: 'name',
   email: 'email',
   position: 'position',
@@ -175,32 +174,10 @@ export const EmailScalarFieldEnum = {
 export type EmailScalarFieldEnum = (typeof EmailScalarFieldEnum)[keyof typeof EmailScalarFieldEnum]
 
 
-export const CompanyScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  website: 'website',
-  industry: 'industry',
-  size: 'size',
-  location: 'location',
-  description: 'description',
-  linkedinUrl: 'linkedinUrl',
-  status: 'status',
-  statusDate: 'statusDate',
-  notes: 'notes',
-  archived: 'archived',
-  archivedDate: 'archivedDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
-
-
 export const ApplicationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  companyId: 'companyId',
+  companyName: 'companyName',
   jobType: 'jobType',
   location: 'location',
   position: 'position',

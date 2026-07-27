@@ -30,7 +30,7 @@ export async function POST(req) {
 	try {
 		const {
 			userId,
-			companyId,
+			companyName,
 			jobType,
 			location,
 			applicationLink,
@@ -41,7 +41,7 @@ export async function POST(req) {
 		} = await req.json();
 		const newApplication = await createNewApplication({
 			userId,
-			companyId,
+			companyName,
 			jobType,
 			location,
 			applicationLink,

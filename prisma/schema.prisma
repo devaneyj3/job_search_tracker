@@ -24,7 +24,6 @@ model User {
   accounts        Account[]
   sessions        Session[]
   connections     Connection[]
-  companies       Company[]
   applications    Application[]
 }
 
@@ -71,7 +70,7 @@ model Connection {
   id              Int      @id @default(autoincrement())
 
   userId          String   @db.Uuid
-  companyId       Int?
+  companyName     String
 
   name            String
   email           String
@@ -101,8 +100,8 @@ model Connection {
   emails          Email[]
 
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company         Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
+
 model Email {
   id            Int         @id @default(autoincrement())
 
@@ -123,37 +122,10 @@ model Email {
   @@index([connectionId])
 }
 
-model Company {
-  id                Int          @id @default(autoincrement())
-  userId            String       @db.Uuid
-  name              String
-  website           String?
-  industry          String?
-  size              String?
-  location          String?
-  description       String?
-  linkedinUrl       String?
-  status            String
-  statusDate        DateTime?
-  notes             String?
-  archived          Boolean?      @default(false)
-  archivedDate      DateTime?    @db.Timestamp(6)
-  createdAt         DateTime?     @default(now()) @db.Timestamp(6)
-  updatedAt         DateTime?     @default(now()) @db.Timestamp(6)
-  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  connections       Connection[]
-  applications      Application[]
-
-  @@index([userId])
-  @@index([status])
-  @@index([name])
-  @@index([industry])
-}
-
 model Application {
   id                Int        @id @default(autoincrement())
   userId            String     @db.Uuid
-  companyId         Int
+  companyName       String
   jobType           String
   location          String
   position          String
@@ -167,9 +139,7 @@ model Application {
   createdAt         DateTime?  @default(now()) @db.Timestamp(6)
   updatedAt         DateTime?  @default(now()) @db.Timestamp(6)
   user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company           Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@index([companyId])
   @@index([status])
 }

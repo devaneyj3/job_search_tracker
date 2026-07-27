@@ -13,7 +13,7 @@ export const applicationKeys = [
 	{
 		name: "applicationLink",
 		label: "Application Link",
-		placeholder: "https://company.com/jobs/role",
+		placeholder: "https://example.com/jobs/role",
 		inputType: "url",
 	},
 	{
@@ -28,9 +28,10 @@ export const applicationKeys = [
 		placeholder: "Researching",
 	},
 	{
-		name: "companyId",
-		label: "Associated Company",
-		placeholder: "Select a company",
+		name: "companyName",
+		label: "Employer",
+		placeholder: "Acme Corp",
+		inputType: "text",
 	},
 	{
 		name: "notes",

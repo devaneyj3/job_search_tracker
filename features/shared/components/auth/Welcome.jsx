@@ -3,9 +3,9 @@ import styles from "@/styles/Welcome.module.scss";
 import SignInCard from "./SignInCard";
 
 const highlights = [
-	"Companies & pipeline",
 	"Applications & status",
 	"Connections & notes",
+	"Outreach templates",
 ];
 
 export default function Welcome() {
@@ -22,8 +22,8 @@ export default function Welcome() {
 					in one place.
 				</h1>
 				<p className={styles.tagline}>
-					Organize companies, applications, and people you reach out to—so you
-					spend less time juggling spreadsheets and more time landing the role.
+					Organize applications and people you reach out to—so you spend less
+					time juggling spreadsheets and more time landing the role.
 				</p>
 				<ul className={styles.featureList} aria-label="What this app helps you do">
 					{highlights.map((label) => (

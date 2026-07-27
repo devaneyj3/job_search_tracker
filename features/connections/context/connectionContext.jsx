@@ -25,7 +25,6 @@ export const ConnectionProvider = ({ children }) => {
 	const mergeConnectionUpdate = (existing, updated) => ({
 		...existing,
 		...updated,
-		company: updated.company ?? existing.company,
 	});
 
 	useEffect(() => {
@@ -91,8 +90,6 @@ export const ConnectionProvider = ({ children }) => {
 			return data.connection;
 		},
 		[session?.user?.id],
-
-		//TODO: When adding connections I want the connection to sync to the company state so that I get the value without refreashing
 	);
 	const deleteConnection = useCallback(
 		async (id) => {
@@ -112,8 +109,6 @@ export const ConnectionProvider = ({ children }) => {
 			setModalOpen(false);
 			return deletedConnectionId;
 		},
-
-		//TODO: When deleting connections I want the connection to sync to the company state so that I get the value without refreashing
 
 		[selectedConnection],
 	);
@@ -147,8 +142,6 @@ export const ConnectionProvider = ({ children }) => {
 		);
 
 		return updatedConnection;
-
-		//TODO: When updating connection.companyId I want the connection to sync to the company state so that I get the value without refreashing
 	}, []);
 
 	const recordConnectionEmail = useCallback(

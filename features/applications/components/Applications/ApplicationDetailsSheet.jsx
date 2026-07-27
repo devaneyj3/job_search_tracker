@@ -118,7 +118,7 @@ export default function ApplicationDetailsSheet({ item }) {
 	};
 
 	const date = readableDate(item.createdAt);
-	const displayName = item.company?.name || "Unknown Company";
+	const displayName = item.companyName || "Unknown employer";
 	return (
 		<Sheet open={modalOpen} onOpenChange={setModalOpen}>
 			<SheetContent className="w-full overflow-y-scroll max-h-screen bg-white max-w-[1000px]">
@@ -135,10 +135,10 @@ export default function ApplicationDetailsSheet({ item }) {
 							<DeleteItemDialog id={item.id} type="application" />
 						</div>
 					</div>
-					{item.company?.name && (
+					{item.companyName && (
 						<div className={styles.company}>
 							<Building size={15} className={styles.icon} />
-							{item.company.name}
+							{item.companyName}
 						</div>
 					)}
 					{(isEditing || item.applicationLink) && (

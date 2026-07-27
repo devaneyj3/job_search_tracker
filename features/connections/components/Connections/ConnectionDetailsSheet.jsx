@@ -44,8 +44,7 @@ export default function ConnectionDetailsSheet({ item }) {
 		useConnection();
 	const [isEditing, setIsEditing] = useState(false);
 	const [selectedTab, setSelectedTab] = useState(EMAIL_LABELS[item.emailCount]);
-	const companyName =
-		typeof item.company === "string" ? item.company : item.company?.name || "";
+	const companyName = item.companyName || "";
 
 	const getInitialFormData = () => ({
 		name: item.name || "",

@@ -7,16 +7,16 @@ const Header = () => {
 	return (
 		<header className={styles.header}>
 			<div className={`wrapper flex-between ${styles.inner}`}>
-				<Link href="/companies" className={styles.brand}>
+				<Link href="/dashboard" className={styles.brand}>
 					<Image
 						src="/images/logo.png"
 						width={160}
 						height={48}
-						alt="Company Tracker"
+						alt="Job Tracker"
 						priority
 						className={styles.logo}
 					/>
-					<span className={styles.brandText}>Company Tracker</span>
+					<span className={styles.brandText}>Job Tracker</span>
 				</Link>
 				<Menu />
 			</div>

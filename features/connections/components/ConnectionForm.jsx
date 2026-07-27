@@ -26,8 +26,6 @@ import { toast } from "sonner";
 import { connectionFormSchema } from "@/features/connections/lib/schema";
 import { connectionKeys } from "@/features/connections/lib/keys";
 import { useConnection } from "@/features/connections/context/connectionContext";
-import { useCompany } from "@/features/companies/context/companyContext";
-import { sortCompaniesByName } from "@/features/companies/lib/sortCompanies";
 import {
 	connectionFormEmptyDefaults,
 	connectionFormTestDefaults,
@@ -51,7 +49,7 @@ function RhfSelect({ field, placeholder, children }) {
 	);
 }
 
-function renderFieldControl(field, cfg, sortedCompanies) {
+function renderFieldControl(field, cfg) {
 	switch (cfg.field) {
 		case "status":
 			return (
@@ -59,16 +57,6 @@ function renderFieldControl(field, cfg, sortedCompanies) {
 					{connectionStatus.map((stat) => (
 						<SelectItem key={stat} value={stat}>
 							{stat}
-						</SelectItem>
-					))}
-				</RhfSelect>
-			);
-		case "company":
-			return (
-				<RhfSelect field={field} placeholder={cfg.placeholder}>
-					{sortedCompanies.map((company) => (
-						<SelectItem key={company.id} value={String(company.id)}>
-							{company.name}
 						</SelectItem>
 					))}
 				</RhfSelect>
@@ -102,16 +90,10 @@ function renderFieldControl(field, cfg, sortedCompanies) {
 
 export default function ConnectionForm({ setDialogOpen }) {
 	const { createConnection, recordConnectionEmail } = useConnection();
-	const { companies } = useCompany();
 
 	const fieldByName = useMemo(
 		() => Object.fromEntries(connectionKeys.map((c) => [c.name, c])),
 		[],
-	);
-
-	const sortedCompanies = useMemo(
-		() => sortCompaniesByName(companies),
-		[companies],
 	);
 
 	const form = useForm({
@@ -128,12 +110,9 @@ export default function ConnectionForm({ setDialogOpen }) {
 		const gmailWindow = recipient ? window.open("about:blank", "_blank") : null;
 
 		try {
-			const companyName =
-				companies.find((c) => c.id === Number(values.companyId))?.name ?? "";
-
 			const connection = await createConnection({
 				...values,
-				companyId: Number(values.companyId),
+				companyName: values.companyName.trim(),
 			});
 
 			if (!recipient) {
@@ -144,7 +123,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 
 			const { subject, body } = buildOutreachEmailDraft({
 				contactName: values.name,
-				companyName,
+				companyName: values.companyName,
 				emailCount: 0,
 			});
 
@@ -186,7 +165,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 				render={({ field }) => (
 					<FormItem className={styles.formItem}>
 						<FormLabel>{cfg.label}</FormLabel>
-						{renderFieldControl(field, cfg, sortedCompanies)}
+						{renderFieldControl(field, cfg)}
 						<FormMessage />
 					</FormItem>
 				)}
@@ -202,7 +181,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 					<RenderField name="email" />
 				</div>
 				<div className={styles.twoCol}>
-					<RenderField name="companyId" />
+					<RenderField name="companyName" />
 					<RenderField name="position" />
 				</div>
 				<div className={styles.twoCol}>

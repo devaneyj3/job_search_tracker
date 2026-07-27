@@ -10,8 +10,7 @@ export async function getConnectionsByUserId(userId) {
 			where: { userId },
 			orderBy: { createdAt: "desc" },
 			include: {
-				company: true,
-				emails: true
+				emails: true,
 			},
 		});
 
@@ -26,7 +25,7 @@ export async function createNewConnection({
 	userId,
 	name,
 	email,
-	companyId,
+	companyName,
 	position,
 	linkedinUrl,
 	status,
@@ -41,8 +40,8 @@ export async function createNewConnection({
 	if (!email) {
 		throw new Error("Email is required");
 	}
-	if (!companyId) {
-		throw new Error("Company Id is required");
+	if (!companyName?.trim()) {
+		throw new Error("Employer name is required");
 	}
 	if (!position) {
 		throw new Error("Position is required");
@@ -57,15 +56,14 @@ export async function createNewConnection({
 				userId,
 				name,
 				email,
-				companyId,
+				companyName: companyName.trim(),
 				position,
 				linkedinUrl,
 				status: status || "Prospecting",
 				notes,
 			},
 			include: {
-				company: true,
-				emails: true
+				emails: true,
 			},
 		});
 
@@ -112,7 +110,6 @@ export async function deleteConnection(id) {
 	}
 }
 
-
 export async function updateConnection(connectionId, data) {
 	if (!connectionId) {
 		throw new Error("Connection ID is required");
@@ -130,8 +127,7 @@ export async function updateConnection(connectionId, data) {
 				...(data.responded === false ? { responseDate: null } : {}),
 			},
 			include: {
-				company: true,
-				emails: true
+				emails: true,
 			},
 		});
 

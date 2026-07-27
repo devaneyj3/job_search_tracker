@@ -6,7 +6,7 @@ import GoogleButtonText from "./GoogleButton";
 
 export default function GoogleSignIn() {
 	const handleSignIn = () => {
-		signIn("google", { callbackUrl: "/companies" });
+		signIn("google", { callbackUrl: "/dashboard" });
 	};
 
 	return (
