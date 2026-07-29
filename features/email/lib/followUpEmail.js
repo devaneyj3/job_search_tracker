@@ -2,16 +2,16 @@ import { readableDate } from "@/features/shared/lib/utils";
 
 const followUpEmail = (company, firstName, firstEmailDate = null) => {
 	const when = firstEmailDate ? readableDate(firstEmailDate) : "my last message";
-	const subject = `Re: ${company} — following up`;
+	const subject = `Re: analyst at ${company}?`;
 	const body = `Hi ${firstName},
 
-I wanted to follow-up on my email from ${when}.
+Following up on my last email from ${when}.
 
-A lot of software engineers just want to stay in their chosen domain. One thing that sets me apart is flexibility to work across many business domains.
+One big project I'm proud of is my tonnage reporting project. I built a repeatable Python script with the help of AI to streamline compliance.  It runs every month—extract from the CRM, calculate and convert units, clean the data, format the output. That's the kind of repeatable work I'd bring to ${company}, not just ad hoc spreadsheets.
 
-Since I currently work for a small business I have the benefit of working across many business areas, such as IT Support, System Administration, and Marketing.
+If you have an analyst opening—or will soon—can we do 15 minutes this week?
 
-I'm still interested in ${company}. Happy to keep it to a short call.
+If you're not the right person, who should I email? A forward or a "no" works.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;

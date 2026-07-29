@@ -1,23 +1,22 @@
 const initialEmail = (company, firstName) => {
-  const subject = `Software engineer interested in ${company}`;
-  const body = `Hi ${firstName},
+	const subject = `Analyst role at ${company}? (dashboard + automated reporting)`;
+	const body = `Hi ${firstName},
 
-I'm a software engineer looking for my next role and wanted to ask if ${company} is hiring software engineers now or in the future.
+${company} is on my short list for data analyst roles. Before I apply, I wanted to reach the right person.
 
-At my current role with AG USA as a software engineer I focus on creating applications that drive profit. Some of my recent project that led to increasing business profits included:
+I'm a software engineer moving into data analysis (SQL, Python, dashboards). At AG USA, the main things I've shipped:
 
-- Migrating a legacy store to Shopify ($5,900 in the first month)
-- Rebuilding two websites that have brought in about $11k over the past few months
-- Constructing a Python/Pandas reporting tool that cut admin work roughly in half
+- Next.js dashboard tracking busiest seasons, peak days/weeks, and top products—used for inventory and staffing decisions
+- Python pipeline that automates monthly compliance reporting: pulls CRM CSV exports, converts sales volume to tons by state, and outputs clean, formatted reports
 
-Outside of work, I'm always learning and improving my skills through courses and personal projects. While earning my Software Engineering degree from Western Governors University, I worked as a janitor, which taught me persistence and discipline.
+I work across IT, ops, and marketing at a small company, so I'm used to owning a problem from raw data to something the team actually uses.
 
-If there might be a fit at ${company}, I'd appreciate ten minutes to introduce myself.
+Are you hiring analysts now, or should I talk to someone else on your team? A name or a "not yet" is enough.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;
 
-  return { subject, body };
+	return { subject, body };
 };
 
 export default initialEmail;

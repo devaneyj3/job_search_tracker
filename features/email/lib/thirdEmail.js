@@ -1,10 +1,14 @@
 const thirdEmail = (company, firstName) => {
-	const subject = `Last note from me — ${company}`;
+	const subject = `Last note — analyst roles at ${company}`;
 	const body = `Hi ${firstName},
 
-I'll keep this short—this is my last follow-up unless you want to connect.
+I'll stop after this one.
 
-I'm still interested in engineering roles at ${company}. If now isn't the right time, let me know how I can best demonstrate my skills and stand out for future opportunities.
+Still interested in analyst work at ${company}. I also built a metrics dashboard (seasonality, peak days, top products) on a popular framework and using SQL to extract data from our database.
+
+If now's bad timing, reply "later" and I'll check back in a few months. If you know who owns hiring, send me their name.
+
+Thanks for reading either way.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;
