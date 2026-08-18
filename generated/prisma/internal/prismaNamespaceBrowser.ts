@@ -138,6 +138,7 @@ export const ConnectionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   companyName: 'companyName',
+  companyMission: 'companyMission',
   name: 'name',
   email: 'email',
   position: 'position',

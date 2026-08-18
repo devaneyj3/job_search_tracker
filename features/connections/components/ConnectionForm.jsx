@@ -113,6 +113,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 			const connection = await createConnection({
 				...values,
 				companyName: values.companyName.trim(),
+				companyMission: values.companyMission?.trim() || "",
 			});
 
 			if (!recipient) {
@@ -124,6 +125,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 			const { subject, body } = buildOutreachEmailDraft({
 				contactName: values.name,
 				companyName: values.companyName,
+				companyMission: values.companyMission,
 				emailCount: 0,
 			});
 
@@ -184,6 +186,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 					<RenderField name="companyName" />
 					<RenderField name="position" />
 				</div>
+				<RenderField name="companyMission" />
 				<div className={styles.twoCol}>
 					<RenderField name="linkedinUrl" />
 					<RenderField name="status" />

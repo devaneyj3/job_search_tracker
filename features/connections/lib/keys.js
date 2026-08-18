@@ -22,6 +22,13 @@ export const connectionKeys = [
 		inputType: "text",
 	},
 	{
+		name: "companyMission",
+		field: "textarea",
+		label: "Company Mission",
+		placeholder: "e.g. making healthcare data accessible to every clinic",
+		inputType: "text",
+	},
+	{
 		name: "position",
 		field: "text",
 		label: "Position",

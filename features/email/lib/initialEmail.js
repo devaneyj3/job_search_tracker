@@ -1,17 +1,25 @@
-const initialEmail = (company, firstName) => {
+const initialEmail = (company, firstName, companyMission = "") => {
+	const mission = companyMission?.trim();
+	const missionLine = mission
+		? `I'd love to contribute to ${company}'s mission: ${mission}.`
+		: `${company} is on my list for data analyst roles.`;
+
 	const subject = `Analyst role at ${company}? (dashboard + automated reporting)`;
 	const body = `Hi ${firstName},
 
-${company} is on my short list for data analyst roles. Before I apply, I wanted to reach the right person.
+I love helping companies turn messy data into clear revenue and operational insights.
 
-I'm a software engineer moving into data analysis (SQL, Python, dashboards). At AG USA, the main things I've shipped:
+I am a software engineer transitioning into data analytics (SQL, Python, dashboards) because I see the value data brings to a company's mission. I bring a systems-first engineering mindset—focusing on reliability, scalable data pipelines, and clean architecture.
 
-- Next.js dashboard tracking busiest seasons, peak days/weeks, and top products—used for inventory and staffing decisions
-- Python pipeline that automates monthly compliance reporting: pulls CRM CSV exports, converts sales volume to tons by state, and outputs clean, formatted reports
+A few recent projects I am proud of include:
 
-I work across IT, ops, and marketing at a small company, so I'm used to owning a problem from raw data to something the team actually uses.
+Custom Operations Dashboard: Tracks peak seasonal demand, busiest windows, and top product velocity to directly drive inventory and staffing decisions.
 
-Are you hiring analysts now, or should I talk to someone else on your team? A name or a "not yet" is enough.
+Automated Compliance Pipeline: Built a Python workflow that ingests CRM data, converts volume metrics by state, and generates automated executive reports.
+
+Because I work cross-functionally across IT, Ops, and Marketing, I'm comfortable taking full ownership of a problem—from messy to insightful dashboards.
+
+${missionLine} Are you currently open to bringing on an analyst with an engineering backbone, or is there someone else on your team I should connect with? A name or a simple "not right now" is plenty.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;

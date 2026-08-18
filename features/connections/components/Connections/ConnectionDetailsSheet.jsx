@@ -45,12 +45,14 @@ export default function ConnectionDetailsSheet({ item }) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [selectedTab, setSelectedTab] = useState(EMAIL_LABELS[item.emailCount]);
 	const companyName = item.companyName || "";
+	const companyMission = item.companyMission || "";
 
 	const getInitialFormData = () => ({
 		name: item.name || "",
 		email: item.email || "",
 		position: item.position || "",
 		linkedinUrl: item.linkedinUrl || "",
+		companyMission: item.companyMission || "",
 		notes: item.notes || "",
 	});
 
@@ -76,6 +78,7 @@ export default function ConnectionDetailsSheet({ item }) {
 				email: formData.email,
 				position: formData.position,
 				linkedinUrl: formData.linkedinUrl,
+				companyMission: formData.companyMission?.trim() || null,
 				notes: formData.notes,
 			};
 
@@ -98,6 +101,7 @@ export default function ConnectionDetailsSheet({ item }) {
 	const { subject, body } = buildOutreachEmailDraft({
 		contactName: isEditing ? formData.name : item.name,
 		companyName,
+		companyMission: isEditing ? formData.companyMission : companyMission,
 		emailCount: item.emailCount,
 		firstEmailDate: item.emails?.[0]?.sentAt ?? item.lastEmailDate,
 	});
@@ -212,6 +216,24 @@ export default function ConnectionDetailsSheet({ item }) {
 								{companyName}
 							</div>
 						)}
+						{(isEditing || companyMission) && (
+							<div className={styles.contact}>
+								<Label htmlFor="companyMission">Company mission: </Label>
+								{isEditing ? (
+									<Textarea
+										id="companyMission"
+										value={formData.companyMission}
+										onChange={(e) =>
+											handleInputChange("companyMission", e.target.value)
+										}
+										placeholder="What the company is trying to achieve"
+										rows={2}
+									/>
+								) : (
+									<p className={styles.itemDescription}>{companyMission}</p>
+								)}
+							</div>
+						)}
 						{(isEditing || item.position) && (
 							<div className={styles.company}>
 								<Briefcase size={15} className={styles.icon} />
@@ -323,6 +345,7 @@ export default function ConnectionDetailsSheet({ item }) {
 						<JobOtreachTemplate
 							contactName={item.name}
 							companyName={companyName}
+							companyMission={companyMission}
 						/>
 					)}
 					{selectedTab === "Follow-Up" && (

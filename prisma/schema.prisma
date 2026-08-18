@@ -71,6 +71,7 @@ model Connection {
 
   userId          String   @db.Uuid
   companyName     String
+  companyMission  String?
 
   name            String
   email           String
