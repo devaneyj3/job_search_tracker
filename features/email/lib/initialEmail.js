@@ -4,22 +4,20 @@ const initialEmail = (company, firstName, companyMission = "") => {
 		? `I'd love to contribute to ${company}'s mission: ${mission}.`
 		: `${company} is on my list for data analyst roles.`;
 
-	const subject = `Analyst role at ${company}? (dashboard + automated reporting)`;
+	const subject = `How can I make a contribution to your company?`;
 	const body = `Hi ${firstName},
 
-I love helping companies turn messy data into clear revenue and operational insights.
+My name is Jordan Devaney, a software engineer transitioning into data analytics. 
 
-I am a software engineer transitioning into data analytics (SQL, Python, dashboards) because I see the value data brings to a company's mission. I bring a systems-first engineering mindset—focusing on reliability, scalable data pipelines, and clean architecture.
+I love helping companies turn messy data into clear revenue and operational insights because I see the value data brings to a company's mission. I bring a systems-first engineering mindset—focusing on reliability, scalable data pipelines, and clean architecture.
 
-A few recent projects I am proud of include:
+I have taken ownerships of many projects as the sole developer. A few recent projects I am proud of include:
 
 Custom Operations Dashboard: Tracks peak seasonal demand, busiest windows, and top product velocity to directly drive inventory and staffing decisions.
 
 Automated Compliance Pipeline: Built a Python workflow that ingests CRM data, converts volume metrics by state, and generates automated executive reports.
 
-Because I work cross-functionally across IT, Ops, and Marketing, I'm comfortable taking full ownership of a problem—from messy to insightful dashboards.
-
-${missionLine} Are you currently open to bringing on an analyst with an engineering backbone, or is there someone else on your team I should connect with? A name or a simple "not right now" is plenty.
+I'd love to talk with you more about what ${company} is doing and explore opportunities to join your team. If there is someone else that I whitin the company that I should connect please forward along this email.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;
