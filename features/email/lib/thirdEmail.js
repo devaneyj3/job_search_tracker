@@ -6,7 +6,7 @@ I'll stop after this one.
 
 I am still interested in analyst work at ${company}.
 
-If now's bad timing, reply "later" and I'll check back in a few months. If you know who makes hiring diecisions, please send me their name.
+If now's bad timing, reply "later" and I'll check back in a few months. If you know who makes hiring decisions, please send me their name.
 
 Thanks for reading either way.
 

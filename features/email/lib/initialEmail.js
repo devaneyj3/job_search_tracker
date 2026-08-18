@@ -17,7 +17,7 @@ Custom Operations Dashboard: Tracks peak seasonal demand, busiest windows, and t
 
 Automated Compliance Pipeline: Built a Python workflow that ingests CRM data, converts volume metrics by state, and generates automated executive reports.
 
-I'd love to talk with you more about what ${company} is doing and explore opportunities to join your team. If there is someone else that I should connect please forward along this email.
+I'd love to talk with you more about what ${company} is doing and explore opportunities to join your team. If there is someone else that I should contact, please forward them this email.
 
 Jordan Devaney
 https://www.linkedin.com/in/jordandevaney/`;
