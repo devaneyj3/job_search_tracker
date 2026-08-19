@@ -1,4 +1,4 @@
-const initialEmail = (company, firstName, companyMission = "") => {
+const initialEmail = (company, firstName, appliedPosition, companyMission = "") => {
 	const mission = companyMission?.trim();
 	const missionLine = mission
 		? `I'd love to contribute to ${company}'s mission: ${mission}.`
@@ -7,7 +7,7 @@ const initialEmail = (company, firstName, companyMission = "") => {
 	const subject = `How can I make a contribution to your company?`;
 	const body = `Hi ${firstName},
 
-My name is Jordan Devaney, a software engineer transitioning into data analytics. 
+My name is Jordan Devaney, a software engineer transitioning into data analytics. I just applied for the ${appliedPosition} role, but I know that HR must receive thousands of applications and wanted to reach out and initiate a conversation.
 
 I love helping companies turn messy data into clear revenue and operational insights because I see the value data brings to a company's mission. I bring a systems-first engineering mindset—focusing on reliability, scalable data pipelines, and clean architecture.
 

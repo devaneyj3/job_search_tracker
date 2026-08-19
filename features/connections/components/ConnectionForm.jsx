@@ -126,6 +126,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 				contactName: values.name,
 				companyName: values.companyName,
 				companyMission: values.companyMission,
+				appliedPosition:  values.appliedPosition,
 				emailCount: 0,
 			});
 
@@ -187,6 +188,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 					<RenderField name="position" />
 				</div>
 				<RenderField name="companyMission" />
+				<RenderField name="appliedPosition" />
 				<div className={styles.twoCol}>
 					<RenderField name="linkedinUrl" />
 					<RenderField name="status" />

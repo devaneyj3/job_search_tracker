@@ -29,6 +29,13 @@ export const connectionKeys = [
 		inputType: "text",
 	},
 	{
+		name: "appliedPosition",
+		field: "text",
+		label: "Applied Position",
+		placeholder: "Data Analyst",
+		inputType: "text",
+	},
+	{
 		name: "position",
 		field: "text",
 		label: "Position",
