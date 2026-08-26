@@ -1,5 +1,5 @@
 /** Flip to true to pre-fill create forms with sample data. */
-export const USE_FORM_TEST_DEFAULTS = true;
+export const USE_FORM_TEST_DEFAULTS = false;
 
 export const applicationFormEmptyDefaults = {
 	jobType: "",
@@ -7,7 +7,7 @@ export const applicationFormEmptyDefaults = {
 	applicationLink: "",
 	position: "",
 	jobDescription: "",
-	status: "Researching",
+	status: "Applied",
 	companyName: "",
 	notes: "",
 };
@@ -30,7 +30,7 @@ export const connectionFormEmptyDefaults = {
 	companyMission: "",
 	position: "",
 	linkedinUrl: "",
-	status: "Prospecting",
+	status: "Contacted",
 	notes: "",
 };
 
@@ -38,7 +38,6 @@ export const connectionFormTestDefaults = {
 	name: "Jane Doe",
 	email: "jane.doe@example.com",
 	companyName: "Acme Corp",
-	companyMission: "helping small businesses make smarter inventory decisions",
 	position: "Software Engineer",
 	linkedinUrl: "https://www.linkedin.com/in/janedoe",
 	status: "Prospecting",

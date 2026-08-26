@@ -64,7 +64,7 @@ function renderFieldControl(field, cfg) {
 		case "textarea":
 			return (
 				<FormControl>
-					<Textarea placeholder={cfg.placeholder} {...field} rows={3} />
+					<Textarea {...field} rows={3} />
 				</FormControl>
 			);
 		case "email":
@@ -126,7 +126,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 				contactName: values.name,
 				companyName: values.companyName,
 				companyMission: values.companyMission,
-				appliedPosition:  values.appliedPosition,
+				appliedPosition: values.appliedPosition,
 				emailCount: 0,
 			});
 

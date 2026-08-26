@@ -17,7 +17,6 @@ const contactPosition = [
 	"Other",
 ];
 
-const LINKEDIN_APPLICATION_MESSAGE = `Hey I am excited about this role, and have experience in Javascript, React and NextJS. I would love to learn more about next steps for this application.`;
 const connectionStatus = [
 	"Prospecting",
 	"Contacted",
