@@ -47,6 +47,7 @@ export default function ConnectionDetailsSheet({ item }) {
 	const companyName = item.companyName || "";
 	const companyMission = item.companyMission || "";
 
+	console.log(item);
 	const getInitialFormData = () => ({
 		name: item.name || "",
 		email: item.email || "",
@@ -345,6 +346,7 @@ export default function ConnectionDetailsSheet({ item }) {
 						<JobOtreachTemplate
 							contactName={item.name}
 							companyName={companyName}
+							appliedPosition={"appliedPosition"}
 							companyMission={companyMission}
 						/>
 					)}

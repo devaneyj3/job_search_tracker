@@ -108,6 +108,7 @@ export default function ConnectionForm({ setDialogOpen }) {
 	async function onSubmit(values) {
 		const recipient = values.email?.trim();
 		const gmailWindow = recipient ? window.open("about:blank", "_blank") : null;
+		console.log('connection form', values);
 
 		try {
 			const connection = await createConnection({
@@ -125,10 +126,11 @@ export default function ConnectionForm({ setDialogOpen }) {
 			const { subject, body } = buildOutreachEmailDraft({
 				contactName: values.name,
 				companyName: values.companyName,
-				companyMission: values.companyMission,
 				appliedPosition: values.appliedPosition,
+				companyMission: values.companyMission,
 				emailCount: 0,
 			});
+			console.log(body);
 
 			await recordConnectionEmail(connection.id, {
 				subject,

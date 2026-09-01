@@ -1,5 +1,5 @@
 /** Flip to true to pre-fill create forms with sample data. */
-export const USE_FORM_TEST_DEFAULTS = false;
+export const USE_FORM_TEST_DEFAULTS = true;
 
 export const applicationFormEmptyDefaults = {
 	jobType: "",
@@ -28,6 +28,7 @@ export const connectionFormEmptyDefaults = {
 	email: "",
 	companyName: "",
 	companyMission: "",
+	appliedPosition: '',
 	position: "",
 	linkedinUrl: "",
 	status: "Contacted",
@@ -39,6 +40,7 @@ export const connectionFormTestDefaults = {
 	email: "jane.doe@example.com",
 	companyName: "Acme Corp",
 	position: "Software Engineer",
+	appliedPosition: 'Data Analyst',
 	linkedinUrl: "https://www.linkedin.com/in/janedoe",
 	status: "Prospecting",
 	notes: "Created with test defaults.",

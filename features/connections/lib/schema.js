@@ -22,6 +22,7 @@ export const connectionFormSchema = z.object({
 			message: "Employer name must be at least 2 characters",
 		}),
 	companyMission: z.string().optional().or(z.literal("")),
+	appliedPosition: z.string().optional().or(z.literal("")),
 	position: z
 		.string()
 		.min(2, {
