@@ -7,9 +7,9 @@ const followUpEmail = (company, firstName, firstEmailDate = null) => {
 
 Following up on my last email from ${when}.
 
-What is it that your company needs to bring in more profit? I can certainly help with that. The dashboard I made used SQL to extract the right product information from the database to find the highest grossing product and the busiest seasons of the year. This report created tremendous value to the company.
+I'm still interested working for ${company}. I have made projects that showcase how I bring value to a company. The dashboard I made using SQL to extract the right product information from the database to find the highest grossing product and the busiest seasons of the year. This report created tremendous value to the company to pinpoint the most profitable products to help marketing campaigns.
 
-The data pipeline I have made with Python extracts CSV reports from the CRM, calculates and converts units, cleans the data to format the output. What used to take hours doing manual calculations of every entry now is only a click of a button. This saves hours of manpower and money. That's the kind of repeatable work I'd bring to Acme Corp, not just ad hoc spreadsheets.
+The data pipeline I have made with Python extracts CSV reports from the CRM, calculates and converts units, cleans the data to format the output. What used to take hours doing manual calculations of every entry now is only a click of a button. This saves hours of manpower and money.
 
 I would love to talk with you or someone else about joining your team?
 
