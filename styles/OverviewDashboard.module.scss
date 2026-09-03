@@ -54,6 +54,46 @@
   line-height: 1.55;
 }
 
+.linkedinCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(10, 102, 194, 0.35);
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  box-shadow:
+    0 4px 14px -4px rgba(10, 102, 194, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow:
+      0 10px 28px -8px rgba(10, 102, 194, 0.65),
+      0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  svg:last-child {
+    opacity: 0.85;
+    margin-left: 0.1rem;
+  }
+}
+
 .layout {
   flex: 1;
   display: grid;

@@ -5,7 +5,9 @@ import {
 	ArrowRight,
 	BookOpen,
 	Briefcase,
+	ExternalLink,
 	Mail,
+	Search,
 	Users,
 } from "lucide-react";
 import LoadingIndicator from "@/features/shared/components/LoadingIndicator";
@@ -107,6 +109,16 @@ export default function OverviewDashboard() {
 					<p className={styles.subtitle}>
 						Pick up where you left off — outreach and applications in one place.
 					</p>
+
+					<Link
+						href="https://www.linkedin.com/jobs/search/?currentJobId=4460477929&f_E=2&f_TPR=r86400&f_WT=2&keywords=data%20analyst&origin=JOB_SEARCH_PAGE_JOB_FILTER"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles.linkedinCta}>
+						<Search size={18} strokeWidth={2.25} aria-hidden />
+						Search Data Analyst Jobs on LinkedIn
+						<ExternalLink size={16} strokeWidth={2} aria-hidden />
+					</Link>
 				</header>
 
 				<div className={styles.layout}>

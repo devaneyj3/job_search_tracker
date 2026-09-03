@@ -1,5 +1,5 @@
 /** Flip to true to pre-fill create forms with sample data. */
-export const USE_FORM_TEST_DEFAULTS = true;
+export const USE_FORM_TEST_DEFAULTS = false;
 
 export const applicationFormEmptyDefaults = {
 	jobType: "",
